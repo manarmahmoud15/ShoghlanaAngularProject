@@ -1,0 +1,34 @@
+/* freelancers.component.css */
+
+/* // <uniquifier>: Use a unique and descriptive class name
+// <weight>: Use a value from 300 to 700 */
+
+.text{
+  font-family: "Marhey", sans-serif;
+  font-optical-sizing: auto;
+  /* font-weight: <weight>;
+  font-style: normal; */
+}
+
+.fa-star {
+    color: #ccc; /* Color for inactive stars */
+  }
+  
+  .fa-star.active {
+    color: #f39c12; /* Color for active stars */
+  }
+  
+  .social-link {
+    color: #333;
+    text-decoration: none;
+    margin: 0 5px;
+  }
+  
+  .social-link:hover {
+    color: #007bff;
+  }
+
+  ul{
+    padding: 0;
+  }
+  
