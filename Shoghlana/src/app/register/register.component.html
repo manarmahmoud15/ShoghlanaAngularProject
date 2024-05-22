@@ -11,11 +11,12 @@
           <input  formControlName="name" placeholder="ادخل اسمك هنا " id="name" class="input" type="text">
 
         </div>
-        <div class="alert alert-danger">
-          <p *ngIf="RegisterForm.get('name')?.getError('minLength')|json" class="m-0">  الاسم لا يمكن أن يكون أقل من 3 حروف</p>
-          <p *ngIf="RegisterForm.get('name')?.getError('maxLength')|json" class="m-0">الاسم لا يمكن أن يكون أكثر من 20 حرفا</p>
-          <p *ngIf="RegisterForm.get('name')?.getError('required')|json" class="m-0">  يرجي ادخال الاسم</p>
+        <div *ngIf="RegisterForm.get('name')?.errors && RegisterForm.get('name')?.touched" class="alert alert-danger">
+          <p *ngIf="RegisterForm.get('name')?.getError('minlength')" class="m-0">الاسم لا يمكن أن يكون أقل من 3 حروف</p>
+          <p *ngIf="RegisterForm.get('name')?.getError('maxlength')" class="m-0">الاسم لا يمكن أن يكون أكثر من 20 حرفا</p>
+          <p *ngIf="RegisterForm.get('name')?.getError('required')" class="m-0">يرجي ادخال الاسم</p>
         </div>
+
         <div class="flex-column">
           <label for="email">البريد الإلكتروني</label>
         </div>
@@ -26,6 +27,10 @@
             </g>
           </svg>
           <input formControlName="email" placeholder="البريد الإلكتروني" id="email" class="input" type="email">
+        </div>
+        <div *ngIf="RegisterForm.get('email')?.errors && RegisterForm.get('name')?.touched" class="alert alert-danger">
+          <p *ngIf="RegisterForm.get('email')?.getError('email')" class="m-0">البريد الإلكتروني غير صحيح</p>
+          <p *ngIf="RegisterForm.get('email')?.getError('required')" class="m-0">يرجي ادخال البريد الإلكتروني</p>
         </div>
         <div class="flex-column">
           <label for="phone"> الهاتف</label>
