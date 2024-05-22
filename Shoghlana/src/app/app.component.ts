@@ -4,13 +4,15 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import {  ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HomeComponent } from './home/home.component';
+import { FooterComponent } from "./footer/footer.component";
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet,LoginComponent,RegisterComponent, ReactiveFormsModule, CommonModule],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+    selector: 'app-root',
+    standalone: true,
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css',
+    imports: [RouterOutlet, LoginComponent, RegisterComponent, HomeComponent, ReactiveFormsModule, CommonModule, FooterComponent]
 })
 export class AppComponent {
   title = 'Shoghlana';
