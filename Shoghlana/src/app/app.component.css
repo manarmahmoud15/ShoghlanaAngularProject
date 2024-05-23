@@ -1,0 +1,16 @@
+:root{
+ --primary-color: #F9FAFB;
+ --SecondaryColor:#1dbf73;
+}
+body{
+  background-color: var(--primary-color);
+}
+span{
+   font-family: cairo;
+   color: var(--SecondaryColor);
+}
+.bold {
+  font-weight: bold;
+}
+
+
