@@ -4,15 +4,18 @@
         <div class="row text-center">
             <!-- Team item -->
             <div class="col-xl-3 col-sm-6 mb-4" *ngFor="let freelancer of FreelancersArr">
-                <div class="bg-white rounded shadow-sm py-5 px-4">
+                <div class="bg-white rounded shadow-lg py-5 px-4">
                     <img [src]="freelancer.imgURL" [alt]="freelancer.name + ' image'" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
                     <h5 class="mb-0 text">{{freelancer.name}}</h5>
                     <span class="small text-uppercase text-muted text">{{freelancer.title}}</span>
                     <div class="mt-2">
-                        <ng-container *ngFor="let star of getStars(freelancer.rate); let i = index">
-                            <i class="fas" [ngClass]="i < freelancer.rate ? 'fa-star active' : 'fa-star'"></i>
+                        <ng-container *ngFor="let star of getStarsArray(freelancer.rate); let i = index">
+                            <i class="fa" [ngClass]="i < freelancer.rate ? 'fa-star active' : 'fa-star'"></i>
                         </ng-container>
                         <span class="small-text">({{freelancer.rate}}.0)</span>
+                    </div>
+                    <div>
+                        <a [routerLink]="['/freelancerprofile', freelancer.id]" class="btn btn-primary mt-2">عرض الملف الشخصي</a>
                     </div>
                     <ul class="social mb-0 list-inline mt-3 text-center">
                         <li class="list-inline-item">

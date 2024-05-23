@@ -1,0 +1,98 @@
+<main class="container">
+  <section id="content" class="page-heading p-5">
+    <div class="media clearfix">
+      <div class="media-left pr-3">
+        <a href="#">
+          <img
+            class="media-object mw-150 border rounded-circle"
+            src="{{ freelancer?.imgURL }}"
+            alt="{{ freelancer?.name }}"
+            height="250"
+          />
+        </a>
+      </div>
+      <div class="media-body align-self-center">
+        <h2 class="media-heading">{{ freelancer?.name }}</h2>
+        <p class="lead">{{ freelancer?.title }}</p>
+        <div class="media-links">
+          <ul class="list-inline list-unstyled">
+            <li>
+              <a href="#" title="Facebook Link"
+                ><span class="fa fa-facebook-square fs-3 text-primary"></span
+              ></a>
+            </li>
+            <li>
+              <a href="#" title="LinkedIn Link"
+                ><span class="fa fa-linkedin-square fs-3 text-info"></span
+              ></a>
+            </li>
+            <li>
+              <a href="#" title="GitHub Link"
+                ><span class="fa fa-github-square fs-3 text-dark"></span
+              ></a>
+            </li>
+            <li>
+              <a href="#" title="Phone Link"
+                ><span class="fa fa-phone-square fs-3 text-system"></span
+              ></a>
+            </li>
+            <li>
+              <a href="#" title="Email Link"
+                ><span class="fa fa-envelope-square fs-3 text-muted"></span
+              ></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="panel">
+        <div class="panel-heading">
+          <span class="panel-icon"><i class="fa fa-trophy"></i></span>
+          <span class="panel-title">نبذة عني</span>
+        </div>
+        <div class="panel-body">
+          <p>{{ freelancer?.description }}</p>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-heading">
+          <span class="panel-icon"><i class="fa fa-pencil"></i></span>
+          <span class="panel-title">مهاراتي</span>
+        </div>
+        <div class="panel-body">
+          <ul>
+            <li *ngFor="let skill of freelancer?.skills">{{ skill }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/freelancerprofile', freelancer?.id, 'portfolio']"
+            routerLinkActive="lighter-bg-secondary"
+            >معرض الأعمال</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/freelancerprofile', freelancer?.id, 'workhistory']"
+            routerLinkActive="lighter-bg-secondary"
+            >المشاريع</a
+          >
+        </li>
+      </ul>
+      <div class="tab-content p-3">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</main>
