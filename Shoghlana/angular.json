@@ -3,11 +3,8 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Shoghlana": {
+    "apppf": {
       "projectType": "application",
-      "i18n": {
-        "sourceLocale": "ar"
-      },
       "schematics": {},
       "root": "",
       "sourceRoot": "src",
@@ -16,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/shoghlana",
+            "outputPath": "dist/apppf",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -28,12 +25,12 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/font-awesome/css/font-awesome.min.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css" ,
+              "./node_modules/@fortawesome/fontawesome-free/css/all.min.css" ,
               "src/styles.css"
             ],
             "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+              "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js" 
             ],
             "server": "src/main.server.ts",
             "prerender": true,
@@ -69,10 +66,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "Shoghlana:build:production"
+              "buildTarget": "apppf:build:production"
             },
             "development": {
-              "buildTarget": "Shoghlana:build:development"
+              "buildTarget": "apppf:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -80,7 +77,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "Shoghlana:build"
+            "buildTarget": "apppf:build"
           }
         },
         "test": {
@@ -103,8 +100,5 @@
         }
       }
     }
-  },
-  "cli": {
-    "analytics": false
   }
 }

@@ -1,6 +1,7 @@
-import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 export const routes: Routes = [
   //لازم pATH match
   { path: '', redirectTo:"register", pathMatch:'full'},
@@ -15,3 +16,8 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 // import { NotfoundComponent } from './notfound/notfound.component';
 
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule {   }
