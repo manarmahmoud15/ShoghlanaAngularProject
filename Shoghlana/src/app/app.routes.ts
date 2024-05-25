@@ -1,15 +1,14 @@
-import { HomeComponent } from './home/home.component';
-import { NotFoundComponent } from './not-found/not-found.component';
+
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 import { FreelancersComponent } from './freelancers/freelancers.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
-import { NotfoundComponent } from './notfound/notfound.component';
 import { FreelancerProfileComponent } from './freelancer-profile/freelancer-profile.component';
 import { FreelancerWorkHistoryComponent } from './freelancer-work-history/freelancer-work-history.component';
 import { FreelancerPortfolioComponent } from './freelancer-portfolio/freelancer-portfolio.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { HomeComponent } from './home/home.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'register', pathMatch: 'full' },
@@ -25,7 +24,7 @@ export const routes: Routes = [
             { path: 'workhistory', component: FreelancerWorkHistoryComponent }
         ]
     },
-    { path: '**', component: NotfoundComponent }
+    { path: '**', component: NotFoundComponent}
 ];
 
 @NgModule({
