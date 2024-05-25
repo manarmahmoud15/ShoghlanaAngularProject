@@ -1,26 +1,32 @@
-<div class="row row-cols-1 row-cols-md-4 g-4 m-4">
-    <div class="col" *ngFor="let job of jobs">
-      <div class="card h-100">
-        <img [src]="job.imgURL" height="250px" class="card-img-top" alt="...">
-        <div class="card-body text-end">
-            <h5 class="card-title">{{job.Tilte}}</h5>
-          <p class="card-text">{{job.description}}</p>
-            
+<div class="mb-3 w-50 mx-auto">
+  <label for="" class="form-label">الخدمات</label>
+  <select class="form-select form-select-lg" name="" id="" [(ngModel)]= "selectedCategoryID" >
+    <option *ngFor="let cat of category" class="text-end" [value]="cat.id">{{cat.name}}</option>
 
-            <p class="card-text"> {{job.rate}}<i class="fa-solid fa-star" ></i> </p>
-<div class="d-flex">
-    <p class="card-text pt-2"> {{job.price}} </p>
-    <div class="freelancerInfo d-flex ms-auto">
-        <p class="pt-2 mx-2">{{job.freelancerName}}</p>
-        <img [src]="job.frelancerImg" height="50px" class="border rounded-circle 
-        border-light" />
-        
-    </div>
-    
+  </select>
 </div>
 
+<div class="row row-cols-1 row-cols-md-4 g-4 m-4">
+  <div class="col" *ngFor="let job of jobs" [class.d-none]="job.catID != selectedCategoryID  ">
+    <div class="card h-100">
+      <img [src]="job.imgURL" height="250px" class="card-img-top" alt="..." />
+      <div class="card-body text-end">
+        <h5 class="card-title">{{ job.Tilte }}</h5>
+        <p class="card-text">{{ job.description }}</p>
+
+        <p class="card-text">{{ job.rate }}<i class="fa-solid fa-star"></i></p>
+        <div class="d-flex">
+          <p class="card-text pt-2">{{ job.price }}</p>
+          <div class="freelancerInfo d-flex ms-auto">
+            <p class="pt-2 mx-2">{{ job.freelancerName }}</p>
+            <img
+              [src]="job.frelancerImg"
+              height="50px"
+              class="border rounded-circle border-light"
+            />
+          </div>
         </div>
       </div>
     </div>
-
   </div>
+</div>

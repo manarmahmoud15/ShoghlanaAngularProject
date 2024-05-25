@@ -2,16 +2,20 @@ import { Component } from '@angular/core';
 import { Ijob } from '../Models/ijob';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ICategory } from '../Models/icategory';
+import { FormsModule, NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-jobs',
   standalone: true,
-  imports: [CommonModule , RouterLink],
+  imports: [CommonModule , RouterLink , FormsModule],
   templateUrl: './jobs.component.html',
   styleUrl: './jobs.component.css'
 })
 export class JobsComponent {
   jobs:Ijob[] 
+  category : ICategory[]
+  selectedCategoryID : Number = 0
   constructor (){
     this.jobs = [
       {
@@ -70,6 +74,11 @@ export class JobsComponent {
         rate : 0 ,
         catID : 3
       },
+    ] ,
+    this.category = [
+      { id : 1 , name : 'خدمات التصميم'} ,
+      { id : 2 , name : 'خدمات برمجية'} ,
+      { id : 3 , name : 'خدمات الكتابة والترجمة'} ,
     ]
   }
 }
