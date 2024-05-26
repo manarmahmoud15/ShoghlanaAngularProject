@@ -4,11 +4,12 @@ import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ICategory } from '../Models/icategory';
 import { FormsModule, NgModel } from '@angular/forms';
+import { HighlightDirective } from '../directives/highlight.directive';
 
 @Component({
   selector: 'app-jobs',
   standalone: true,
-  imports: [CommonModule , RouterLink , FormsModule],
+  imports: [CommonModule , RouterLink , FormsModule , HighlightDirective],
   templateUrl: './jobs.component.html',
   styleUrl: './jobs.component.css'
 })
