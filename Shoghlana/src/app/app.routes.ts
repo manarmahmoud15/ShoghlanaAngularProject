@@ -9,11 +9,13 @@ import { FreelancerWorkHistoryComponent } from './freelancer-work-history/freela
 import { FreelancerPortfolioComponent } from './freelancer-portfolio/freelancer-portfolio.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
+import { authGuard } from './Gards/auth.guard';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'register', pathMatch: 'full' },
     { path: 'register', component: RegisterComponent },
     { path: 'home', component: HomeComponent },
+    { path: 'home', component: HomeComponent, canActivate:[authGuard]},
     {path:'signin', component:LoginComponent},
     { path: 'login', component: LoginComponent },
     { path: 'freelancers', component: FreelancersComponent },
