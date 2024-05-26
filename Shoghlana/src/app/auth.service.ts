@@ -7,5 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
 
-  constructor() { }
+  constructor(private _httpClient:HttpClient) { }
+   register(userdata:object):Observable<any>{
+    return this._httpClient.post('https://route-ecommerce.onrender.com/api/v1/auth//signup', JSON.stringify(userdata))
+}
 }
