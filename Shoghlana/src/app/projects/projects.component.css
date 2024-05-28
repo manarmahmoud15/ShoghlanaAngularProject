@@ -1,0 +1,47 @@
+
+.project {
+    background-color: rgb(235, 235, 235);
+}
+.container {
+    background-color: white;
+}
+  
+  /* .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  } */
+  
+  .btn-primary {
+    background-color: #1dbf73;
+    border: none;
+  }
+  
+  .btn-primary:hover {
+    background-color: #279e66;
+  }
+  
+  .dropdown-menu {
+    text-align: right;
+  }
+  
+  .form-check-label {
+    margin-left: 0.5rem;
+  }
+  .form-check-input:checked {
+    background-color: #1dbf73;
+  }
+  
+  .border {
+    border: 1px solid #ddd;
+  }
+  
+  .p-2 {
+    padding: 0.5rem;
+  }
+  
+  .rounded {
+    border-radius: 0.25rem;
+  }
+  
+  
