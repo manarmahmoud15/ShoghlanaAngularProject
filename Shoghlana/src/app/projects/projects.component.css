@@ -129,3 +129,15 @@ button:hover {
     margin: 0.5rem 0;
   }
   
+.status {
+    background-color: #1dbf73;
+    color: white;
+    border-radius: 5px;
+    font-size: 15px;
+}
+.title {
+    color: #032c1a;
+}
+.clientName , .price {
+    color: rgb(125, 125, 125);
+}
