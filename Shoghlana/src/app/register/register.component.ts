@@ -14,15 +14,18 @@ import { AuthService } from '../auth.service';
 })
 
 export class RegisterComponent {
-RegisterForm:FormGroup= new FormGroup({
-  name: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
-  email: new FormControl (null,[Validators.required, Validators.email]),
-  password: new FormControl (null,[Validators.required,  Validators.pattern(/^(?=.*\d{3,})[A-Za-z\d]{5,}$/)]),
-  rePassword: new FormControl(null,[Validators.required,  Validators.pattern(/^(?=.*\d{3,})[A-Za-z\d]{5,}$/)]),
-  phone: new FormControl(null,[Validators.required, Validators.pattern(/^01[0125][0-9]{8}$/)])
+RegisterForm:FormGroup
+constructor(){
+  this.RegisterForm= new FormGroup({
+    name: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
+    email: new FormControl (null,[Validators.required, Validators.email]),
+    password: new FormControl (null,[Validators.required,  Validators.pattern(/^(?=.*\d{3,})[A-Za-z\d]{5,}$/)]),
+    rePassword: new FormControl(null,[Validators.required,  Validators.pattern(/^(?=.*\d{3,})[A-Za-z\d]{5,}$/)]),
+    phone: new FormControl(null,[Validators.required, Validators.pattern(/^01[0125][0-9]{8}$/)])
 
-})
+  })
+}
   handleRegister(RegisterForm: FormGroup) {
-    console.log(RegisterForm);
+    console.log(this.RegisterForm.value);
   }
 }

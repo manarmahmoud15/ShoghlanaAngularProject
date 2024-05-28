@@ -1,0 +1,80 @@
+button:hover {
+  color: #fff;
+  background-color: #16a763;
+}
+.btn {
+  margin: 0.5em;
+  background: #1dbf73;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+ }
+
+.gallery{
+  background-color:#f1f2f2;
+}
+.coloum{
+  height: max-content;
+  background-color: #fff;
+  border-radius: 8px  ;
+  border: 2px solid #ebe8e8;
+}
+.bold-text {
+  font-weight: bold;
+}
+p{
+  color: #707070;
+}
+.coloum :hover{
+background-color:#ebe8e8 ;
+cursor: pointer;
+}
+.GalleryWork{
+  background-color: #fff;
+  font-size: large;
+  border-radius: 8px  ;
+  border: 2px solid #ebe8e8;
+}
+
+.card {
+  height: max-content;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-text.mt-auto {
+  margin-top: auto;
+}
+.card {
+  text-align: center;
+  border: 2px solid #eaeaea;
+  background-color: #fff;
+  padding: 5px;
+  cursor: pointer;
+
+}
+
+.card:hover,
+.card:focus {
+  border-bottom: 4px solid #1dbf73 !important;
+}
+
+h5 {
+
+  font-family: 'cairo';
+  font-optical-sizing: auto;
+  color: rgb(1, 63, 1);
+}
+
+.freelancerInfo .info{
+display: block
+}
+.freelancerInfo .info .jop-title{
+  color: #471212;
+}
