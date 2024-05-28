@@ -10,6 +10,8 @@ import { FreelancerPortfolioComponent } from './freelancer-portfolio/freelancer-
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
 import { authGuard } from './Gards/auth.guard';
+import { JobsComponent } from './jobs/jobs.component';
+import { ProjectsComponent } from './projects/projects.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'register', pathMatch: 'full' },
@@ -19,6 +21,8 @@ export const routes: Routes = [
     {path:'signin', component:LoginComponent},
     { path: 'login', component: LoginComponent },
     { path: 'freelancers', component: FreelancersComponent },
+    { path: 'jobs', component: JobsComponent },
+    { path: 'projects', component: ProjectsComponent },
     {
         path: 'freelancerprofile/:id', component: FreelancerProfileComponent, children: [
             { path: '', redirectTo: 'portfolio', pathMatch: 'full' },
