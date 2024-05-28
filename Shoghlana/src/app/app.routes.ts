@@ -10,6 +10,7 @@ import { FreelancerPortfolioComponent } from './freelancer-portfolio/freelancer-
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
 import { authGuard } from './Gards/auth.guard';
+import { WorksGalleryComponent } from './works-gallery/works-gallery.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'register', pathMatch: 'full' },
@@ -18,6 +19,7 @@ export const routes: Routes = [
     { path: 'home', component: HomeComponent, canActivate:[authGuard]},
     {path:'signin', component:LoginComponent},
     { path: 'login', component: LoginComponent },
+    {path:'galleryworks',component:WorksGalleryComponent},
     { path: 'freelancers', component: FreelancersComponent },
     {
         path: 'freelancerprofile/:id', component: FreelancerProfileComponent, children: [
