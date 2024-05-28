@@ -11,6 +11,9 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
 import { authGuard } from './Gards/auth.guard';
 import { WorksGalleryComponent } from './works-gallery/works-gallery.component';
+import { JobsComponent } from './jobs/jobs.component';
+import { ProjectsComponent } from './projects/projects.component';
+
 
 export const routes: Routes = [
     // { path: 'register', component: RegisterComponent },

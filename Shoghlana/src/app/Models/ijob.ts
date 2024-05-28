@@ -1,11 +1,11 @@
 export interface Ijob {
     id:Number ,
-    Tilte : String ,
+    title : String ,
     description : String ,
     price : string,
     imgURL : string ,
     rate : Number ,
     freelancerName : string ,
-    frelancerImg : string ,
+    freelancerImg : string ,
     catID : Number 
 }
