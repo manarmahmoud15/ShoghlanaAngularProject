@@ -14,7 +14,7 @@ import { JobsComponent } from './jobs/jobs.component';
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-    imports: [RouterOutlet, LoginComponent, RegisterComponent, HomeComponent, ReactiveFormsModule, CommonModule, FooterComponent, NavbarComponent , RouterLink , RouterLinkActive , JobsComponent]
+    imports: [RouterOutlet, LoginComponent, RegisterComponent, HomeComponent, ReactiveFormsModule, CommonModule, FooterComponent, NavbarComponent ,JobsComponent , RouterLink , RouterLinkActive ]
 })
 export class AppComponent {
   title = 'Shoghlana';
