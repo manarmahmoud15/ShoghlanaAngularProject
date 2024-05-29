@@ -43,8 +43,8 @@ export class StaticClientJobsService {
       },
     ];
     this.filteredJobs = [...this.ClientJob];
-
   }
+  
   getAllClientJobs():IClientJob[]{
     return this.ClientJob
   }
@@ -52,6 +52,7 @@ export class StaticClientJobsService {
     let foundedJob = this.ClientJob.find((job)=>job.id == id)
     return foundedJob ? foundedJob : null
   }
+
   getClientJobByCatID (catID:Number):IClientJob[]{
     return this.ClientJob.filter((job)=>job.catID == catID)
   }

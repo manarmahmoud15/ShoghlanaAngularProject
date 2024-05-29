@@ -25,10 +25,15 @@ export class ProjectsComponent implements OnChanges{
     this.filteredJobs = [...this.ClientJob];
 
   }
-  ngOnChanges() {
-    this.filteredJobs =this._StaticClientJobsService.filterProjects(this.selectedCategories)
-
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.selectedCategories) {
+      this.filteredJobs = this._StaticClientJobsService.filterProjects(this.selectedCategories);
+    }
   }
 
+  filterProjects(selectedCategories: Number[]) {
+    this.selectedCategories = selectedCategories;
+    this.filteredJobs = this._StaticClientJobsService.filterProjects(this.selectedCategories);
+  }
   
 }
