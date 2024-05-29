@@ -1,27 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IFreelancer } from '../Models/ifreelancer';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { StaticFreelancersService } from '../Services/static-freelancers.service';
+import { FreelancerService } from '../Services/freelancer.service';
 
 @Component({
   selector: 'app-freelancers',
   standalone: true,
-  imports: [CommonModule , RouterLink],
+  imports: [CommonModule, RouterLink],
   templateUrl: './freelancers.component.html',
-  styleUrl: './freelancers.component.css'
+  styleUrls: ['./freelancers.component.css']
 })
-export class FreelancersComponent {
+export class FreelancersComponent implements OnInit {
+  FreelancersArr: IFreelancer[] = [];
 
-  FreelancersArr :IFreelancer[] 
+  constructor(private _FreelancerService: FreelancerService) { }
 
-  constructor(private staticFreelancersService : StaticFreelancersService) 
-  {
-   this.FreelancersArr = staticFreelancersService.getAll();
-  }
+  ngOnInit(): void {
+    this._FreelancerService.getAllFreelancers().subscribe({
+      next: (res) => {
+        console.log(res); // Log the response to verify its structure
 
-  getStarsArray(rate: number): Array<number> 
-  {
-    return Array(5).fill(0).map((x, i) => i);
+        // Ensure the response has the expected structure before mapping
+        if (res.isSuccess && Array.isArray(res.data)) {
+          this.FreelancersArr = res.data.map((freelancer: { personalImageBytes: any; }) => {
+            return {
+              ...freelancer,
+              personalImageBytes: freelancer.personalImageBytes ? `data:image/png;base64,${freelancer.personalImageBytes}` : null
+            };
+          });
+        } else {
+          console.error('Unexpected response structure:', res);
+        }
+      },
+      error: (err) => console.log(err)
+    });
   }
 }
