@@ -1,11 +1,13 @@
 export interface IFreelancer {
-    id : number , 
+    id : number ,
     name : string ,
-    description : string ,
-    title : string ,    
-    skills : string[]
-    rate : number ,
-    imgURL : string ,
-    portfolio : string[] | null ,
-    workHistory : string[] | null
+    // description : string ,
+    title : string ,
+    // skills : string[]
+    // rate : number ,
+    address:string
+    personalImageBytes : string ,
+    overview:string
+    // portfolio : string[] | null ,
+    // workHistory : string[] | null
 }

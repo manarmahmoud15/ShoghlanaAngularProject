@@ -5,7 +5,7 @@
         <a href="#">
           <img
             class="media-object mw-150 border rounded-circle"
-            src="{{ freelancer?.imgURL }}"
+            src="{{ freelancer?.personalImageBytes }}"
             alt="{{ freelancer?.name }}"
             height="250"
           />
@@ -55,7 +55,7 @@
           <span class="panel-title">نبذة عني</span>
         </div>
         <div class="panel-body">
-          <p>{{ freelancer?.description }}</p>
+          <p>{{ freelancer?.overview}}</p>
         </div>
       </div>
       <div class="panel">
@@ -63,11 +63,11 @@
           <span class="panel-icon"><i class="fa fa-pencil"></i></span>
           <span class="panel-title">مهاراتي</span>
         </div>
-        <div class="panel-body">
+        <!-- <div class="panel-body">
           <ul>
             <li *ngFor="let skill of freelancer?.skills">{{ skill }}</li>
           </ul>
-        </div>
+        </div> -->
       </div>
     </div>
 
