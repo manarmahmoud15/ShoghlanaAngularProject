@@ -10,6 +10,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
 import { authGuard } from './Gards/auth.guard';
 import { WorksGalleryComponent } from './works-gallery/works-gallery.component';
+import { JobsComponent } from './jobs/jobs.component';
+import { ProjectsComponent } from './projects/projects.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'register', pathMatch: 'full' },
@@ -24,7 +26,8 @@ export const routes: Routes = [
     .then((obj)=>obj.WorksGalleryComponent)},
     {path:'freelancers',loadComponent:()=>import('./freelancers/freelancers.component')
     .then((obj)=>obj.FreelancersComponent )},
-
+    { path: 'jobs', loadComponent:()=>import('./jobs/jobs.component').then((obj)=>obj.JobsComponent) },
+    { path: 'projects', loadComponent:()=>import('./projects/projects.component').then((Obj)=>Obj.ProjectsComponent) },
     {
       path: 'freelancerprofile/:id',
       loadComponent: () => import('./freelancer-profile/freelancer-profile.component').then(obj => obj.FreelancerProfileComponent),
