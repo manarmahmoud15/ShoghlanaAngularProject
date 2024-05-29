@@ -1,0 +1,23 @@
+<button class="btn btn-primary w-75">
+  <i class="fa-solid fa-plus ms-2"></i>
+  اضف مشروع
+</button>
+<div class="search-container w-75 my-3 position-relative">
+  <i class="fa-solid fa-magnifying-glass search-icon position-absolute"></i>
+  <input class="form-control search-input text-end" placeholder="... ابحث عن" />
+</div>
+<div class="text-end w-75">
+  <div class="column mb-3 pe-2">
+    <p class="bold-text pt-2 pe-2">الأقسام</p>
+  </div>
+  <div class="categories pe-2">
+    <div class="category-item d-flex align-items-center justify-content-between" *ngFor="let cat of category">
+      <div>
+        <input class="form-check-input ms-3" type="checkbox" [(ngModel)]="cat.selected" (change)="categorySelected()" />
+        <label class="form-check-label">
+          {{cat.name}}
+        </label>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,31 +1,25 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ICategory } from '../Models/icategory';
 import { RouterLink } from '@angular/router';
-import { HighlightDirective } from '../directives/highlight.directive';
 import { HttpClientModule } from '@angular/common/http';
+import { ProjectSideBarComponent } from '../project-side-bar/project-side-bar.component';
 import { IClientJob } from '../Models/iclient-job';
+
 
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule, HighlightDirective, HttpClientModule],
+  imports: [CommonModule, RouterLink, FormsModule, ProjectSideBarComponent],
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.css']
 })
 export class ProjectsComponent {
-  category: ICategory[];
-  selectedCategoryID: number = 0;
-  ClientJob : IClientJob[] ;
+  ClientJob: IClientJob[];
+  filteredJobs: IClientJob[];
+  selectedCategories: number[] = [];
+
   constructor() {
-    this.category = [
-      { id: 1, name: 'أعمال وخدمات ادارية واستشارية' },
-      { id: 2, name: 'برمجة, تطوير المواقع و التطبيقات' },
-      { id: 3, name: 'تصميم' },
-      { id: 4, name: 'فيديو' },
-      { id: 5, name: 'كتابة و ترجمة ولغات' }
-    ];
     this.ClientJob = [
       {
         id: 1,
@@ -39,7 +33,7 @@ export class ProjectsComponent {
       },
       {
         id: 2,
-        title: " تعديلات و إعادة تصميم موقع ووردبريس",
+        title: "تعديلات و إعادة تصميم موقع ووردبريس",
         MinPrice: '10$',
         MaxPrice: '30$',
         status: 'مغلق',
@@ -58,6 +52,15 @@ export class ProjectsComponent {
         catID: 3
       },
     ];
-    
+    this.filteredJobs = [...this.ClientJob];
+  }
+
+  filterProjects(selectedCategories: number[]) {
+    this.selectedCategories = selectedCategories;
+    if (this.selectedCategories.length > 0) {
+      this.filteredJobs = this.ClientJob.filter(job => this.selectedCategories.includes(job.catID));
+    } else {
+      this.filteredJobs = [...this.ClientJob];
+    }
   }
 }

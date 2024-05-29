@@ -1,10 +1,10 @@
 export interface IClientJob {
-    id:Number ,
-    title : String ,
-    MinPrice : string,
-    MaxPrice : string ,
-    status : string, 
-    clientName : string ,
-    clientImg : string ,
-    catID : Number 
+    id: number;
+  title: string;
+  MinPrice: string;
+  MaxPrice: string;
+  status: string;
+  clientName: string;
+  clientImg: string;
+  catID: number;
 }

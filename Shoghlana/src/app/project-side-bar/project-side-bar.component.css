@@ -1,0 +1,143 @@
+
+.project {
+    background-color: rgb(235, 235, 235);
+}
+.container {
+    background-color: white;
+}
+  
+  /* .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  } */
+  
+  .btn-primary {
+    background-color: #1dbf73;
+    border: none;
+  }
+  
+  .btn-primary:hover {
+    background-color: #279e66;
+  }
+  
+  .dropdown-menu {
+    text-align: right;
+  }
+  
+  .form-check-label {
+    margin-left: 0.5rem;
+  }
+  .form-check-input:checked {
+    background-color: #1dbf73;
+  }
+  
+  .border {
+    border: 1px solid #ddd;
+  }
+  
+  .p-2 {
+    padding: 0.5rem;
+  }
+  
+  .rounded {
+    border-radius: 0.25rem;
+  }
+  /* Styling for the search container */
+.search-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.search-icon {
+    right: 10px;
+    position: absolute;
+    color: #aaa;
+    font-size: 1.2rem;
+    pointer-events: none;
+}
+
+.search-input {
+    padding-right: 30px; 
+    width: 100%;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: 2px solid #1dbf73;
+    border-radius: 25px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.search-input:focus {
+    border-color: #1dbf73;
+    box-shadow: 0 0 5px rgba(29, 191, 115, 0.25);
+}
+
+button:hover {
+    color: #fff;
+    background-color: #16a763;
+  }
+  .btn {
+    margin: 0.5em;
+    background: #1dbf73;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+   }
+  
+   .text-end {
+    direction: rtl;
+  }
+  
+  .bold-text {
+    font-weight: bold;
+    font-size: 1.25rem;
+  }
+  
+  .categories {
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+    padding: 1rem;
+    background-color: #f9f9f9;
+  }
+  
+  .category-item {
+    padding: 0.5rem 0;
+    cursor: pointer;
+  }
+  
+  .category-item p {
+    margin: 0;
+    flex-grow: 1;
+  }
+  
+  .category-item i {
+    font-size: 1.25rem;
+    color: #16a763;
+  }
+  
+  .category-item:hover {
+    background-color: #f1f1f1;
+  }
+  
+  hr {
+    margin: 0.5rem 0;
+  }
+  
+.status {
+    background-color: #1dbf73;
+    color: white;
+    border-radius: 5px;
+    font-size: 15px;
+}
+.title {
+    color: #032c1a;
+}
+.clientName , .price {
+    color: rgb(125, 125, 125);
+}

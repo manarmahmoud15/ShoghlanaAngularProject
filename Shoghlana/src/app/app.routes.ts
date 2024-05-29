@@ -21,7 +21,6 @@ export const routes: Routes = [
     .then((obj)=>obj.HomeComponent)},
     {path:'signin',loadComponent:()=>import('./login/login.component')
     .then((obj)=>obj.LoginComponent)},
-
     {path:'galleryworks',loadComponent:()=>import('./works-gallery/works-gallery.component')
     .then((obj)=>obj.WorksGalleryComponent)},
     {path:'freelancers',loadComponent:()=>import('./freelancers/freelancers.component')

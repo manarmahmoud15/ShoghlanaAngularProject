@@ -1,4 +1,5 @@
 export interface ICategory {
-    id : Number ,
-    name : String
+    id: number;
+    name: string;
+    selected?: boolean; 
 }
