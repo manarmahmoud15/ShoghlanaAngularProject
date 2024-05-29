@@ -24,7 +24,6 @@ export class ProjectSideBarComponent {
     ];
     this.categorySelectedChanged = new EventEmitter<number[]>();
   }
-
   getSelectedCategories(): number[] {
     return this.category.filter(cat => cat.selected).map(cat => cat.id);
   }
