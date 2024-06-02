@@ -5,17 +5,17 @@
       <form (ngSubmit)="handleRegister(RegisterForm)" [formGroup] = "RegisterForm" class="form px-3 pt-1 pb-4">
         <h5 class="text-center" style="color: #1dbf73;">مرحبا بك</h5>
         <div class="flex-column">
-          <label for="name">الاسم</label>
+          <label for="username">الاسم</label>
         </div>
         <div class="inputForm">
           <i class="fas fa-user fa-lg me-1 fa-fw"></i>
-          <input  formControlName="name" placeholder="ادخل اسمك هنا " id="name" class="input" type="text">
+          <input  formControlName="username" placeholder="ادخل اسمك هنا " id="username" class="input" type="text">
 
         </div>
-        <div *ngIf="RegisterForm.get('name')?.errors && RegisterForm.get('name')?.touched" class="alert alert-danger">
-          <p *ngIf="RegisterForm.get('name')?.getError('minlength')" class="m-0">الاسم لا يمكن أن يكون أقل من 3 حروف</p>
-          <p *ngIf="RegisterForm.get('name')?.getError('maxlength')" class="m-0">الاسم لا يمكن أن يكون أكثر من 20 حرفا</p>
-          <p *ngIf="RegisterForm.get('name')?.getError('required')" class="m-0">يرجي ادخال الاسم</p>
+        <div *ngIf="RegisterForm.get('username')?.errors && RegisterForm.get('username')?.touched" class="alert alert-danger">
+          <p *ngIf="RegisterForm.get('username')?.getError('minlength')" class="m-0">الاسم لا يمكن أن يكون أقل من 3 حروف</p>
+          <p *ngIf="RegisterForm.get('username')?.getError('maxlength')" class="m-0">الاسم لا يمكن أن يكون أكثر من 20 حرفا</p>
+          <p *ngIf="RegisterForm.get('username')?.getError('required')" class="m-0">يرجي ادخال الاسم</p>
         </div>
 
         <div class="flex-column">
@@ -38,11 +38,11 @@
         </div>
         <div class="inputForm">
           <i class="fa-solid fa-phone me-1"></i>
-          <input formControlName="phone" placeholder="الهاتف" id="phone" class="input" type="text">
+          <input formControlName="phoneNumber" placeholder="الهاتف" id="phoneNumber" class="input" type="text">
         </div>
-        <div *ngIf="RegisterForm.get('phone')?.errors && RegisterForm.get('phone')?.touched" class="alert alert-danger">
-          <p *ngIf="RegisterForm.get('phone')?.getError('pattern')" class="m-0">رقم الهاتف غير صحيح</p>
-          <p *ngIf="RegisterForm.get('phone')?.getError('required')" class="m-0">يرجي ادخال رقم الهاتف </p>
+        <div *ngIf="RegisterForm.get('phoneNumber')?.errors && RegisterForm.get('phoneNumber')?.touched" class="alert alert-danger">
+          <p *ngIf="RegisterForm.get('phoneNumber')?.getError('pattern')" class="m-0">رقم الهاتف غير صحيح</p>
+          <p *ngIf="RegisterForm.get('phoneNumber')?.getError('required')" class="m-0">يرجي ادخال رقم الهاتف </p>
         </div>
 
         <div class="row">
@@ -59,30 +59,32 @@
 
             </div>
             <div *ngIf="RegisterForm.get('password')?.errors && RegisterForm.get('password')?.touched" class="alert alert-danger">
-              <p *ngIf="RegisterForm.get('password')?.getError('pattern')" class="m-0">كلمة السر غير صحيحة</p>
+              <!-- <p *ngIf="RegisterForm.get('password')?.getError('pattern')" class="m-0">كلمة السر غير صحيحة</p> -->
               <p *ngIf="RegisterForm.get('password')?.getError('required')" class="m-0">يرجي ادخال كلمة السر </p>
             </div>
           </div>
 
           <div class="col-md-6">
             <div class="flex-column">
-              <label for="rePassword">تأكيد كلمة السر</label>
+              <label for="repeatPassword">تأكيد كلمة السر</label>
             </div>
             <div class="inputForm">
               <svg class="me-1" xmlns="http://www.w3.org/2000/svg" width="20" viewBox="-64 0 512 512" height="20">
                 <path d="m336 512h-288c-26.453125 0-48-21.523438-48-48v-224c0-26.476562 21.546875-48 48-48h288c26.453125 0 48 21.523438 48 48v224c0 26.476562-21.546875 48-48 48zm-288-288c-8.8125 0-16 7.167969-16 16v224c0 8.832031 7.1875 16 16 16h288c8.8125 0 16-7.167969 16-16v-224c0-8.832031-7.1875-16-16-16zm0 0"></path>
                 <path d="m304 224c-8.832031 0-16-7.167969-16-16v-80c0-52.929688-43.070312-96-96-96s-96 43.070312-96 96v80c0 8.832031-7.167969 16-16 16s-16-7.167969-16-16v-80c0-70.59375 57.40625-128 128-128s128 57.40625 128 128v80c0 8.832031-7.167969 16-16 16zm0 0"></path>
               </svg>
-              <input formControlName="rePassword" placeholder="تأكيد كلمة السر" id="rePassword" class="input" type="password">
+              <input formControlName="repeatPassword" placeholder="تأكيد كلمة السر" id="repeatPassword" class="input" type="password">
             </div>
-            <div *ngIf="RegisterForm.get('password')?.errors && RegisterForm.get('password')?.touched" class="alert alert-danger">
-              <p *ngIf="RegisterForm.get('password')?.getError('pattern')" class="m-0">كلمة السر غير صحيحة</p>
-              <p *ngIf="RegisterForm.get('password')?.getError('required')" class="m-0">يرجي ادخال كلمة السر </p>
+            <div *ngIf="RegisterForm.get('repeatPassword')?.errors && RegisterForm.get('repeatPassword')?.touched" class="alert alert-danger">
+              <!-- <p *ngIf="RegisterForm.get('repeatPassword')?.getError('pattern')" class="m-0">كلمة السر غير صحيحة</p> -->
+              <p *ngIf="RegisterForm.get('repeatPassword')?.getError('required')" class="m-0">يرجي ادخال كلمة السر </p>
             </div>
           </div>
         </div>
 
-        <button [disabled]="RegisterForm.invalid" type="submit" class="btn">إنشاء حساب</button>
+        <button [disabled]="RegisterForm.invalid" type="submit" class="btn">إنشاء حساب
+        <i *ngIf="isLoading" class="fas fa-spinner fa-spin"></i></button>
+
         <p class="p">ليس لديك حساب؟ <span class="span">سجل الآن</span></p>
         <p class="p line">أو</p>
 
