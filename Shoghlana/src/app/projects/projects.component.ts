@@ -1,7 +1,7 @@
 import { Component, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { ProjectSideBarComponent } from '../project-side-bar/project-side-bar.component';
 import { IClientJob } from '../Models/iclient-job';
@@ -19,7 +19,7 @@ export class ProjectsComponent implements OnChanges{
   filteredJobs: IClientJob[];
   selectedCategories: Number[] = [];
 
-  constructor(private _StaticClientJobsService:StaticClientJobsService) {
+  constructor(private _StaticClientJobsService:StaticClientJobsService , private router :Router) {
 
     this.ClientJob = this._StaticClientJobsService.getAllClientJobs()
     this.filteredJobs = [...this.ClientJob];
@@ -34,6 +34,9 @@ export class ProjectsComponent implements OnChanges{
   filterProjects(selectedCategories: Number[]) {
     this.selectedCategories = selectedCategories;
     this.filteredJobs = this._StaticClientJobsService.filterProjects(this.selectedCategories);
+  }
+  navigateToDetails(id:Number){
+    this.router.navigateByUrl(`/projectDetails/${id}`)
   }
   
 }

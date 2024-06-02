@@ -27,6 +27,8 @@ export const routes: Routes = [
     .then((obj)=>obj.FreelancersComponent )},
     { path: 'jobs', loadComponent:()=>import('./jobs/jobs.component').then((obj)=>obj.JobsComponent) },
     { path: 'projects', loadComponent:()=>import('./projects/projects.component').then((Obj)=>Obj.ProjectsComponent) },
+    { path : 'projectDetails/:id' , loadComponent:()=> import('./project-details/project-details.component')
+      .then((obj) =>obj.ProjectDetailsComponent)} ,
     {
       path: 'freelancerprofile/:id',
       loadComponent: () => import('./freelancer-profile/freelancer-profile.component').then(obj => obj.FreelancerProfileComponent),
