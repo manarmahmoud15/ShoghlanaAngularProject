@@ -45,12 +45,17 @@ hr {
 .clientName {
   color: rgb(125, 125, 125);
 }
-.projectdetails p {
+.projectdetails p ,label {
   color: rgb(98, 98, 98);
+}
+label {
+  display: block;
+  margin: 10px;
 }
 div {
   border-radius: 15px;
 }
 input {
-  border-radius: 15px;
+  border-radius: 15px; 
+  padding-right: 15px;
 }

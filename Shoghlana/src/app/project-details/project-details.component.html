@@ -4,7 +4,7 @@
       <div class="col-12 justify-content-start align-items-center gap-3">
         <div class="jobs-container mt-3">
           <div
-            class="container job-item my-3 p-3 border rounded"
+            class="container job-item my-3 pt-2 border rounded"
             *ngFor="let job of clientJob"
           >
             <div class="row justify-content-between align-items-center">
@@ -75,14 +75,19 @@
        <hr>
       <div class="d-flex">
         <div class="col-6 "> 
-          <label class="d-block m-2" >مده التسليم بالايام </label>
+          <label  >مده التسليم بالايام </label>
           <input type="number" placeholder="مده التسليم"  class="w-75"/>
          </div>
          <div class="col-6"> 
-          <label class="d-block m-2" > قيمة العرض بالدولار</label>
+          <label > قيمة العرض بالدولار</label>
           <input type="number" placeholder="قيمة العرض"  class="w-75 "/>
          </div>
       </div>
+      <div class="col-11">
+        <label>تفاصيل العرض</label>
+        <textarea class="w-100"> </textarea>
+      </div>
+      <button type="submit" class="btn btn-success">اضف عرضك</button>
       </div>
     </div>
   </div>
