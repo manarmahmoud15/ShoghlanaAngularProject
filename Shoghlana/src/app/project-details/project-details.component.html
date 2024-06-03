@@ -33,14 +33,42 @@
       </div>
     </div>
   </div>
-  <div class="col-11 container-fluid justify-content-center align-items-center d-flex my-2"  *ngFor="let job of clientJob">
+  <div
+    class="col-11 container-fluid justify-content-center align-items-center d-flex my-2"
+    *ngFor="let job of clientJob"
+  >
     <div class="col-4 container">
-      <h6 class="text-end">معلومات المشروع</h6>
+      <h6 class="text-end py-3">معلومات المشروع</h6>
+      <hr />
+      <div class="text-end projectdetails">
+        <div class="d-flex justify-content-between mx-3">
+          <p class="p-1">تاريخ النشر</p>
+          <p class="mx-5">2024-06-02</p>
+        </div>
+        <hr />
+        <div class="d-flex justify-content-between mx-3">
+          <p class="p-1">الميزانية</p>
+          <p class="mx-5">{{ job.MinPrice }} - {{ job.MaxPrice }}</p>
+        </div>
+        <hr />
+        <div class="d-flex justify-content-between mx-3">
+          <p class="p-1">مده المشروع</p>
+          <p class="mx-5">3ايام</p>
+        </div>
+        <hr />
+        <div class="d-flex justify-content-between mx-3">
+          <p class="p-1">عدد العروض</p>
+          <p class="mx-5">3</p>
+        </div>
+      </div>
     </div>
-    <div class="col-8 ms-2 container text-end my-2 py-2">
-      <h5 class="text-end"> وصف المشروع</h5>
-      <hr>
-      <p>{{job.title}}</p>
+    <div class="col-8  text-end ">
+      <div class="container  my-2 py-2 ">
+        <h5 class="text-end py-2">وصف المشروع</h5>
+        <hr />
+        <p>{{ job.title }}</p>
+      </div>
+      <div>hi</div>
     </div>
   </div>
 </div>
