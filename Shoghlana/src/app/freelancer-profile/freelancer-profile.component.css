@@ -10,7 +10,7 @@
 body{margin-top:20px;
     background:#eee;
     }
-    .fs35 {
+    /* .fs35 {
         font-size: 35px !important;
     }
     
@@ -28,7 +28,7 @@ body{margin-top:20px;
     }
     .mr25 {
         margin-right: 25px !important;
-    }
+    } */
     
     .mw40 {
         max-width: 40px !important;
@@ -40,8 +40,8 @@ body{margin-top:20px;
     
     .page-heading {
       position: relative;
-      padding: 30px 40px;
-      margin: -25px -20px 25px;
+      /* padding: 30px 40px; */
+      /* margin: -25px -20px 25px; */
       border-bottom: 1px solid #d9d9d9;
       background-color: #f2f2f2;
     }
