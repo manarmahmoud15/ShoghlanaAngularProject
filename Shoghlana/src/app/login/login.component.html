@@ -2,7 +2,7 @@
 <div dir="rtl" class=" container-fluid">
   <div class="row">
     <div class="col-md-6 float-right mt-5 me-3">
-      <form (ngSubmit)="handleRegister(LoginForm)" [formGroup] = "LoginForm" class="form">
+      <form (ngSubmit)="handleLogin(LoginForm)" [formGroup] = "LoginForm" class="form">
         <h5 class="text-center" style="color: #1dbf73;"> أهلا بك مجددا</h5>
 
         <div class="flex-column">
@@ -33,13 +33,12 @@
 
           </div>
           <div *ngIf="LoginForm.get('password')?.errors && LoginForm.get('password')?.touched" class="alert alert-danger">
-            <p *ngIf="LoginForm.get('password')?.getError('pattern')" class="m-0">كلمة السر غير صحيحة</p>
             <p *ngIf="LoginForm.get('password')?.getError('required')" class="m-0">يرجي ادخال كلمة السر </p>
           </div>
 
 
         <button class="btn" [disabled]="LoginForm.invalid" type="submit"> تسجيل الدخول
-        </button>
+          <i *ngIf="isLoading" class="fas fa-spinner fa-spin"></i> </button>
         <p class="p">ليس لديك حساب؟ <span class="span">سجل الآن</span>
         </p><p class="p line">أو</p>
 
