@@ -12,6 +12,7 @@ import { authGuard } from './Gards/auth.guard';
 import { WorksGalleryComponent } from './works-gallery/works-gallery.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { ProjectsComponent } from './projects/projects.component';
+import { ClientProfileComponent } from './client-profile/client-profile.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'register', pathMatch: 'full' },
@@ -29,7 +30,8 @@ export const routes: Routes = [
     { path: 'projects', loadComponent:()=>import('./projects/projects.component').then((Obj)=>Obj.ProjectsComponent) },
     { path : 'projectDetails/:id' , loadComponent:()=> import('./project-details/project-details.component')
       .then((obj) =>obj.ProjectDetailsComponent)} ,
-    {
+      {path : 'clientProfile/:id' , component : ClientProfileComponent}, 
+      { 
       path: 'freelancerprofile/:id',
       loadComponent: () => import('./freelancer-profile/freelancer-profile.component').then(obj => obj.FreelancerProfileComponent),
       children: [
