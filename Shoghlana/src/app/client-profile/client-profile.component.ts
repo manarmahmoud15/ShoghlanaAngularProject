@@ -44,8 +44,8 @@ export class ClientProfileComponent implements OnInit {
     this.ClientId = Number(this._activatedRoute.snapshot.paramMap.get('id'));
     console.log(this.ClientId);
 
-   this.ClientService.GetById(3).subscribe({
-    next : (res) => {
+   this.ClientService.GetById(this.ClientId).subscribe({
+    next : (res) => { 
       console.log(res.data);
       if(res.isSuccess)
         {
