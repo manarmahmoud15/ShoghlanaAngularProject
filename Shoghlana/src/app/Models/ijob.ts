@@ -1,3 +1,5 @@
+import { JobStatus } from "../Enums/JobStatus";
+
 export interface Ijob {
     id:Number ,
     title : String ,
@@ -7,5 +9,5 @@ export interface Ijob {
     rate : Number ,
     freelancerName : string ,
     freelancerImg : string ,
-    catID : Number 
+    catID : Number ,
 }
