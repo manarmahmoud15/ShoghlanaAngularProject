@@ -2,28 +2,28 @@
   <div class="col-12">
     <div class="container d-flex justify-content-between align-items-center">
       <div class="col-12 justify-content-start align-items-center gap-3">
-        <div class="jobs-container mt-3">
+        <div class="jobs-container mt-3" *ngIf="clientJob">
           <div
             class="container job-item my-3 pt-2 border rounded"
-            *ngFor="let job of clientJob"
+            *ngIf="clientJob"
           >
             <div class="row justify-content-between align-items-center">
               <div class="col-12 d-flex justify-content-end align-items-center">
                 <div class="d-flex flex-column text-end me-3">
                   <div class="d-flex">
-                    <p class="status ms-1 p-1">{{ job.status }}</p>
-                    <p class="title">{{ job.title }}</p>
+                    <p class="status ms-1 p-1"> {{ clientJob.status === "0" ? 'مغلق' : 'مفتوح' }}</p>
+                    <p class="title">{{ clientJob.title }}</p>
                   </div>
                   <div class="d-flex">
                     <p class="clientName">
-                      <i class="fa-solid fa-user"></i> {{ job.clientName }}
+                      <i class="fa-solid fa-user"></i> {{ clientJob.clientName }}
                     </p>
                   </div>
                 </div>
                 <img
-                  [src]="job.clientImg"
+                  [src]="clientJob.clientImg"
                   height="50px"
-                  alt="{{ job.clientName }}"
+                  alt="{{ clientJob.clientName }}"
                   class="rounded-circle"
                 />
               </div>
@@ -32,62 +32,57 @@
         </div>
       </div>
     </div>
-  </div>
-  <div
-    class="col-11 container-fluid justify-content-center align-items-center d-flex my-2"
-    *ngFor="let job of clientJob"
-  >
-    <div class="col-4 container">
-      <h6 class="text-end py-3">معلومات المشروع</h6>
-      <hr />
-      <div class="text-end projectdetails">
-        <div class="d-flex justify-content-between mx-3">
-          <p class="p-1">تاريخ النشر</p>
-          <p class="mx-5">2024-06-02</p>
-        </div>
+    <div class="col-11 container-fluid justify-content-center align-items-center d-flex my-2" *ngIf="clientJob">
+      <div class="col-4 container">
+        <h6 class="text-end py-3">معلومات المشروع</h6>
         <hr />
-        <div class="d-flex justify-content-between mx-3">
-          <p class="p-1">الميزانية</p>
-          <p class="mx-5">{{ job.minBudget }} - {{ job.maxBudget }}</p>
-        </div>
-        <hr />
-        <div class="d-flex justify-content-between mx-3">
-          <p class="p-1">مده المشروع</p>
-          <p class="mx-5">3ايام</p>
-        </div>
-        <hr />
-        <div class="d-flex justify-content-between mx-3">
-          <p class="p-1">عدد العروض</p>
-          <p class="mx-5">3</p>
+        <div class="text-end projectdetails">
+          <div class="d-flex justify-content-between mx-3">
+            <p class="p-1">تاريخ النشر</p>
+            <p class="mx-2">{{ getFormattedDate(clientJob.postTime) }}</p>
+          </div>
+          <hr />
+          <div class="d-flex justify-content-between mx-3">
+            <p class="p-1">الميزانية</p>
+            <p class="mx-5">{{ clientJob.minBudget }} $ - {{ clientJob.maxBudget }} $</p>
+          </div>
+          <hr />
+          <div class="d-flex justify-content-between mx-3">
+            <p class="p-1">مدة المشروع</p>
+            <p class="mx-5">3 أيام</p>
+          </div>
+          <hr />
+          <div class="d-flex justify-content-between mx-3">
+            <p class="p-1">عدد العروض</p>
+            <!-- <p class="mx-5">{{ clientJob.offersCount }}</p> -->
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-8 text-end ms-3">
-      <div class="container my-2 py-2">
-        <h5 class="text-end py-2">وصف المشروع</h5>
-        <hr />
-        <p>{{ job.title }}</p>
-      </div>
-      <div class="container my-2 py-2">
-       <h5>
-        اضف عرضك
-       </h5> 
-       <hr>
-      <div class="d-flex">
-        <div class="col-6 "> 
-          <label  >مده التسليم بالايام </label>
-          <input type="number" placeholder="مده التسليم"  class="w-75"/>
-         </div>
-         <div class="col-6"> 
-          <label > قيمة العرض بالدولار</label>
-          <input type="number" placeholder="قيمة العرض"  class="w-75 "/>
-         </div>
-      </div>
-      <div class="col-11">
-        <label>تفاصيل العرض</label>
-        <textarea class="w-100"> </textarea>
-      </div>
-      <button type="submit" class="btn btn-success">اضف عرضك</button>
+      <div class="col-8 text-end ms-3">
+        <div class="container my-2 py-2">
+          <h5 class="text-end py-2">وصف المشروع</h5>
+          <hr />
+          <p>{{ clientJob.description }}</p>
+        </div>
+        <div class="container my-2 py-2">
+          <h5>أضف عرضك</h5>
+          <hr>
+          <div class="d-flex">
+            <div class="col-6">
+              <label>مدة التسليم بالأيام</label>
+              <input type="number" placeholder="مدة التسليم" class="w-75"/>
+            </div>
+            <div class="col-6">
+              <label>قيمة العرض بالدولار</label>
+              <input type="number" placeholder="قيمة العرض" class="w-75"/>
+            </div>
+          </div>
+          <div class="col-11">
+            <label>تفاصيل العرض</label>
+            <textarea class="w-100"></textarea>
+          </div>
+          <button type="submit" class="btn btn-success">أضف عرضك</button>
+        </div>
       </div>
     </div>
   </div>

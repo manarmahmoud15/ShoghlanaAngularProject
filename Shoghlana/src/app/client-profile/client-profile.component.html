@@ -18,7 +18,7 @@
                                 </svg> -->
                             </div>
                             <p class="name" *ngIf="Client">
-                                <span style="font-weight: bold; font-size: larger;">{{Client.name}}</span> 
+                                <span style="font-weight: bold; font-size: larger;">{{Client.name}}</span>
                             </p>
                             <div class="">
                                 <div class="dashboard-sidebar-tag">
@@ -53,7 +53,7 @@
                                 </span>
                             <!-- </a> -->
                         </div>
-                            
+
 
                             <!-- <div class="stars">
                                 <i class="fas fa-star "></i>
@@ -102,7 +102,7 @@
                     </div>
 
 
-                
+
 
 
 
@@ -116,7 +116,7 @@
                                 </p>
                                 <i class="fas fa-chevron-down"></i>
                             </div>
-                            <div class="block-body col-12">   
+                            <div class="block-body col-12">
                                 <table class="info-table col-12">
                                     <tbody>
                                         <tr>
@@ -130,7 +130,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-                    
+
 
                                         <tr>
                                             <td style="direction: rtl;" class="row w-100">
@@ -163,18 +163,18 @@
                                                     <i class="fa-solid fa-percent m-1"></i>
                                                     <span style="margin-right: 5px;">معدل التوظيف</span>
                                                 </div>
-                                                <span class="mx-4 text-success offset-1 col-3">{{Client.jobsCount !== 0 ? Client.completedJobsCount / Client.jobsCount * 100 : 0}} %</span> 
+                                                <span class="mx-4 text-success offset-1 col-3">{{Client.jobsCount !== 0 ? Client.completedJobsCount / Client.jobsCount * 100 : 0}} %</span>
                                                 </div>
                                             </td>
                                         </tr>
-                                        
+
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                      
-                    
+
+
                     <!-- <div class="col-12 col-md-4">
                         <div class="block collapse-block">
                             <div class="block-head" onclick="toggleBlockBody(this)">
@@ -182,11 +182,11 @@
                                     <i class="fas fa-chart-pie"></i> الإحصائيات
                                 </p>
                                 <i class="fas fa-chevron-down"></i>
-                            </div>     
-                            <div class="block-body">   
+                            </div>
+                            <div class="block-body">
                                 <table class="info-table">
                                     <tbody>
-                                       
+
                                         <tr>
                                             <td><i class="fas fa-calendar"></i> تاريخ التسجيل</td>
                                             <td>منذ 11 شهر</td>
@@ -200,7 +200,7 @@
                             </div>
                         </div>
                     </div> -->
-                    
+
                     <!-- <div class="col-12 col-md-4">
                         <div class="block">
                             <div class="block-head">
@@ -241,7 +241,7 @@
                                 </p>
                                 <i class="fas fa-chevron-down"></i>
                             </div>
-                            <div id="block-body-2" class="block-body col-12">   
+                            <div id="block-body-2" class="block-body col-12">
                                 <table class="info-table col-12">
                                     <tbody>
                                         <ng-container *ngIf="Client.jobsCount > 0; else NoProjects">
@@ -268,14 +268,14 @@
                                             <tr style="direction: rtl;" class="text-danger">
                                                 <td colspan="2">لا توجد مشاريع حتى الآن</td>
                                             </tr>
-                                        </ng-template> 
+                                        </ng-template>
                                     </tbody>
                                 </table>
                               </div>
                         </div>
                     </div>
                 </div>
-                    
+
                 </div>
             </div>
         </div>

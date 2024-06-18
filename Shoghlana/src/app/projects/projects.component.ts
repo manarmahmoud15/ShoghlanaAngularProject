@@ -35,8 +35,25 @@ export class ProjectsComponent implements OnChanges{
     this.selectedCategories = selectedCategories;
     this.filteredJobs = this._StaticClientJobsService.filterProjects(this.selectedCategories);
   }
-  navigateToDetails(id:Number){
-    this.router.navigateByUrl(`/projectDetails/${id}`)
+
+  navigateToDetails(id: number): void {
+    this._ClientJobsService.getProjectById(id).subscribe({
+      next: (res) => {
+        if (res.isSuccess) {
+          console.log('Project details:', res.data);
+  
+          this.router.navigate(['/project-details', id]);
+        } else {
+          console.error('Unexpected response structure:', res);
+        }
+      },
+      error: (err) => console.log(err)
+    });
   }
+
+
+}
+
   
 }
+
