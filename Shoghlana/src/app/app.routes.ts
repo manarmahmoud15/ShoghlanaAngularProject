@@ -25,6 +25,8 @@ export const routes: Routes = [
     .then((obj)=>obj.WorksGalleryComponent)},
     {path:'freelancers',loadComponent:()=>import('./freelancers/freelancers.component')
     .then((obj)=>obj.FreelancersComponent )},
+    {path:'works',loadComponent:()=>import('./work/work.component')
+    .then((obj)=>obj.WorkComponent )},
     { path: 'jobs', loadComponent:()=>import('./jobs/jobs.component').then((obj)=>obj.JobsComponent) },
     { path: 'projects', loadComponent:()=>import('./projects/projects.component').then((Obj)=>Obj.ProjectsComponent) },
     { path : 'projectDetails/:id' , loadComponent:()=> import('./project-details/project-details.component')
