@@ -5,8 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { ProjectSideBarComponent } from '../project-side-bar/project-side-bar.component';
 import { IClientJob } from '../Models/iclient-job';
-import { ProjectService } from '../Services/Projects/project.service.service';
-
+import { StaticClientJobsService } from '../Services/ClientJob/static-client-jobs.service';
 
 @Component({
   selector: 'app-projects',
@@ -15,25 +14,26 @@ import { ProjectService } from '../Services/Projects/project.service.service';
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.css']
 })
-export class ProjectsComponent{
-  ClientJob: IClientJob[]=[] as IClientJob[] ;
-
+export class ProjectsComponent implements OnChanges{
+  ClientJob: IClientJob[];
+  filteredJobs: IClientJob[];
   selectedCategories: Number[] = [];
 
-  constructor(private _ClientJobsService:ProjectService , private router :Router) {}
-  ngOnInit(): void {
-    this._ClientJobsService.getAllProjects().subscribe({
-      next: (res) => {
-        if (res.isSuccess && Array.isArray(res.data)) {
-          this.ClientJob = res.data;
-          console.log('title',res.data)
+  constructor(private _StaticClientJobsService:StaticClientJobsService , private router :Router) {
 
-        } else {
-          console.error('Unexpected response structure:', res);
-        }
-      },
-      error: (err) => console.log(err)
-    });
+    this.ClientJob = this._StaticClientJobsService.getAllClientJobs()
+    this.filteredJobs = [...this.ClientJob];
+
+  }
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.selectedCategories) {
+      this.filteredJobs = this._StaticClientJobsService.filterProjects(this.selectedCategories);
+    }
+  }
+
+  filterProjects(selectedCategories: Number[]) {
+    this.selectedCategories = selectedCategories;
+    this.filteredJobs = this._StaticClientJobsService.filterProjects(this.selectedCategories);
   }
 
   navigateToDetails(id: number): void {
@@ -51,4 +51,9 @@ export class ProjectsComponent{
     });
   }
 
+
 }
+
+  
+}
+

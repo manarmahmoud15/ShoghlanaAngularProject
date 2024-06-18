@@ -14,7 +14,7 @@ import { ProjectService } from '../Services/Projects/project.service.service';
   providers: [DatePipe]
 })
 export class ProjectDetailsComponent implements OnInit {
-  currentID: Number = 0;
+  currentID: number = 0;
   // clientJob :IClientJob = {}as IClientJob or clientJob !:IClientJob
   clientJob: IClientJob | undefined;
 
