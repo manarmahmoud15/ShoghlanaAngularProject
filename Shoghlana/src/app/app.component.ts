@@ -9,7 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { FooterComponent } from "./footer/footer.component";
 import { NavbarComponent } from "./navbar/navbar.component";
 import { JobsComponent } from './jobs/jobs.component';
-import { SignalRService } from './Services/signal-r.service';
+// import { SignalRService } from './Services/signal-r.service';
 
 @Component({
     selector: 'app-root',
@@ -20,20 +20,29 @@ import { SignalRService } from './Services/signal-r.service';
 })
 export class AppComponent implements OnInit , OnDestroy {
   constructor(
-    public _SignalRService:SignalRService
+    // public _SignalRService:SignalRService
   ){}
   ngOnDestroy(): void {
-    this._SignalRService.hubConnection?.off('askServerResponse')
-    this._SignalRService.hubConnection?.stop()
-    .catch(err => console.error('Error while stopping connection: ' + err));
+    // this._SignalRService.hubConnection?.off('askServerResponse')
+    // this._SignalRService.hubConnection?.stop()
+    // .catch(err => console.error('Error while stopping connection: ' + err));
   }
   ngOnInit(): void {
-    this._SignalRService.startConnection();
+// <<<<<<< new-new
+//     // this._SignalRService.startConnection();
+
+//     // setTimeout(()=> {
+//     //   this._SignalRService.askServerListener();
+//     //   this._SignalRService.askServer();
+//     // },2000)
+// =======
+//     this._SignalRService.startConnection();
     
-    setTimeout(()=> {
-      this._SignalRService.askServerListener();
-      this._SignalRService.askServer();
-    },2000)
+//     setTimeout(()=> {
+//       this._SignalRService.askServerListener();
+//       this._SignalRService.askServer();
+//     },2000)
+// >>>>>>> main
   }
   title = 'Shoghlana';
 }
