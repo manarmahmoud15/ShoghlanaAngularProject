@@ -12,31 +12,57 @@ import { authGuard } from './Gards/auth.guard';
 import { WorksGalleryComponent } from './works-gallery/works-gallery.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { ProjectsComponent } from './projects/projects.component';
+import { FreelancerEditProfileComponent } from './freelancer-edit-profile/freelancer-edit-profile.component';
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'register', pathMatch: 'full' },
-    {path:'register',loadComponent:()=>import('./register/register.component')
-    .then((obj)=>obj.RegisterComponent)},
-    {path:'home',loadComponent:()=>import('./home/home.component')
-    .then((obj)=>obj.HomeComponent)},
-    {path:'signin',loadComponent:()=>import('./login/login.component')
-    .then((obj)=>obj.LoginComponent)},
-    {path:'galleryworks',loadComponent:()=>import('./works-gallery/works-gallery.component')
-    .then((obj)=>obj.WorksGalleryComponent)},
-    {path:'freelancers',loadComponent:()=>import('./freelancers/freelancers.component')
-    .then((obj)=>obj.FreelancersComponent )},
-    { path: 'jobs', loadComponent:()=>import('./jobs/jobs.component').then((obj)=>obj.JobsComponent) },
-    { path: 'projects', loadComponent:()=>import('./projects/projects.component').then((Obj)=>Obj.ProjectsComponent) },
-    { path : 'projectDetails/:id' , loadComponent:()=> import('./project-details/project-details.component')
-      .then((obj) =>obj.ProjectDetailsComponent)} ,
-    {
-      path: 'freelancerprofile/:id',
-      loadComponent: () => import('./freelancer-profile/freelancer-profile.component').then(obj => obj.FreelancerProfileComponent),
-      children: [
-          { path: '', redirectTo: 'portfolio', pathMatch: 'full' },
-          { path: 'portfolio', loadComponent: () => import('./freelancer-portfolio/freelancer-portfolio.component').then(obj => obj.FreelancerPortfolioComponent) },
-          { path: 'workhistory', loadComponent: () => import('./freelancer-work-history/freelancer-work-history.component').then(obj => obj.FreelancerWorkHistoryComponent) }
-      ]
+  { path: '', redirectTo: 'register', pathMatch: 'full' },
+  {
+    path: 'register', loadComponent: () => import('./register/register.component')
+      .then((obj) => obj.RegisterComponent)
+  },
+  {
+    path: 'home', loadComponent: () => import('./home/home.component')
+      .then((obj) => obj.HomeComponent)
+  },
+  {
+    path: 'signin', loadComponent: () => import('./login/login.component')
+      .then((obj) => obj.LoginComponent)
+  },
+  {
+    path: 'galleryworks', loadComponent: () => import('./works-gallery/works-gallery.component')
+      .then((obj) => obj.WorksGalleryComponent)
+  },
+  {
+    path: 'freelancers', loadComponent: () => import('./freelancers/freelancers.component')
+      .then((obj) => obj.FreelancersComponent)
+  },
+  {
+    path: 'jobs', loadComponent: () => import('./jobs/jobs.component').then((obj) => obj.JobsComponent)
+  },
+  {
+    path: 'projects', loadComponent: () => import('./projects/projects.component').then((Obj) => Obj.ProjectsComponent)
+  },
+  {
+    path: 'projectDetails/:id', loadComponent: () => import('./project-details/project-details.component')
+      .then((obj) => obj.ProjectDetailsComponent)
+  },
+  {
+    path: 'freelancerprofile/:id',
+    loadComponent: () => import('./freelancer-profile/freelancer-profile.component').then(obj => obj.FreelancerProfileComponent),
+    children: [
+      {
+        path: '', redirectTo: 'portfolio', pathMatch: 'full'
+      },
+      {
+        path: 'portfolio', loadComponent: () => import('./freelancer-portfolio/freelancer-portfolio.component')
+          .then(obj => obj.FreelancerPortfolioComponent)
+      },
+      { path: 'workhistory', loadComponent: () => import('./freelancer-work-history/freelancer-work-history.component')
+      .then(obj => obj.FreelancerWorkHistoryComponent) }
+      ,
+      { path: 'edit', loadComponent: () => import('./freelancer-edit-profile/freelancer-edit-profile.component')
+      .then(obj => obj.FreelancerEditProfileComponent) }
+    ]
   },
   { path: '**', loadComponent: () => import('./not-found/not-found.component').then(obj => obj.NotFoundComponent) }
 ];
@@ -45,4 +71,4 @@ export const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {   }
+export class AppRoutingModule { }
