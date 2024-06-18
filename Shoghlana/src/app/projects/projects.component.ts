@@ -41,7 +41,7 @@ export class ProjectsComponent{
       next: (res) => {
         if (res.isSuccess) {
           console.log('Project details:', res.data);
-  
+
           this.router.navigate(['/project-details', id]);
         } else {
           console.error('Unexpected response structure:', res);
