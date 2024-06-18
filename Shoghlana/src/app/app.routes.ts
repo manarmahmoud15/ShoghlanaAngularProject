@@ -29,12 +29,16 @@ export const routes: Routes = [
     .then((obj)=>obj.FreelancersComponent )},
     {path:'works',loadComponent:()=>import('./work/work.component')
     .then((obj)=>obj.WorkComponent )},
+    {path:'offers',loadComponent:()=>import('./offers/offers.component')
+      .then((obj)=>obj.OffersComponent)},
     { path: 'jobs', loadComponent:()=>import('./jobs/jobs.component').then((obj)=>obj.JobsComponent) },
     { path: 'projects', loadComponent:()=>import('./projects/projects.component').then((Obj)=>Obj.ProjectsComponent) },
-    { path : 'projectDetails/:id' , loadComponent:()=> import('./project-details/project-details.component')
-      .then((obj) =>obj.ProjectDetailsComponent)} ,
-      {path : 'clientProfile/:id' , component : ClientProfileComponent}, 
-      { 
+    // { path : 'projectDetails/:id' , loadComponent:()=> import('./project-details/project-details.component')
+    //   .then((obj) =>obj.ProjectDetailsComponent)} ,
+      { path: 'project-details/:id', loadComponent: () => import('./project-details/project-details.component').then((obj) => obj.ProjectDetailsComponent) },
+
+      {path : 'clientProfile/:id' , component : ClientProfileComponent},
+      {
       path: 'freelancerprofile/:id',
       loadComponent: () => import('./freelancer-profile/freelancer-profile.component').then(obj => obj.FreelancerProfileComponent),
       children: [
@@ -43,7 +47,7 @@ export const routes: Routes = [
           { path: 'workhistory', loadComponent: () => import('./freelancer-work-history/freelancer-work-history.component').then(obj => obj.FreelancerWorkHistoryComponent) } ,
           { path: 'edit', loadComponent: () => import('./freelancer-edit-profile/freelancer-edit-profile.component')
             .then(obj => obj.FreelancerEditProfileComponent) }
-          
+
       ]
     },
     { path: '**', loadComponent: () => import('./not-found/not-found.component').then(obj => obj.NotFoundComponent) }
