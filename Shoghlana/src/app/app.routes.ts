@@ -52,7 +52,7 @@ export const routes: Routes = [
     },
     { path: '**', loadComponent: () => import('./not-found/not-found.component').then(obj => obj.NotFoundComponent) }
   ]
-
+  // canActivate:[authGuard]
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
