@@ -1,0 +1,167 @@
+body {
+    font-family: 'Segoe UI', Roboto, Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    background-color: var(--gray-25);
+    margin: 0;
+    /* direction: rtl; */
+    /* text-align: right; */
+    color: var(--gray-700);
+}
+
+.container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.pt-40 {
+    padding-top: 40px;
+}
+
+.pb-40 {
+    padding-bottom: 40px;
+}
+
+.block {
+    background-color: var(--white);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.block-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--gray-100);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.block-head .title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.has-padding {
+    padding: 20px;
+}
+
+.user-info-column {
+    text-align: center;
+}
+
+.user-info-column .img {
+    display: inline-block;
+    position: relative;
+}
+
+.user-info-column .img img {
+    border-radius: 50%;
+    width: 82px;
+    height: 82px;
+}
+
+.user-info-column .img svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotate(-90deg);
+}
+
+.name {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.dashboard-sidebar-tag {
+    display: inline-block;
+    background-color: var(--green-bg);
+    color: var(--green);
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.info-content {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.stars {
+    margin: 10px 0;
+}
+
+.stars .fas {
+    color: var(--gold);
+}
+
+.stars .small-text {
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+.more-medals .medals {
+    display: inline-block;
+}
+
+.block .collapse-block .block-body {
+    display: none;
+}
+
+.block .collapse-block .block-body.show {
+    display: block;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+}
+
+.table th,
+.table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table tbody + tbody {
+    border-top: 2px solid #dee2e6;
+}
+
+.table .table {
+    background-color: #fff;
+}
+
+.verified-icon {
+    color: green; /* Adjust the color as needed */
+    margin-left: 5px; /* Adjust the margin as needed */
+}
+
+.unverified-icon {
+    color: red; /* Adjust the color as needed */
+    margin-left: 5px; /* Adjust the margin as needed */
+}
+
+.block-body {
+    display: none;
+}
+
+.block-body.show {
+    display: block;
+}
+
+.block-body td {
+    width: 100%;
+}
+
+

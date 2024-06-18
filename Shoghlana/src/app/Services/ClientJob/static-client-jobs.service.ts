@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IClientJob } from '../../Models/iclient-job';
+import { JobStatus } from '../../Enums/JobStatus';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class StaticClientJobsService {
         title: "مطلوب متخصص لعمل اسكربت علي موقع حجز مواعيد تأشيرة",
         MinPrice: '25$',
         MaxPrice: '50$',
-        status: 'مفتوح',
+        status: JobStatus.Closed,
         clientName: 'منار',
         clientImg: "../../assets/imgs/Nerd-amico.png",
         catID: 1
@@ -26,7 +27,7 @@ export class StaticClientJobsService {
         title: "تعديلات و إعادة تصميم موقع ووردبريس",
         MinPrice: '10$',
         MaxPrice: '30$',
-        status: 'مغلق',
+        status: JobStatus.completed,
         clientName: 'أحمد',
         clientImg: "../../assets/imgs/Nerd-amico.png",
         catID: 2
@@ -36,7 +37,7 @@ export class StaticClientJobsService {
         title: "موقع ومتجر إلكتروني لجمعية خيرية",
         MinPrice: '20$',
         MaxPrice: '40$',
-        status: 'مفتوح',
+        status: JobStatus.Active,
         clientName: 'اسماء',
         clientImg: "../../assets/imgs/Nerd-amico.png",
         catID: 3
