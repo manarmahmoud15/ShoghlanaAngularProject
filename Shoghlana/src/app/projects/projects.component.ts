@@ -5,7 +5,8 @@ import { Router, RouterLink } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { ProjectSideBarComponent } from '../project-side-bar/project-side-bar.component';
 import { IClientJob } from '../Models/iclient-job';
-import { StaticClientJobsService } from '../Services/ClientJob/static-client-jobs.service';
+import { ProjectService } from '../Services/Projects/project.service.service';
+
 
 @Component({
   selector: 'app-projects',
@@ -14,29 +15,28 @@ import { StaticClientJobsService } from '../Services/ClientJob/static-client-job
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.css']
 })
-export class ProjectsComponent implements OnChanges{
-  ClientJob: IClientJob[];
-  filteredJobs: IClientJob[];
+export class ProjectsComponent{
+  ClientJob: IClientJob[]=[] as IClientJob[] ;
+
   selectedCategories: Number[] = [];
 
-  constructor(private _StaticClientJobsService:StaticClientJobsService , private router :Router) {
+  constructor(private _ClientJobsService:ProjectService , private router :Router) {}
+  ngOnInit(): void {
+    this._ClientJobsService.getAllProjects().subscribe({
+      next: (res) => {
+        if (res.isSuccess && Array.isArray(res.data)) {
+          this.ClientJob = res.data;
+          console.log('title',res.data)
 
-    this.ClientJob = this._StaticClientJobsService.getAllClientJobs()
-    this.filteredJobs = [...this.ClientJob];
-
-  }
-  ngOnChanges(changes: SimpleChanges) {
-    if (this.selectedCategories) {
-      this.filteredJobs = this._StaticClientJobsService.filterProjects(this.selectedCategories);
-    }
-  }
-
-  filterProjects(selectedCategories: Number[]) {
-    this.selectedCategories = selectedCategories;
-    this.filteredJobs = this._StaticClientJobsService.filterProjects(this.selectedCategories);
+        } else {
+          console.error('Unexpected response structure:', res);
+        }
+      },
+      error: (err) => console.log(err)
+    });
   }
   navigateToDetails(id:Number){
     this.router.navigateByUrl(`/projectDetails/${id}`)
   }
-  
+
 }

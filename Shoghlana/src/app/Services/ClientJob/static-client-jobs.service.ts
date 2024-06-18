@@ -12,36 +12,36 @@ export class StaticClientJobsService {
   filteredJobs: IClientJob[];
   constructor() { 
     this.ClientJob = [
-      {
-        id: 1,
-        title: "مطلوب متخصص لعمل اسكربت علي موقع حجز مواعيد تأشيرة",
-        MinPrice: '25$',
-        MaxPrice: '50$',
-        status: JobStatus.Closed,
-        clientName: 'منار',
-        clientImg: "../../assets/imgs/Nerd-amico.png",
-        catID: 1
-      },
-      {
-        id: 2,
-        title: "تعديلات و إعادة تصميم موقع ووردبريس",
-        MinPrice: '10$',
-        MaxPrice: '30$',
-        status: JobStatus.completed,
-        clientName: 'أحمد',
-        clientImg: "../../assets/imgs/Nerd-amico.png",
-        catID: 2
-      },
-      {
-        id: 3,
-        title: "موقع ومتجر إلكتروني لجمعية خيرية",
-        MinPrice: '20$',
-        MaxPrice: '40$',
-        status: JobStatus.Active,
-        clientName: 'اسماء',
-        clientImg: "../../assets/imgs/Nerd-amico.png",
-        catID: 3
-      },
+      // {
+      //   id: 1,
+      //   title: "مطلوب متخصص لعمل اسكربت علي موقع حجز مواعيد تأشيرة",
+      //   MinPrice: '25$',
+      //   MaxPrice: '50$',
+      //   // status: JobStatus.Closed,
+      //   clientName: 'منار',
+      //   clientImg: "../../assets/imgs/Nerd-amico.png",
+      //   catID: 1
+      // },
+      // {
+      //   id: 2,
+      //   title: "تعديلات و إعادة تصميم موقع ووردبريس",
+      //   MinPrice: '10$',
+      //   MaxPrice: '30$',
+      //   status: JobStatus.completed,
+      //   clientName: 'أحمد',
+      //   clientImg: "../../assets/imgs/Nerd-amico.png",
+      //   catID: 2
+      // },
+      // {
+      //   id: 3,
+      //   title: "موقع ومتجر إلكتروني لجمعية خيرية",
+      //   MinPrice: '20$',
+      //   MaxPrice: '40$',
+      //   status: JobStatus.Active,
+      //   clientName: 'اسماء',
+      //   clientImg: "../../assets/imgs/Nerd-amico.png",
+      //   catID: 3
+      // },
     ];
     this.filteredJobs = [...this.ClientJob];
   }

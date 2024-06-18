@@ -45,10 +45,9 @@ export const routes: Routes = [
             .then(obj => obj.FreelancerEditProfileComponent) }
           
       ]
-    }
+    },
+    { path: '**', loadComponent: () => import('./not-found/not-found.component').then(obj => obj.NotFoundComponent) }
   ]
-
-
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
