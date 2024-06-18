@@ -12,7 +12,7 @@ import { CommonModule, Location } from '@angular/common';
   styleUrl: './project-details.component.css',
 })
 export class ProjectDetailsComponent implements OnInit {
-  currentID: Number = 0;
+  currentID: number = 0;
   // clientJob :IClientJob = {}as IClientJob or clientJob !:IClientJob
   clientJob: IClientJob[] = [];
   constructor(
