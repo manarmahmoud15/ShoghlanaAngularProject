@@ -29,7 +29,7 @@ export class AppComponent implements OnInit , OnDestroy {
   }
   ngOnInit(): void {
     this._SignalRService.startConnection();
-
+    
     setTimeout(()=> {
       this._SignalRService.askServerListener();
       this._SignalRService.askServer();
