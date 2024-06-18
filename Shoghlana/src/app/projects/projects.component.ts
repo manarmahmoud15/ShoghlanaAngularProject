@@ -38,7 +38,11 @@ export class ProjectsComponent implements OnInit {
       next: (res) => {
         if (res.isSuccess) {
           console.log('Project details:', res.data);
-          // Navigate to the details page
+// <<<<<<< new-new
+//           // Navigate to the details page
+// =======
+
+// >>>>>>> main
           this.router.navigate(['/project-details', id]);
         } else {
           console.error('Unexpected response structure:', res);
