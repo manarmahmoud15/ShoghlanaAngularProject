@@ -16,11 +16,11 @@ export class ProjectSideBarComponent {
 
   constructor() {
     this.category = [
-      { id: 1, name: 'أعمال وخدمات ادارية واستشارية', selected: false },
-      { id: 2, name: 'برمجة, تطوير المواقع و التطبيقات', selected: false },
-      { id: 3, name: 'تصميم', selected: false },
-      { id: 4, name: 'فيديو', selected: false },
-      { id: 5, name: 'كتابة و ترجمة ولغات', selected: false },
+      { id: 1, title: 'أعمال وخدمات ادارية واستشارية', selected: false , description : "" },
+      { id: 2, title: 'برمجة, تطوير المواقع و التطبيقات', selected: false , description : "" },
+      { id: 3, title: 'تصميم', selected: false , description : "" },
+      { id: 4, title: 'فيديو', selected: false , description : "" },
+      { id: 5, title: 'كتابة و ترجمة ولغات', selected: false , description : "" },
     ];
     this.categorySelectedChanged = new EventEmitter<number[]>();
   }
