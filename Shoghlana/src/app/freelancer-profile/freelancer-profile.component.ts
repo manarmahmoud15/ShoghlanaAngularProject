@@ -16,7 +16,7 @@ import { FreelancerService } from '../Services/freelancer.service';
 
 export class FreelancerProfileComponent implements OnInit {
 
-  freelancer: IFreelancer | undefined = {} as IFreelancer;
+  freelancer!: IFreelancer;
 
   // personalImageBytes : any ;
 
@@ -36,21 +36,22 @@ export class FreelancerProfileComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // this.currentFreelancerId = Number(this.activeRoute.snapshot.paramMap.get('id'));
+     this.currentFreelancerId = Number(this.activeRoute.snapshot.paramMap.get('id'));
 
-    if (this.currentFreelancerId) {
-      this.loadFreelancerData();
-    }
+    // if (this.currentFreelancerId) {
+    //   console.log("enterd if condition")
+    //   this.loadFreelancerData();
+    // }
 
-    console.log("Freelancer obj OnInit :");
-    console.log(this.freelancer);
+    // console.log("Freelancer obj OnInit :");
+    // console.log(this.freelancer);
 
   }
 
   loadFreelancerData(): void {
-    if (!this.freelancer) {
+    if (this.freelancer == undefined) {
       this.freelancerService.getFreelancerById(this.currentFreelancerId).subscribe({
-        next: (res) => {
+        next: (res) => { 
           console.log("Response: ", res);
           if (res.isSuccess) {
             this.freelancer = res.data;
