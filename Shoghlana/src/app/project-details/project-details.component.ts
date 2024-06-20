@@ -76,7 +76,6 @@ export class ProjectDetailsComponent implements OnInit {
           error:(err)=>{
             console.log(err)
           }
-
           }
         );
       }
