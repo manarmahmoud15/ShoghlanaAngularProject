@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { FooterComponent } from "./footer/footer.component";
 import { NavbarComponent } from "./navbar/navbar.component";
 import { JobsComponent } from './jobs/jobs.component';
+import { ProjectDetailsComponent } from './project-details/project-details.component';
 // import { SignalRService } from './Services/signal-r.service';
 
 @Component({
@@ -16,7 +17,7 @@ import { JobsComponent } from './jobs/jobs.component';
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-    imports: [  RouterOutlet, LoginComponent , RegisterComponent, HomeComponent, ReactiveFormsModule, CommonModule , FooterComponent, NavbarComponent ,JobsComponent , RouterLink , RouterLinkActive ]
+    imports: [  RouterOutlet, LoginComponent , RegisterComponent, HomeComponent, ReactiveFormsModule, CommonModule , FooterComponent,  ProjectDetailsComponent,NavbarComponent ,JobsComponent , RouterLink , RouterLinkActive ]
 })
 export class AppComponent implements OnInit , OnDestroy {
   constructor(

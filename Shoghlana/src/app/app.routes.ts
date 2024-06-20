@@ -14,6 +14,7 @@ import { JobsComponent } from './jobs/jobs.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { FreelancerEditProfileComponent } from './freelancer-edit-profile/freelancer-edit-profile.component';
 import { ClientProfileComponent } from './client-profile/client-profile.component';
+import { AddprojectComponent } from './addproject/addproject.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'register', pathMatch: 'full' },
@@ -52,6 +53,7 @@ export const routes: Routes = [
   { path: 'project-details/:id', loadComponent: () => import('./project-details/project-details.component').then((obj) => obj.ProjectDetailsComponent) },
 
   { path: 'clientProfile/:id', component: ClientProfileComponent },
+  {path:'addproject' , component:AddprojectComponent},
   {
     path: 'freelancerprofile/:id',
     loadComponent: () => import('./freelancer-profile/freelancer-profile.component').then(obj => obj.FreelancerProfileComponent),
