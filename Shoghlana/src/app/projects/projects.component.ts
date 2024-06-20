@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProjectSideBarComponent } from '../project-side-bar/project-side-bar.component';
 import { IClientJob } from '../Models/iclient-job';
 import { ProjectService } from '../Services/Projects/project.service.service';
+import { StaticClientJobsService } from '../Services/ClientJob/static-client-jobs.service';
 
 @Component({
   selector: 'app-projects',
@@ -16,8 +17,11 @@ import { ProjectService } from '../Services/Projects/project.service.service';
 })
 export class ProjectsComponent implements OnInit {
   ClientJob: IClientJob[] = [] as IClientJob[];
-
-  constructor(private _ClientJobsService: ProjectService, private router: Router) {}
+  selectedCategories: Number[] = [];
+  filteredJobs: IClientJob[];
+  constructor(private _ClientJobsService: ProjectService,private _StaticClientJobsService:StaticClientJobsService , private router: Router) {
+    this.filteredJobs = [...this.ClientJob];
+  }
 
   ngOnInit(): void {
     this._ClientJobsService.getAllProjects().subscribe({
@@ -33,6 +37,10 @@ export class ProjectsComponent implements OnInit {
     });
   }
 
+  filterProjects(selectedCategories: Number[]) {
+       this.selectedCategories = selectedCategories;
+      this.filteredJobs = this._StaticClientJobsService.filterProjects(this.selectedCategories);
+    }
   navigateToDetails(id: number): void {
     this._ClientJobsService.getProjectById(id).subscribe({
       next: (res) => {
