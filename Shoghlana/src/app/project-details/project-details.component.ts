@@ -21,7 +21,7 @@ export class ProjectDetailsComponent implements OnInit {
   // clientJob :IClientJob = {}as IClientJob or clientJob !:IClientJob
   clientJob: IClientJob | undefined;
   proposal :IProposal ={} as IProposal ;
-  proposalForm: FormGroup | undefined;
+  proposalForm!: FormGroup ;
   constructor(
     private _activatedRoute: ActivatedRoute,
     // private _statisClientJobService: StaticClientJobsService ,
@@ -66,7 +66,7 @@ export class ProjectDetailsComponent implements OnInit {
   getFormattedDate(date: string): string {
     return this.datePipe.transform(date, 'dd-MM-yyyy, h:mm a') || date;
   }
-  addProposal()
+  addProposal(proposalForm: FormGroup )
   {
       if (this.proposalForm?.valid) {
         this._proposalService.postProposal(this.proposal).subscribe({
