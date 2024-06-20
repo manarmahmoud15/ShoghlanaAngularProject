@@ -16,4 +16,7 @@ export class ProposalService {
   getProposalById(id:number):Observable<any>{
 return this.httpclient.get<any>(`${environment.baseUrl}/Proposal${id}`)
   }
+  postProposal(proposalData: any): Observable<any> {
+    return this.httpclient.post(`${environment.baseUrl}/Proposal`, proposalData);
+  }
 }

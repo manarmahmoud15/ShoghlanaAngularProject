@@ -1,6 +1,7 @@
 <div class="project container-fluid pt-5">
   <div class="col-12">
     <div class="container d-flex justify-content-between align-items-center">
+     
       <div class="col-12 justify-content-start align-items-center gap-3">
         <div class="jobs-container mt-3" *ngIf="clientJob">
           <div
@@ -67,14 +68,14 @@
         <div class="container my-2 py-2">
           <h5>أضف عرضك</h5>
           <hr>
-          <form>
+          <form  (submit)="addProposal()" >
             <div class="d-flex">
               <div class="col-6">
                 <label for="delivery-time">مدة التسليم بالأيام</label>
                 <input [(ngModel)]="proposal.duration" type="number" id="delivery-time" name="delivery-time" placeholder="مدة التسليم" class="w-75" required/>
               </div>
               <div class="col-6">
-                <label for="offer-value">قيمة العرض بالدولار</label>
+                <label for="offer-value">قيمة  بالدولار</label>
                 <input [(ngModel)]="proposal.price" type="number" id="offer-value" name="offer-value" placeholder="قيمة العرض" class="w-75" required/>
               </div>
             </div>
@@ -84,6 +85,7 @@
             </div>
             <button type="submit" class="btn btn-success mt-3">أضف عرضك</button>
           </form>
+          <h1>{{proposal | json}} </h1>
         </div>
         
       </div>

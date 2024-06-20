@@ -5,7 +5,8 @@ import { IClientJob } from '../Models/iclient-job';
 import { CommonModule, DatePipe, Location } from '@angular/common';
 import { ProjectService } from '../Services/Projects/project.service.service';
 import { IProposal } from '../Models/iproposal';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { ProposalService } from '../Services/proposal.service';
 
 @Component({
   selector: 'app-project-details',
@@ -20,12 +21,15 @@ export class ProjectDetailsComponent implements OnInit {
   // clientJob :IClientJob = {}as IClientJob or clientJob !:IClientJob
   clientJob: IClientJob | undefined;
   proposal :IProposal ={} as IProposal ;
+  proposalForm: FormGroup | undefined;
   constructor(
     private _activatedRoute: ActivatedRoute,
     // private _statisClientJobService: StaticClientJobsService ,
     private _ProjectService: ProjectService ,
     private _Location : Location,
-    private datePipe: DatePipe
+    private datePipe: DatePipe ,
+    private _proposalService: ProposalService ,
+    private fb: FormBuilder,
   ) {}
   // ngOnInit(): void {
   //   this.currentID = Number(this._activatedRoute.snapshot.paramMap.get('id'));
@@ -34,6 +38,8 @@ export class ProjectDetailsComponent implements OnInit {
   //     this.currentID
   //   );
   // }
+
+ 
   ngOnInit(): void {
     const id = +this._activatedRoute.snapshot.paramMap.get('id')!;
     this._ProjectService.getProjectById(id).subscribe({
@@ -46,12 +52,35 @@ export class ProjectDetailsComponent implements OnInit {
       },
       error: (err) => console.log(err)
     });
+
+    this.proposalForm = this.fb.group({
+      deliveryTime: ['', Validators.required],
+      offerValue: ['', Validators.required],
+      offerDetails: ['', Validators.required]
+    }) ;
   }
+  
   goBack() {
     this._Location.back()
   }
   getFormattedDate(date: string): string {
     return this.datePipe.transform(date, 'dd-MM-yyyy, h:mm a') || date;
   }
+  addProposal()
+  {
+      if (this.proposalForm?.valid) {
+        this._proposalService.postProposal(this.proposal).subscribe({
+          next:()=>{
+            alert('done')
+          },
+          error:(err)=>{
+            console.log(err)
+          }
 
+          }
+        );
+      }
+  
+
+}
 }
