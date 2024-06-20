@@ -9,7 +9,9 @@ import { HomeComponent } from './home/home.component';
 import { FooterComponent } from "./footer/footer.component";
 import { NavbarComponent } from "./navbar/navbar.component";
 import { JobsComponent } from './jobs/jobs.component';
+
 import { ProjectDetailsComponent } from './project-details/project-details.component';
+
 // import { SignalRService } from './Services/signal-r.service';
 
 @Component({
@@ -29,6 +31,14 @@ export class AppComponent implements OnInit , OnDestroy {
     // .catch(err => console.error('Error while stopping connection: ' + err));
   }
   ngOnInit(): void {
+
+    // this._SignalRService.startConnection();
+
+    // setTimeout(()=> {
+    //   this._SignalRService.askServerListener();
+    //   this._SignalRService.askServer();
+    // },2000)
+
 // <<<<<<< new-new
 //     // this._SignalRService.startConnection();
 
@@ -44,6 +54,7 @@ export class AppComponent implements OnInit , OnDestroy {
 //       this._SignalRService.askServer();
 //     },2000)
 // >>>>>>> main
+
   }
   title = 'Shoghlana';
 }

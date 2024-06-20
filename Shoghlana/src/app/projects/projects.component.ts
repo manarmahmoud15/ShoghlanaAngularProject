@@ -6,7 +6,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProjectSideBarComponent } from '../project-side-bar/project-side-bar.component';
 import { IClientJob } from '../Models/iclient-job';
 import { ProjectService } from '../Services/Projects/project.service.service';
+
 import { StaticClientJobsService } from '../Services/ClientJob/static-client-jobs.service';
+
 
 @Component({
   selector: 'app-projects',
@@ -17,6 +19,10 @@ import { StaticClientJobsService } from '../Services/ClientJob/static-client-job
 })
 export class ProjectsComponent implements OnInit {
   ClientJob: IClientJob[] = [] as IClientJob[];
+
+
+  constructor(private _ClientJobsService: ProjectService, private router: Router) {}
+
   selectedCategories: Number[] = [];
   filteredJobs: IClientJob[];
   constructor(private _ClientJobsService: ProjectService,private _StaticClientJobsService:StaticClientJobsService , private router: Router) {
@@ -46,11 +52,13 @@ export class ProjectsComponent implements OnInit {
       next: (res) => {
         if (res.isSuccess) {
           console.log('Project details:', res.data);
-// <<<<<<< new-new
-//           // Navigate to the details page
-// =======
 
-// >>>>>>> main
+          // Navigate to the details page
+
+//           // Navigate to the details page
+
+
+
           this.router.navigate(['/project-details', id]);
         } else {
           console.error('Unexpected response structure:', res);
