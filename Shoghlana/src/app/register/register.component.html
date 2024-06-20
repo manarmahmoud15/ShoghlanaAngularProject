@@ -81,7 +81,19 @@
             </div>
           </div>
         </div>
+        <!-- /////// -->
+        <!-- <div class="flex-column">
+          <label for="phone"> 2الهاتف</label>
+        </div>
+        <div formArrayName=" phoneNumbers">
+          <div class="inputForm" *ngFor="let ph of Phones.controls; let i=index">
+            <i class="fa-solid fa-phone me-1"></i>
+            <input formControlName="i" placeholder="الهاتف" id="phoneNumber" class="input" type="text">
+          </div>
+        </div>
+        <button class="btn btn-success" (click)="addnewphone">+</button> -->
 
+        <!-- ///// -->
         <button [disabled]="RegisterForm.invalid" type="submit" class="btn">إنشاء حساب
         <i *ngIf="isLoading" class="fas fa-spinner fa-spin"></i></button>
 

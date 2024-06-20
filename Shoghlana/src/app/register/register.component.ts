@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import {
+  FormArray,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
@@ -37,8 +38,15 @@ export class RegisterComponent {
         Validators.required,
         Validators.pattern(/^01[0125][0-9]{8}$/),
       ]),
+      // phoneNumbers:new FormArray([new FormControl('')])
     });
   }
+//   get Phones(){
+//    return this.RegisterForm.get("phoneNumbers") as FormArray
+//   }
+//   addnewphone(){
+// this.Phones.push(new FormControl(''))
+//   }
   handleRegister(RegisterForm: FormGroup) {
     this.isLoading=true;
     if (RegisterForm.valid) {
