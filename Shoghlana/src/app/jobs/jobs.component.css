@@ -42,3 +42,6 @@
     font-family: 'cairo';
   }
  
+  .cursor-pointer {
+    cursor: pointer;
+  }

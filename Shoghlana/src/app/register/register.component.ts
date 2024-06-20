@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, OnChanges , OnInit, SimpleChanges } from '@angular/core';
 import {
+  FormArray,
   FormControl,
   FormGroup,
   FormsModule,
@@ -48,6 +49,7 @@ export class RegisterComponent implements OnInit {
         Validators.required,
         Validators.pattern(/^01[0125][0-9]{8}$/),
       ]),
+      // phoneNumbers:new FormArray([new FormControl('')])
     });
   }
 
@@ -92,6 +94,12 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+//   get Phones(){
+//    return this.RegisterForm.get("phoneNumbers") as FormArray
+//   }
+//   addnewphone(){
+// this.Phones.push(new FormControl(''))
+//   }
   handleRegister(RegisterForm: FormGroup) {
     this.isLoading=true;
     if (RegisterForm.valid) {

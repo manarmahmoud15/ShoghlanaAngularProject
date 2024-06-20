@@ -13,8 +13,6 @@ export class AuthService {
   constructor(private _httpClient:HttpClient,
      private UserRoleService : UserRoleServiceService) { }
    register(userdata:object):Observable<any>{
-   // return this._httpClient.post(`http://localhost:5092/api/Auth/Register`, JSON.parse(userdata))
-
     return this._httpClient.post(`http://localhost:5092/api/Auth/Register`, userdata)
 }
 login(userdata:object):Observable<any>{
@@ -27,4 +25,8 @@ GoogleAuthentication(googleAuthData : GoogleAuthData) : Observable<any>
   googleAuthData.role = this.UserRoleService.get()
   return this._httpClient.post(environment.baseUrl + '/Auth/GoogleAuthentication' , googleAuthData)
 }
+
+// getToken():string{
+// return  localStorage.getItem("token")? localStorage.getItem("token"):""
+// }
 }

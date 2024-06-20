@@ -1,33 +1,57 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { StaticClientJobsService } from '../Services/ClientJob/static-client-jobs.service';
 import { IClientJob } from '../Models/iclient-job';
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule, DatePipe, Location } from '@angular/common';
+import { ProjectService } from '../Services/Projects/project.service.service';
+import { IProposal } from '../Models/iproposal';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-project-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink , FormsModule] ,
   templateUrl: './project-details.component.html',
   styleUrl: './project-details.component.css',
+  providers: [DatePipe]
 })
 export class ProjectDetailsComponent implements OnInit {
-  currentID: Number = 0;
+  currentID: number = 0;
   // clientJob :IClientJob = {}as IClientJob or clientJob !:IClientJob
-  clientJob: IClientJob[] = [];
+  clientJob: IClientJob | undefined;
+  proposal :IProposal ={} as IProposal ;
   constructor(
     private _activatedRoute: ActivatedRoute,
-    private _statisClientJobService: StaticClientJobsService ,
-    private _Location : Location
+    // private _statisClientJobService: StaticClientJobsService ,
+    private _ProjectService: ProjectService ,
+    private _Location : Location,
+    private datePipe: DatePipe
   ) {}
+  // ngOnInit(): void {
+  //   this.currentID = Number(this._activatedRoute.snapshot.paramMap.get('id'));
+  //   console.log(this.currentID);
+  //   this.clientJob = this._statisClientJobService.getClientJobByCatID(
+  //     this.currentID
+  //   );
+  // }
   ngOnInit(): void {
-    this.currentID = Number(this._activatedRoute.snapshot.paramMap.get('id'));
-    console.log(this.currentID);
-    this.clientJob = this._statisClientJobService.getClientJobByCatID(
-      this.currentID
-    );
+    const id = +this._activatedRoute.snapshot.paramMap.get('id')!;
+    this._ProjectService.getProjectById(id).subscribe({
+      next: (res) => {
+        if (res.isSuccess) {
+          this.clientJob = res.data;
+        } else {
+          console.error('Unexpected response structure:', res);
+        }
+      },
+      error: (err) => console.log(err)
+    });
   }
   goBack() {
     this._Location.back()
   }
+  getFormattedDate(date: string): string {
+    return this.datePipe.transform(date, 'dd-MM-yyyy, h:mm a') || date;
+  }
+
 }
