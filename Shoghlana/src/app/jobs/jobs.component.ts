@@ -37,6 +37,8 @@ export class JobsComponent implements OnInit {
 
   maxBudget : number = 0 ;
 
+  noJobsAvailable: boolean = false; 
+
   constructor(private jobService: JobService, private categoryService: CategoryService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
@@ -60,6 +62,9 @@ export class JobsComponent implements OnInit {
   }
 
   fetchPaginatedJobs() : void {
+    
+    this.noJobsAvailable = false ;
+
     this.jobService.getPaginatedJobs(this.currentPage , this.pageSize , this.selectedCategoryID  , this.minBudget , this.maxBudget).subscribe({
       next: (res) => {
         if (res.isSuccess) {
@@ -76,7 +81,10 @@ export class JobsComponent implements OnInit {
           });
 
         } else {
+
+          this.noJobsAvailable = true;
           console.error('Response failed:', res);
+
         }
       },
       error: (err) => {
@@ -134,6 +142,7 @@ export class JobsComponent implements OnInit {
     this.maxBudget = 0;
     this.selectedCategoryID = 0 ;
     this.currentPage = 1 ;
+    this.noJobsAvailable = false ;
     this.fetchPaginatedJobs(); // Apply filters after resetting
   }
 }
