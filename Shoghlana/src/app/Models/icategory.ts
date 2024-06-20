@@ -1,5 +1,16 @@
+import { Ijob } from "./ijob";
+
 export interface ICategory {
+
     id: number;
-    name: string;
-    selected?: boolean; 
-}
+
+    title: string;
+
+    description: string;
+
+    selected?: boolean;   // ???
+
+    //--------------------------
+
+    jobs?: Ijob[];
+}   

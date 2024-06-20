@@ -1,39 +1,112 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-3">
+      <!-- Categories list and budget filters here -->
+      <h4 class="mb-3">الخدمات</h4>
+      <ul class="list-group">
+        <!-- Categories list -->
+        <li
+          class="list-group-item cursor-pointer"
+          [class.active]="selectedCategoryID === 0"
+          (click)="onCategorySelect(0)"
+        >
+          عرض جميع الخدمات
+        </li>
+        <li
+          class="list-group-item cursor-pointer"
+          *ngFor="let cat of categories"
+          [class.active]="selectedCategoryID === cat.id"
+          (click)="onCategorySelect(cat.id)"
+        >
+          {{ cat.title }}
+        </li>
+      </ul>
 
-<div class="mb-3 w-50 mx-auto">
-  <label for="" class="form-label" >الخدمات</label>
-  <select class="form-select form-select-lg text-end" (change)="filterJobs()" [(ngModel)]= "selectedCategoryID" >
-    <option  [value] = "0"> عرض جميع الخدمات </option>
-    <option *ngFor="let cat of category" [value]="cat.id">{{cat.name}}</option>
-  </select>
-</div>
+      <!-- Budget filters -->
+      <div class="mt-3">
+        <h5>الفلترة بواسطة الميزانية:</h5>
+        <div class="mb-3">
+          <label for="minBudget" class="form-label">الحد الأدنى</label>
+          <input
+            type="number"
+            class="form-control"
+            id="minBudget"
+            name="minBudget"
+            [(ngModel)]="minBudget"
+            (blur)="applyFilters()"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="maxBudget" class="form-label">الحد الأقصى</label>
+          <input
+            type="number"
+            class="form-control"
+            id="maxBudget"
+            name="maxBudget"
+            [(ngModel)]="maxBudget"
+            (blur)="applyFilters()"
+          />
+        </div>
+        <button class="btn btn-primary" (click)="resetFilters()">إعادة الضبط</button>
+      </div>
+    </div>
 
-<div class="row row-cols-1 row-cols-md-4 g-4 m-4">
-  <!-- // for Block (control flow) instead *ngFor="let job of jobs" -->
-  @for (job of filteredJobs ; track job.id){
-    <div class="col">
-      <div class="card h-100" appHighlight externalColor="green">
-        <img [src]="job.imgURL" height="250px" class="card-img-top" alt="..." />
-        <div class="card-body text-end">
-          <h5 class="card-title">{{ job.title }}</h5>
-          <p class="card-text">{{ job.description }}</p>
-  
-          <p class="card-text">{{ job.rate }}<i class="fa-solid fa-star"></i></p>
-          <div class="d-flex">
-            <p class="card-text pt-2">{{ job.price }}</p>
-            <div class="freelancerInfo d-flex ms-auto">
-              <p class="pt-2 mx-2">{{ job.freelancerName }}</p>
-              <img
-                [src]="job.freelancerImg"
-                height="50px"
-                class="border rounded-circle border-light"
-              />
+    <div class="col-md-9">
+      <!-- Jobs list -->
+      <div *ngIf="filteredJobs.length > 0; else noJobsTemplate">
+        <div class="card mb-3" *ngFor="let job of filteredJobs">
+          <div class="card-header"><h4>{{ job.title }}</h4></div>
+          <div class="card-body">
+            <h5 class="card-title">{{ job.description }}</h5>
+            <div class="row">
+              <div class="col-6">
+                <p class="card-text">
+                  {{ job.minBudget | currency }} - {{ job.maxBudget | currency }}
+                </p>
+              </div>
+              <div class="col-6">
+                <p class="card-text">العميل: {{ job.clientName }}</p>
+              </div>
             </div>
+            <div class="row">
+              <div class="col-6">
+                <p class="card-text">الفئة: {{ job.categoryTitle }}</p>
+              </div>
+              <div class="col-6">
+                <p class="card-text">عدد العروض: {{ job.proposalsCount }}</p>
+                <!-- Display "أضف أول عرض" only when proposalsCount is 0 -->
+                <p class="card-text" *ngIf="job.proposalsCount === 0">أضف أول عرض</p>
+              </div>
+            </div>
+            <p class="card-text">{{ job.postTime | date : "medium" }}</p>
+            <a href="#" class="btn btn-primary">أضف عرضك</a>
           </div>
         </div>
       </div>
-    </div>
-  }@empty {
-    <h1>no fetch data</h1>
-  }
+      <ng-template #noJobsTemplate>
+        <h3 class="text-center">لا توجد وظائف متاحة في هذا التصنيف</h3>
+      </ng-template>
 
+      <!-- Pagination controls -->
+      <div *ngIf="totalItems > pageSize" class="text-center mt-4">
+        <button
+          class="btn btn-secondary me-2"
+          [disabled]="currentPage === 1"
+          (click)="onPageChange(currentPage - 1)"
+        >
+          السابق
+        </button>
+        <span class="align-middle"
+          >الصفحة {{ currentPage }} من {{ calculateTotalPages() }}</span
+        >
+        <button
+          class="btn btn-secondary ms-2"
+          [disabled]="currentPage === calculateTotalPages()"
+          (click)="onPageChange(currentPage + 1)"
+        >
+          التالي
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
