@@ -67,22 +67,25 @@
         <div class="container my-2 py-2">
           <h5>أضف عرضك</h5>
           <hr>
-          <div class="d-flex">
-            <div class="col-6">
-              <label>مدة التسليم بالأيام</label>
-              <input type="number" placeholder="مدة التسليم" class="w-75"/>
+          <form>
+            <div class="d-flex">
+              <div class="col-6">
+                <label for="delivery-time">مدة التسليم بالأيام</label>
+                <input [(ngModel)]="proposal.duration" type="number" id="delivery-time" name="delivery-time" placeholder="مدة التسليم" class="w-75" required/>
+              </div>
+              <div class="col-6">
+                <label for="offer-value">قيمة العرض بالدولار</label>
+                <input [(ngModel)]="proposal.price" type="number" id="offer-value" name="offer-value" placeholder="قيمة العرض" class="w-75" required/>
+              </div>
             </div>
-            <div class="col-6">
-              <label>قيمة العرض بالدولار</label>
-              <input type="number" placeholder="قيمة العرض" class="w-75"/>
+            <div class="col-11 mt-3">
+              <label for="offer-details">تفاصيل العرض</label>
+              <textarea [(ngModel)]="proposal.description" id="offer-details" name="offer-details" class="w-100" rows="4" required></textarea>
             </div>
-          </div>
-          <div class="col-11">
-            <label>تفاصيل العرض</label>
-            <textarea class="w-100"></textarea>
-          </div>
-          <button type="submit" class="btn btn-success">أضف عرضك</button>
+            <button type="submit" class="btn btn-success mt-3">أضف عرضك</button>
+          </form>
         </div>
+        
       </div>
     </div>
   </div>

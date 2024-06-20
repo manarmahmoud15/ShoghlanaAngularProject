@@ -6,6 +6,9 @@ import { JobStatus } from '../../Enums/JobStatus';
   providedIn: 'root'
 })
 export class StaticClientJobsService {
+  getProjectById(id: number) {
+    throw new Error('Method not implemented.');
+  }
 
   ClientJob : IClientJob[];
   selectedCategories: Number[] = [];

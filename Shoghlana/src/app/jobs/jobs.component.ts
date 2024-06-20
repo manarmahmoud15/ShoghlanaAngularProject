@@ -1,101 +1,148 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Ijob } from '../Models/ijob';
 import { RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ICategory } from '../Models/icategory';
 import { FormsModule, NgModel } from '@angular/forms';
 import { HighlightDirective } from '../directives/highlight.directive';
 import { HttpClientModule } from '@angular/common/http';
+import { JobService } from '../Services/job/job.service';
+import { CategoryService } from '../Services/Category/category.service';
 
 @Component({
   selector: 'app-jobs',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule, HighlightDirective ,HttpClientModule],
+  imports: [CommonModule, RouterLink, FormsModule, HighlightDirective, HttpClientModule, FormsModule, DatePipe],
   templateUrl: './jobs.component.html',
-  styleUrl: './jobs.component.css',
+  styleUrls: ['./jobs.component.css'],
+  providers: [DatePipe] // Add DatePipe here
 })
-export class JobsComponent {
-  jobs: Ijob[];
-  category: ICategory[];
-  filteredJobs: Ijob[];
-  selectedCategoryID : Number =0 ;
-  constructor() {
-    (this.jobs = [
-      {
-        id: 1,
-        freelancerName: 'محمد صلاح',
-        freelancerImg: 'https://fakeimg.pl/300/',
-        title: 'تصميم شعار احترافى ومميز',
-        description: 'تصميم واعمال فنيه واحترافيه',
-        price: '25$',
-        imgURL: 'https://fakeimg.pl/300/',
-        rate: 5,
-        catID: 1,
-      },
-      {
-        id: 2,
-        freelancerName: 'محمد صلاح',
-        freelancerImg: 'https://fakeimg.pl/300/',
-        title: 'تصميم بوستر اعلانى لمواقع التواصل',
-        description: 'تصميم واعمال فنيه واداريه',
-        price: '5$',
-        imgURL: 'https://fakeimg.pl/300/',
-        rate: 3,
-        catID: 1,
-      },
-      {
-        id: 3,
-        freelancerName: 'محمد صلاح',
-        freelancerImg: 'https://fakeimg.pl/300/',
-        title: 'تصميم كارت شخصي احترافى للطباعه',
-        description: 'تصميم بطاقات اعمال',
-        price: '5$',
-        imgURL: 'https://fakeimg.pl/300/',
-        rate: 4,
-        catID: 1,
-      },
+export class JobsComponent implements OnInit {
 
-      {
-        id: 4,
-        freelancerName: 'محمد صلاح',
-        freelancerImg: 'https://fakeimg.pl/300/',
-        title: 'تركيب لوحه تحكم مجانيه مدى الحياة ',
-        description: 'برمجه وتطوير المواقع والتطبيقات',
-        price: '25$',
-        imgURL: 'https://fakeimg.pl/300/',
-        rate: 2,
-        catID: 2,
-      },
-      {
-        id: 5,
-        freelancerName: 'محمد صلاح',
-        freelancerImg: 'https://fakeimg.pl/300/',
-        title: 'تصميم موقع تعريفي للشركات',
-        description: 'برمجه مواقع الانترنت',
-        price: '25$',
-        imgURL: 'https://fakeimg.pl/300/',
-        rate: 0,
-        catID: 3,
-      },
-    ]),
-      (this.category = [
-        { id: 1, name: 'خدمات التصميم' },
-        { id: 2, name: 'خدمات برمجية' },
-        { id: 3, name: 'خدمات الكتابة والترجمة' },
-      ]);
-    this.filteredJobs = this.jobs;
+  jobs: Ijob[] = [];
+
+  categories: ICategory[] = [];
+
+  filteredJobs: Ijob[] = [];
+
+  selectedCategoryID: number = 0;
+
+  currentPage = 1;
+
+  pageSize = 5;
+
+  totalItems = 0;
+
+  minBudget : number = 0 ;
+
+  maxBudget : number = 0 ;
+
+  noJobsAvailable: boolean = false; 
+
+  constructor(private jobService: JobService, private categoryService: CategoryService, private datePipe: DatePipe) { }
+
+  ngOnInit(): void {
+    this.fetchAllCategories();
+    this.fetchPaginatedJobs();
   }
-  filterJobs() {
-    if (this.selectedCategoryID == 0) {
-      this.filteredJobs = this.jobs;
-      console.log(this.selectedCategoryID)
-    } else {
-      this.filteredJobs = this.jobs.filter(
-        (job) => job.catID == this.selectedCategoryID
-        
-      );
-     // console.log(this.selectedCategoryID)
 
+  fetchAllCategories() {
+    this.categoryService.GetAll().subscribe({
+      next: (res) => {
+        if (res.isSuccess) {
+          this.categories = res.data || [];
+        } else {
+          console.error('Response failed:', res);
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching categories', err);
+      }
+    });
+  }
+
+  fetchPaginatedJobs() : void {
+    
+    this.noJobsAvailable = false ;
+
+    this.jobService.getPaginatedJobs(this.currentPage , this.pageSize , this.selectedCategoryID  , this.minBudget , this.maxBudget).subscribe({
+      next: (res) => {
+        if (res.isSuccess) {
+
+          console.log("Pagination Succeed");
+          console.log(res);
+
+          this.filteredJobs = res.data.items;
+
+          this.totalItems = res.data.totalItems || 0;
+
+          this.filteredJobs.forEach(job => {
+            job.postTime = this.datePipe.transform(job.postTime, 'medium') || 'Invalid Date';
+          });
+
+        } else {
+
+          this.noJobsAvailable = true;
+          console.error('Response failed:', res);
+
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching categories', err);
+      }
+    })
+  }
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    this.fetchPaginatedJobs();
+  }
+
+    // Method to calculate the ceiling of division
+    calculateTotalPages(): number {
+      return Math.ceil(this.totalItems / this.pageSize);
     }
+
+  fetchAllJobs() {
+    this.jobService.GetAll().subscribe({
+      next: (res) => {
+        if (res.isSuccess) {
+          this.jobs = res.data || [];
+
+          // Formatting the postTime for each job
+          this.jobs.forEach(job => {
+            job.postTime = this.datePipe.transform(job.postTime, 'medium') || 'Invalid Date';
+          });
+
+          console.log("Angular Jobs : ");
+          console.log(this.jobs);
+
+        } else {
+          console.error('Response failed:', res);
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching jobs', err);
+      }
+    });
+  }
+
+  onCategorySelect(categoryId: number) {
+    this.selectedCategoryID = categoryId; 
+    this.currentPage = 1 ; // returning it to first page in the new filteration
+    this.fetchPaginatedJobs(); 
+  }
+
+  applyFilters() {
+    this.fetchPaginatedJobs();
+  }
+
+  resetFilters() {
+    this.minBudget = 0;
+    this.maxBudget = 0;
+    this.selectedCategoryID = 0 ;
+    this.currentPage = 1 ;
+    this.noJobsAvailable = false ;
+    this.fetchPaginatedJobs(); // Apply filters after resetting
   }
 }
