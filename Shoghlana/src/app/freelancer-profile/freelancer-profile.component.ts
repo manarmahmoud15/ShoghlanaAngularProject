@@ -16,7 +16,7 @@ import { FreelancerService } from '../Services/freelancer.service';
 
 export class FreelancerProfileComponent implements OnInit {
 
-  freelancer: IFreelancer | undefined = {} as IFreelancer
+  freelancer: IFreelancer | undefined = {} as IFreelancer;
 
   // personalImageBytes : any ;
 
