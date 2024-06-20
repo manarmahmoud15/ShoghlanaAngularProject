@@ -1,0 +1,9 @@
+/* role-selection-popup.component.css */
+.modal {
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-dialog {
+    margin: 10% auto;
+  }
+  

@@ -153,3 +153,35 @@ button:hover {
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
  }
+
+
+ /* Custom styles for the Google sign-in button */
+.google-signin-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background-color: #6cfb9a; /* Google blue */
+  color: #6cfb9a;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.google-signin-btn:hover {
+  background-color: #ffffff;
+}
+
+.google-signin-btn i {
+  margin-right: 10px;
+}
+
+.google-signin-btn img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
