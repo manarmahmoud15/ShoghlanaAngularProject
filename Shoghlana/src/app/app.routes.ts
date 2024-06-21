@@ -53,7 +53,12 @@ export const routes: Routes = [
   { path: 'project-details/:id', loadComponent: () => import('./project-details/project-details.component').then((obj) => obj.ProjectDetailsComponent) },
 
   { path: 'clientProfile/:id', component: ClientProfileComponent },
-  {path:'addproject' , component:AddprojectComponent},
+  {path:'addproject' , loadComponent:()=> 
+    import('./addproject/addproject.component').then(obj => obj.AddprojectComponent)
+  },
+  {path: 'addservice' , loadComponent:()=>
+    import('./add-service/add-service.component').then(obj=> obj.AddServiceComponent)
+  },
   {
     path: 'freelancerprofile/:id',
     loadComponent: () => import('./freelancer-profile/freelancer-profile.component').then(obj => obj.FreelancerProfileComponent),

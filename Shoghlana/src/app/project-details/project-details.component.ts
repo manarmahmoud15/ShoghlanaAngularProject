@@ -56,7 +56,6 @@ export class ProjectDetailsComponent implements OnInit {
   goBack() {
     this._Location.back();
   }
-
   getFormattedDate(date: string): string {
     return this.datePipe.transform(date, 'dd-MM-yyyy, h:mm a') || date;
   }
