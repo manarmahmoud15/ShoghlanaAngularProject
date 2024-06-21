@@ -17,7 +17,7 @@ import { ClientProfileComponent } from './client-profile/client-profile.componen
 import { AddprojectComponent } from './addproject/addproject.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'register', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
     path: 'register', loadComponent: () => import('./register/register.component')
       .then((obj) => obj.RegisterComponent)
