@@ -1,14 +1,17 @@
 .card {
     height: 100%;
   }
-  
+
   .card-body {
     display: flex;
     flex-direction: column;
   }
-  
+
   .card-text.mt-auto {
     margin-top: auto;
+  }
+  ul{
+    padding: 0;
   }
   .card {
     text-align: center;
@@ -16,17 +19,18 @@
     background-color: #fff;
     padding: 5px;
     cursor: pointer;
-    -webkit-transition: all 0.2s ease-in;
-    transition: all 0.2s ease-in;
+    /* -webkit-transition: all 0.2s ease-in;
+    transition: all 0.2s ease-in; */
   }
-  
+
   .card:hover,
   .card:focus {
-    border-bottom: 4px solid #1dbf73 !important;
-    -webkit-transform: scale(1.05);
-    transform: scale(1.05);
-    -webkit-transition: all 0.2s ease-in;
-    transition: all 0.2s ease-in;
+    border-right: 4px solid #1dbf73 !important;
+    
+    /* -webkit-transform: scale(1.05);
+    transform: scale(1.05); */
+    /* -webkit-transition: all 0.2s ease-in;
+    transition: all 0.2s ease-in; */
   }
   i {
     color: #f39c12
@@ -41,7 +45,15 @@
   p {
     font-family: 'cairo';
   }
- 
+.btn{
+  background-color:#1dbf73;
+  color: white;
+}
   .cursor-pointer {
     cursor: pointer;
+  }
+  .list-group-item.active {
+    background-color:#1dbf73;
+    color: white; /* Adjust text color for better visibility */
+    border-color: #1dbf73;
   }

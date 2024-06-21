@@ -1,25 +1,24 @@
 <!-- role-selection-popup.component.html -->
-<div *ngIf="showModal" class="modal" tabindex="-1" role="dialog" [class.show]="showModal" style="display: block;" aria-hidden="true">
+<div dir="rtl" *ngIf="showModal" class="modal" tabindex="-1" role="dialog" [class.show]="showModal" style="display: block;" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title text-success">Welcome to Shoghlana</h5>
+          <h5 class="modal-title text-success">أهلا بيك في شغلانة</h5>
         </div>
         <div class="modal-body">
-          <p>I want to act as:</p>
+          <p> تريد الدخول ك</p>
           <div class="row">
           <!-- <div class="col-4"> -->
-          <img src="../../assets/imgs/freelancer.webp" class="col-6"/>
-          <img src="../../assets/imgs/client.jpg" class="col-6"/>
+          <img src="../../assets/imgs/freelancer.webp" class="col-6 img"/>
+          <img src="../../assets/imgs/client.jpg" class="col-6 img"/>
         <!-- </div> -->
         </div>
 
         <div class="row">
-          <button class="btn btn-primary col-5 m-auto " (click)="selectRole(freelancer)">Freelancer</button>
-          <button class="btn btn-secondary offset-1 col-5 m-auto my-2" (click)="selectRole(client)">Client</button>
+          <button class="btn btn-success col-5 m-auto " (click)="selectRole(freelancer)">بائع</button>
+          <button class="btn btn-secondary offset-1 col-5 m-auto my-2" (click)="selectRole(client)">مشتري</button>
         </div>
         </div>
       </div>
     </div>
   </div>
-  
