@@ -33,8 +33,10 @@ export class ProjectDetailsComponent implements OnInit {
       Duration: [null, [Validators.required]],
       Price: [null, [Validators.required]],
       Description: [null, [Validators.required]],
-      // JobId: [null, [Validators.required]],
-      // FreelancerId: [1, [Validators.required]] // Assuming the FreelancerId is 1 for now
+      JobId: [null, [Validators.required]],
+      FreelancerId: [1, [Validators.required]], // Assuming the FreelancerId is 1 for now
+      // ReposLinks: [null],
+      // Images:[null]
     });
   }
 
@@ -62,24 +64,35 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   addProposal() {
+
+let formData: FormData;
+formData = new FormData();
+
+formData.append('Duration', this.proposalForm.get('Duration')?.value);
+formData.append('Description', this.proposalForm.get('Description')?.value);
+formData.append('Price', this.proposalForm.get('Price')?.value);
+formData.append('JobId', this.proposalForm.get('JobId')?.value);
+formData.append('FreelancerId', this.proposalForm.get('FreelancerId')?.value);
+
+
     console.log("Submitting proposal...");
     if (this.proposalForm.valid) {
-      const payload = this.proposalForm.value;
-      console.log("Form is valid:", payload);
-      this._proposalService.postProposal(payload).subscribe({
+      // const payload = this.proposalForm.value;
+      // console.log("Form is valid:", payload);
+      this._proposalService.postProposal(formData).subscribe({
         next: () => {
           swal({
-            title: "wow!",
-            text: "تم ارسال طلبك بنجاح !",
+            // title: "wow!",
+            text: ":) تم ارسال عرضك بنجاح ",
             icon: "success",
-            // button: "Aww yiss!",
+
           })        },
         error: (err) => {
           console.log('Error response:', err);
-          console.log('Payload sent:', payload);
-          // alert('Failed to submit proposal');
+          console.log('Payload sent:',formData);
+          // console.log('Payload sent:', payload);
           swal({
-            title: "فشل ارسال الطلب",
+            title: " :( فشل ارسال العرض ",
             icon: "warning",
             dangerMode: true,
           })

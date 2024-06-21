@@ -20,7 +20,7 @@ export class ProposalService {
     return this.httpclient.get<any>(`${this.baseUrl}/${id}`);
   }
 
-  postProposal(proposalData: IProposal): Observable<any> {
+  postProposal(proposalData: any): Observable<any> {
     return this.httpclient.post<any>(this.baseUrl, proposalData);
   }
 }
