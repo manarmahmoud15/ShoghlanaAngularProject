@@ -1,0 +1,68 @@
+.project {
+    background-color: rgb(235, 235, 235);
+  }
+  .container {
+    background-color: white;
+  }
+  .btn-primary {
+    background-color: #1dbf73;
+    border: none;
+  }
+  .btn-primary:hover {
+    background-color: #279e66;
+  }
+  button:hover {
+    color: #fff;
+    background-color: #16a763;
+  }
+  .btn {
+    margin: 0.5em;
+    background: #1dbf73;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+  }
+  
+  .text-end {
+    direction: rtl;
+  }
+  hr {
+    margin: 0.8rem 0;
+    color: darkgray;
+  }
+  .status {
+    background-color: #1dbf73;
+    color: white;
+    border-radius: 5px;
+    font-size: 15px;
+  }
+  .title {
+    color: #032c1a;
+  }
+  .clientName {
+    color: rgb(125, 125, 125);
+  }
+  .projectdetails p ,label {
+    color: rgb(98, 98, 98);
+  }
+  label {
+    display: block;
+    margin: 10px;
+  }
+  div {
+    border-radius: 15px;
+  }
+  input {
+    border-radius: 15px;
+    padding-right: 15px;
+  }
+small {
+    color: rgb(175, 175, 175);
+}  
+.fa-lightbulb ,.fa-plus ,.fa-backward-fast ,.fa-briefcase {
+    color: #16a763;
+    font-size: larger;
+}
