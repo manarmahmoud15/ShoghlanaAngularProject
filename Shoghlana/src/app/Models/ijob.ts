@@ -1,10 +1,12 @@
 import { JobStatus } from "../Enums/JobStatus";
+
 import { ExperienceLevel } from "../Enums/experience-level";
 import { IRate } from "./i-rate";
 import { ISkill } from "./i-skill";
 import { ICategory } from "./icategory";
 import { IFreelancer } from "./ifreelancer";
 import { IProposal } from "./iproposal";
+import { Irate } from "./Irate";
 
 export interface Ijob {
 
@@ -14,8 +16,9 @@ export interface Ijob {
 
     description: String,
 
-    postTime: string
-
+    postTime?: string,
+  // postTime? : Date,
+ formattedPostTime? : string,
     price: string,
 
     minBudget: number;
@@ -33,7 +36,8 @@ export interface Ijob {
     proposals?: IProposal[];
 
     freelancers?: IFreelancer[];
-
+   freelancerName : string ,
+    freelancerImg : string ,
     //----------------------------------
 
     acceptedFreelancerId?: number;
@@ -48,8 +52,8 @@ export interface Ijob {
 
     clientImage: string;
 
-    categoryTitle: string;
-
+    categoryTitle?: string;
+ catID : Number ,
     categoryId: number,
 
     category: ICategory;
@@ -57,4 +61,6 @@ export interface Ijob {
     proposalsCount: number;
 
     rate?: IRate;
+  // rate? : Irate,
+  showFeedback? : boolean
 }

@@ -1,1 +1,31 @@
-<p>freelancer-work-history works!</p>
+<div *ngFor="let job of WorkingHistory" class="card mb-4 shadow-sm" style="direction: rtl;">
+    <div class="card-header d-flex justify-content-between align-items-center bg-primary text-white">
+      <h5 class="mb-0">{{ job.categoryTitle }}</h5>
+      <span style="direction: ltr;">{{ job.formattedPostTime }}</span>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{ job.title }}</h5>
+      <p class="card-text">{{ job.description }}</p>
+      <button (click)="ToggleFeedback(job.id)" class="btn btn-outline-primary mt-2">
+        {{ job.showFeedback ? 'اخفاء التقييم' : 'عرض التقييم' }}
+      </button>
+      <div *ngIf="job.showFeedback" class="feedback-section mt-3 p-3 border rounded bg-light">
+       <div *ngIf="job.rate; else defaultRate">
+        <h6 class="mb-2">تقييم العميل:</h6>
+        <p class="mb-0">
+          {{ job.rate?.feedback }}
+          <span class="rating">
+            (<i class="fa-solid fa-star text-warning"></i> {{ job.rate?.value }})
+          </span>
+        </p>
+    </div>
+    <ng-template #defaultRate>
+        <span class="text-danger">
+العميل لم يضيف تقييم لهذا العمل 
+        </span>
+    </ng-template>
+    
+      </div>
+    </div>
+  </div>
+  

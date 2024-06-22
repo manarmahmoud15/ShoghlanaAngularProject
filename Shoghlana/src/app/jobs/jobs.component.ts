@@ -17,6 +17,7 @@ import { CategoryService } from '../Services/Category/category.service';
   styleUrls: ['./jobs.component.css'],
   providers: [DatePipe] // Add DatePipe here
 })
+
 export class JobsComponent implements OnInit {
 
   jobs: Ijob[] = [];

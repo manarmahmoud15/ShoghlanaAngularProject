@@ -53,7 +53,10 @@ export class ClientProfileComponent implements OnInit {
           console.log(res)
           console.log(this.Client);
           console.log(this.Client.country);
-          this.ClientLevel = Math.ceil(this.Client.completedJobsCount / 10);
+          this.ClientLevel = Math.ceil(this.Client.completedJobsCount / 10); 
+
+          console.log(this.Client.image)
+
         }
     },
     error : (err) => {console.log(err)}

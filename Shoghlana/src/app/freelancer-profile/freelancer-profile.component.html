@@ -1,46 +1,52 @@
-<main class="container">
-  <section id="content" class="page-heading p-5">
-    <div class="media clearfix">
-      <div class="media-left pr-3">
+<main class="container mt-4">
+  <section id="content" class="page-heading p-5 bg-light rounded shadow-sm">
+    <div class="media d-flex align-items-center flex-row-reverse">
+      <div class="media-right pl-3">
         <a href="#">
           <img
-            class="media-object mw-150 border rounded-circle"
-            src="{{ freelancer?.personalImageBytes}}"
-            alt="{{ freelancer?.name}} image"
+            class="media-object mw-150 border rounded-circle shadow"
+            src="data:image/png;base64,{{freelancer.personalImageBytes}}"
+            alt="{{ freelancer.name }} image"
             height="250"
+            width="250"
           />
-          <!-- <img [src]="freelancer.personalImageBytes" [alt]="freelancer.name + ' image'" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm"> -->
         </a>
       </div>
-      <div class="media-body align-self-center">
-        <h2 class="media-heading">{{ freelancer?.name }}</h2>
-        <p class="lead">{{ freelancer?.title }}</p>
-        <div class="media-links">
-          <ul class="list-inline list-unstyled">
-            <li>
-              <a href="#" title="Facebook Link"
-                ><span class="fa-brands fa-facebook-square fs-3 text-primary"></span
-              ></a>
+      <div class="media-body mr-4">
+        <h2 class="media-heading" style="direction: rtl;">{{ freelancer?.name }}</h2>
+        <p class="lead text-muted" *ngIf="freelancer.title; else defaultTitle">{{ freelancer?.title }}</p>
+        <ng-template #defaultTitle>
+          <span class="text-danger">
+            لم يضف التخصص بعد
+          </span>
+        </ng-template>
+        
+        <div class="media-links mt-3">
+          <ul class="list-inline">
+            <li class="list-inline-item">
+              <a href="#" title="Facebook Link">
+                <span class="fa-brands fa-facebook-square fs-3 text-primary"></span>
+              </a>
             </li>
-            <li>
-              <a href="#" title="LinkedIn Link"
-                ><span  class="fa-brands fa-linkedin fs-3 text-primary"></span
-              ></a>
+            <li class="list-inline-item">
+              <a href="#" title="LinkedIn Link">
+                <span class="fa-brands fa-linkedin fs-3 text-primary"></span>
+              </a>
             </li>
-            <li>
-              <a href="#" title="GitHub Link"
-                ><span class="fa-brands fa-github fs-3 text-dark"></span
-              ></a>
+            <li class="list-inline-item">
+              <a href="#" title="GitHub Link">
+                <span class="fa-brands fa-github fs-3 text-dark"></span>
+              </a>
             </li>
-            <li>
-              <a href="#" title="Phone Link"
-                ><span class="fa fa-phone-square fs-3 text-system"></span
-              ></a>
+            <li class="list-inline-item">
+              <a href="#" title="Phone Link">
+                <span class="fa fa-phone-square fs-3 text-success"></span>
+              </a>
             </li>
-            <li>
-              <a href="#" title="Email Link"
-                ><span class="fa fa-envelope-square fs-3 text-muted"></span
-              ></a>
+            <li class="list-inline-item">
+              <a href="#" title="Email Link">
+                <span class="fa fa-envelope-square fs-3 text-muted"></span>
+              </a>
             </li>
           </ul>
         </div>
@@ -48,52 +54,67 @@
     </div>
   </section>
 
-  <div class="row">
+  <div class="row mt-4">
     <div class="col-md-4">
-      <div class="panel">
-        <div class="panel-heading">
-          <span class="panel-icon"><i class="fa fa-trophy"></i></span>
-          <span class="panel-title">نبذة عني</span>
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-primary text-white" style="direction: rtl;">
+          <span class="card-icon"><i class="fa fa-trophy m-2"></i></span>
+          <span class="card-title ml-2">نبذة عني</span>
         </div>
-        <div class="panel-body">
-          <p>{{ freelancer?.overview}}</p>
+        <div class="card-body" style="direction: rtl;">
+          <p *ngIf="freelancer.overview; else defaultOverview">{{ freelancer?.overview }}</p> 
+         
+          <ng-template #defaultOverview >
+          <span class="text-danger">  لم يكتب نبذة شخصية عن نفسه بعد </span>
+          </ng-template>
+          
         </div>
       </div>
-      <div class="panel">
-        <div class="panel-heading">
-          <span class="panel-icon"><i class="fa fa-pencil"></i></span>
-          <span class="panel-title">مهاراتي</span>
+
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-primary text-white" style="direction: rtl;">
+          <span class="card-icon"><i class="fa fa-pencil m-2"></i></span>
+          <span class="card-title ml-2">مهاراتي</span>
         </div>
-        <!-- <div class="panel-body">
-          <ul>
-            <li *ngFor="let skill of freelancer?.skills">{{ skill }}</li>
+        <div class="card-body" style="direction: rtl;">
+          <ul *ngIf="freelancer.skills[0]; else defaultSkills">
+            <li *ngFor="let skill of freelancer?.skills">{{ skill.title }}</li>
           </ul>
-        </div> -->
+          <ng-template #defaultSkills>
+            <span class="text-danger">
+              لا توجد مهارات مضافة حتي الان
+            </span>
+          </ng-template>
+          
+        </div>
       </div>
     </div>
 
     <div class="col-md-8">
-      <ul class="nav nav-tabs">
-        <li class="nav-item">
+      <ul class="nav nav-tabs mb-3">
+        <li class="nav-item ms-auto">
           <a
             class="nav-link"
-            [routerLink]="['/freelancerprofile', freelancer?.id, 'portfolio']"
-            routerLinkActive="lighter-bg-secondary"
+            routerLinkActive="active"
+            [routerLink]="['/freelancerprofile', freelancer.id, 'portfolio']"
+            [queryParams]="{ portfolio: StringifiedPortfolio }" 
             >معرض الأعمال</a
           >
         </li>
         <li class="nav-item">
           <a
             class="nav-link"
+            routerLinkActive="active"
             [routerLink]="['/freelancerprofile', freelancer?.id, 'workhistory']"
-            routerLinkActive="lighter-bg-secondary"
+            [queryParams]="{ workingHistory: StringifiedWorkingHistory }" 
             >المشاريع</a
           >
         </li>
       </ul>
-      <div class="tab-content p-3">
+      <div class="tab-content p-3 bg-white rounded shadow-sm">
         <router-outlet></router-outlet>
       </div>
     </div>
   </div>
 </main>
+
