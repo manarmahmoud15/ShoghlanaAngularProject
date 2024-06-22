@@ -2,8 +2,10 @@
 .modal {
     background: rgba(0, 0, 0, 0.5);
   }
-  
+
   .modal-dialog {
     margin: 10% auto;
   }
-  
+  .img{
+border-radius: 20px;
+  }

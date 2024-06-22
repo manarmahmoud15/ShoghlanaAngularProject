@@ -1,0 +1,53 @@
+.custom-navbar {
+  backdrop-filter: blur(10px);
+  background-color: #1dbf73b4;
+  /* background-color: black; */
+  /* position:fixed; */
+  z-index:11111;
+  width:100%;
+  color:white;
+
+}
+.logo{
+  width: 100%;
+}
+.navbar-nav .nav-item {
+  margin: 0 10px;
+
+}
+
+.navbar-nav .nav-link {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 5px;
+  color: white
+}
+
+.navbar-nav .nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  display: block;
+  margin-top: 5px;
+  right: 0;
+  background:#1dbf73; /* Baby blue color */
+  transition: width 1s ease;
+  -webkit-transition: width 1s ease;
+}
+
+/* .navbar-nav .nav-link:hover {
+  color: #1dbf73;
+} */
+
+.navbar-nav .nav-link:hover::after {
+  width: 100%;
+  left: 0;
+  right: auto;
+}
+
+.mx-auto {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<div dir="rtl" class="container mt-4">
   <div class="row">
     <div class="col-md-3">
       <!-- Categories list and budget filters here -->
@@ -45,7 +45,7 @@
             (blur)="applyFilters()"
           />
         </div>
-        <button class="btn btn-primary" (click)="resetFilters()">إعادة الضبط</button>
+        <button class="btn btn-success" (click)="resetFilters()">إعادة الضبط</button>
       </div>
     </div>
 
@@ -76,7 +76,7 @@
               </div>
             </div>
             <p class="card-text">{{ job.postTime | date : "medium" }}</p>
-            <a href="#" class="btn btn-primary">أضف عرضك</a>
+            <a href="#" class="btn ">أضف عرضك</a>
           </div>
         </div>
       </div>
@@ -84,9 +84,9 @@
           <h3 class="text-center">لا توجد وظائف متاحة في هذا التصنيف</h3>
         </ng-template>
 
-      <div *ngIf="totalItems > pageSize" class="text-center mt-4">
+      <div  *ngIf="totalItems > pageSize" class="text-center mt-4 mb-3" >
         <button
-          class="btn btn-secondary me-2"
+          class="btn  me-2"
           [disabled]="currentPage === 1"
           (click)="onPageChange(currentPage - 1)"
         >

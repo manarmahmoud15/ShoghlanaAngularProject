@@ -1,32 +1,21 @@
 <div class="project container-fluid pt-5">
   <div class="col-12">
     <div class="container d-flex justify-content-between align-items-center">
-     
       <div class="col-12 justify-content-start align-items-center gap-3">
         <div class="jobs-container mt-3" *ngIf="clientJob">
-          <div
-            class="container job-item my-3 pt-2 border rounded"
-            *ngIf="clientJob"
-          >
+          <div class="container job-item my-3 pt-2 border rounded" *ngIf="clientJob">
             <div class="row justify-content-between align-items-center">
               <div class="col-12 d-flex justify-content-end align-items-center">
                 <div class="d-flex flex-column text-end me-3">
                   <div class="d-flex">
-                    <p class="status ms-1 p-1"> {{ clientJob.status === "0" ? 'مغلق' : 'مفتوح' }}</p>
+                    <p class="status ms-1 p-1">{{ clientJob.status === "0" ? 'مغلق' : 'مفتوح' }}</p>
                     <p class="title">{{ clientJob.title }}</p>
                   </div>
                   <div class="d-flex">
-                    <p class="clientName">
-                      <i class="fa-solid fa-user"></i> {{ clientJob.clientName }}
-                    </p>
+                    <p class="clientName"><i class="fa-solid fa-user"></i> {{ clientJob.clientName }}</p>
                   </div>
                 </div>
-                <img
-                  [src]="clientJob.clientImg"
-                  height="50px"
-                  alt="{{ clientJob.clientName }}"
-                  class="rounded-circle"
-                />
+                <img [src]="clientJob.clientImg" height="50px" alt="{{ clientJob.clientName }}" class="rounded-circle" />
               </div>
             </div>
           </div>
@@ -67,27 +56,25 @@
         </div>
         <div class="container my-2 py-2">
           <h5>أضف عرضك</h5>
-          <hr>
-          <form  (ngSubmit)="addProposal(proposalForm)" >
+          <hr />
+          <form [formGroup]="proposalForm" (ngSubmit)="addProposal()">
             <div class="d-flex">
               <div class="col-6">
-                <label for="delivery-time">مدة التسليم بالأيام</label>
-                <input [(ngModel)]="proposal.duration" type="number" id="delivery-time" name="delivery-time" placeholder="مدة التسليم" class="w-75" required/>
+                <label for="deliveryTime">مدة التسليم بالأيام</label>
+                <input formControlName="Duration" type="number" id="deliveryTime" name="deliveryTime" placeholder="مدة التسليم" class="w-75" required />
               </div>
               <div class="col-6">
-                <label for="offer-value">قيمة  بالدولار</label>
-                <input [(ngModel)]="proposal.price" type="number" id="offer-value" name="offer-value" placeholder="قيمة العرض" class="w-75" required/>
+                <label for="offerValue">قيمة العرض بالدولار</label>
+                <input formControlName="Price" type="number" id="offerValue" name="offerValue" placeholder="قيمة العرض" class="w-75" required />
               </div>
             </div>
             <div class="col-11 mt-3">
-              <label for="offer-details">تفاصيل العرض</label>
-              <textarea [(ngModel)]="proposal.description" id="offer-details" name="offer-details" class="w-100" rows="4" required></textarea>
+              <label for="offerDetails">تفاصيل العرض</label>
+              <textarea formControlName="Description" id="offerDetails" name="offerDetails" class="w-100" rows="4" required></textarea>
             </div>
             <button type="submit" class="btn btn-success mt-3">أضف عرضك</button>
           </form>
-          <h1>{{proposal | json}} </h1>
         </div>
-        
       </div>
     </div>
   </div>
