@@ -8,7 +8,7 @@ import { IProposal } from "./iproposal";
 
 export interface Ijob {
 
-    id: Number,
+    id: number,
 
     title: String,
 
@@ -32,7 +32,7 @@ export interface Ijob {
 
     proposals?: IProposal[];
 
-    freelancers? : IFreelancer[];
+    freelancers?: IFreelancer[];
 
     //----------------------------------
 
@@ -46,13 +46,15 @@ export interface Ijob {
 
     clientName: string;
 
+    clientImage: string;
+
     categoryTitle: string;
 
-    categoryId: Number,
+    categoryId: number,
 
-    category : ICategory ;
+    category: ICategory;
 
-    proposalsCount : number ;
+    proposalsCount: number;
 
     rate?: IRate;
 }

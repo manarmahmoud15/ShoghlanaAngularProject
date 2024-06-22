@@ -3,6 +3,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment.development';
 import { Observable } from 'rxjs';
 import { env } from 'process';
+import { IPaginatedJobsRequestBody } from '../../Models/i-paginated-jobs-request-body';
+import { JobStatus } from '../../Enums/JobStatus';
 
 @Injectable({
   providedIn: 'root'
@@ -17,29 +19,29 @@ export class JobService {
 
   getPaginatedJobs(
     // The server handles the Zeros & nulls and doesn't do any filteration then
+
+    minBudget: number = 0,
+    maxBudget: number = 0,
+    clientId: number = 0,
+    freelancerId: number = 0,
     page: number = 1,
     pageSize: number = 5,
-    categoryId: number = 0 ,
-    minBudget: number = 0,
-    maxBudget: number = 0 ,
-    clientId: number = 0 ,
-    freelancerId: number = 0,
-    includes: string[] | null = null  
+    status : JobStatus = JobStatus.Active ,
+    requestBody: IPaginatedJobsRequestBody = {
+      CategoriesIDs: [],
+      Includes: []
+    }
   ): Observable<any> {
     let params = new HttpParams()
-      .set('MinBudget', minBudget.toString())
-      .set('MaxBudget', maxBudget.toString())
-      .set('CategoryId', categoryId.toString())
-      .set('ClientId', clientId.toString())
-      .set('FreelancerId', freelancerId.toString())
-      .set('page', page.toString())
-      .set('pageSize', pageSize.toString());
+    .set('MinBudget', (minBudget ?? 0).toString())
+    .set('MaxBudget', (maxBudget ?? 0).toString())
+    .set('ClientId', (clientId ?? 0).toString())
+    .set('FreelancerId', (freelancerId ?? 0).toString())
+    .set('page', (page ?? 1).toString())
+    .set('pageSize', (pageSize ?? 5).toString())
+    .set('status', (status ?? 5).toString());
 
-    if (includes) {
-      params = params.set('includes', includes.join(','));
-    }
-
-    return this._HttpClient.get<any>(`${environment.baseUrl}/job/pagination`, { params });
+    return this._HttpClient.post<any>(`${environment.baseUrl}/job/pagination`, requestBody, { params });
   }
 
   GetById(Id: number): Observable<any> {

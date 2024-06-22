@@ -4,4 +4,6 @@ export enum JobStatus{
     Closed = 1,
   
     completed = 2,
+
+    All = 3
 }
