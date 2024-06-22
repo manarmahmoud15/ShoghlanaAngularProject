@@ -1,6 +1,8 @@
 <div class="project container-fluid d-flex pt-5">
   <div class="col-8 h-50 mx-5">
-    <div class="container py-1 d-flex justify-content-between align-items-center">
+    <div
+      class="container py-1 d-flex justify-content-between align-items-center"
+    >
       <div class="col-8 d-flex justify-content-start align-items-center gap-3">
         <div class="dropdown">
           <button
@@ -12,67 +14,118 @@
           >
             الاحدث
           </button>
-          <ul class="dropdown-menu text-end" aria-labelledby="dropdownMenuButton">
+          <ul
+            class="dropdown-menu text-end"
+            aria-labelledby="dropdownMenuButton"
+          >
             <li><a class="dropdown-item" href="#">الاقدم</a></li>
             <li><a class="dropdown-item" href="#">الاقل عروضا</a></li>
             <li><a class="dropdown-item" href="#">الاكثر عروضا</a></li>
           </ul>
         </div>
         <div class="d-flex align-items-center border p-2 rounded">
-          <div class="form-check mx-3">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="statusFilter"
-              id="statusAll"
-            />
+          <div class="form-check">
+            <input class="form-check-input"
+                   type="radio"
+                   name="statusFilter"
+                   id="statusAll"
+                   [checked]="jobsStatus === JobStatus.All"
+                   (change)="onStatusChange(JobStatus.All)">
             <label class="form-check-label" for="statusAll"> الكل </label>
           </div>
           <div class="form-check">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="statusFilter"
-              id="statusOpen"
-              checked
-            />
+            <input class="form-check-input mx-2"
+                   type="radio"
+                   name="statusFilter"
+                   id="statusOpen"
+                   [checked]="jobsStatus === JobStatus.Active"
+                   (change)="onStatusChange(JobStatus.Active)">
             <label class="form-check-label" for="statusOpen"> مفتوح </label>
           </div>
         </div>
       </div>
       <div class="col-4">
-        <h6 class="text-end">المشاريع<i class="fa-brands fa-rocketchat"></i></h6>
+        <h6 class="text-end">
+          المشاريع<i class="fa-brands fa-rocketchat"></i>
+        </h6>
       </div>
     </div>
-     <div class="jobs-container mt-3">
-      <div class="container job-item my-3 p-3 border rounded" *ngFor="let job of ClientJob">
-        <div class="row justify-content-between align-items-center">
-          <div class="col-4">
-            <p class="price">{{ job.minBudget }} $ - {{ job.maxBudget }} $</p>
-            <button class="btn btn-success" (click)="navigateToDetails(job.id)">View Details</button>
-          </div>
-          <div class="col-8 d-flex justify-content-end align-items-center">
-            <div class="d-flex flex-column text-end me-3">
-              <div class="d-flex ">
-                  <!-- <p class="status ms-1 p-1" >{{ job.status }}</p> -->
-                  <p class="status ms-1 p-1"> {{ job.status === "0" ? 'مغلق' : 'مفتوح' }}</p>
-
-                  <p class="title">{{ job.title }}</p>
-
-              </div>
-              <p class="Descriptipn">{{job.description}}</p>
-              <div class="d-flex">
-                  <p class="clientName"><i class="fa-solid fa-user "></i> {{ job.clientName }}</p>
-              </div>
+    <div class="jobs-container mt-3">
+      <div
+        *ngIf="filteredJobs.length > 0 && !noJobsAvailable; else noJobsTemplate"
+      >
+        <div
+          class="container job-item my-3 p-3 border rounded"
+          *ngFor="let job of filteredJobs"
+        >
+          <div class="row justify-content-between align-items-center">
+            <div class="col-4">
+              <p class="price">{{ job.minBudget }} $ - {{ job.maxBudget }} $</p>
+              <button
+                class="btn btn-success"
+                (click)="navigateToDetails(job.id)"
+              >
+                View Details
+              </button>
             </div>
-            <img [src]="job.clientImg" height="50px" alt="{{ job.clientName }}" class="rounded-circle">
+            <div class="col-8 d-flex justify-content-end align-items-center">
+              <div class="d-flex flex-column text-end me-3">
+                <div class="d-flex">
+                  <p class="status ms-1 p-1">{{ job.proposalsCount }}</p>
+                  
+                  <ng-container [ngSwitch]="job.status">
+                    <p class="status ms-1 p-1" *ngSwitchCase="JobStatus.Active">مفتوح</p>
+                    <p class="status ms-1 p-1" *ngSwitchCase="JobStatus.Closed">مغلق</p>
+                    <p class="status ms-1 p-1" *ngSwitchCase="JobStatus.completed">مكتمل</p>
+                    <p class="status ms-1 p-1" *ngSwitchDefault>غير معروف</p>
+                  </ng-container>
+                  
+                  <p class="title">{{ job.title }}</p>
+                </div>
+                <p class="Descriptipn">{{ job.description }}</p>
+                <div class="d-flex">
+                  <p class="clientName">
+                    <i class="fa-solid fa-user"></i> {{ job.clientName }}
+                  </p>
+                </div>
+              </div>
+              <img
+                [src]="job.clientImage"
+                height="50px"
+                alt="{{ job.clientName }}"
+                class="rounded-circle"
+              />
+            </div>
           </div>
         </div>
       </div>
-
+      <ng-template #noJobsTemplate>
+        <h3 class="text-center">لا توجد وظائف متاحة في هذا التصنيف</h3>
+      </ng-template>
     </div>
   </div>
   <div class="col-4 justify-content-center align-items-center">
-     <app-project-side-bar (categorySelectedChanged)="filterProjects($event)"></app-project-side-bar> 
+    <app-project-side-bar
+      (FiltersChangedEvent)="filterProjects($event)"
+    ></app-project-side-bar>
   </div>
+</div>
+<div *ngIf="totalItems > pageSize" class="text-center mt-4">
+  <button
+    class="btn btn-secondary me-2"
+    [disabled]="currentPage === 1"
+    (click)="onPageChange(currentPage - 1)"
+  >
+    السابق
+  </button>
+  <span class="align-middle"
+    >الصفحة {{ currentPage }} من {{ calculateTotalPages() }}</span
+  >
+  <button
+    class="btn btn-secondary ms-2"
+    [disabled]="currentPage === calculateTotalPages()"
+    (click)="onPageChange(currentPage + 1)"
+  >
+    التالي
+  </button>
 </div>
