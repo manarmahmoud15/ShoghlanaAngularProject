@@ -37,7 +37,7 @@ export const routes: Routes = [
   },
     { path: 'projects', loadComponent:()=>import('./projects/projects.component').then((Obj)=>Obj.ProjectsComponent) },
   //  { path : 'projectDetails/:id' , loadComponent:()=> import('./project-details/project-details.component')
-      .then((obj) =>obj.ProjectDetailsComponent)} ,
+      // .then((obj) =>obj.ProjectDetailsComponent)} ,
       {path : 'clientProfile/:id' , component : ClientProfileComponent}, 
           { path: 'project-details/:id', loadComponent: () => import('./project-details/project-details.component').then((obj) => obj.ProjectDetailsComponent) },
 
@@ -52,7 +52,7 @@ export const routes: Routes = [
             .then(obj => obj.FreelancerEditProfileComponent) }
           
       ]
-    }
+    },
  
 
   { path: 'clientProfile/:id', component: ClientProfileComponent },

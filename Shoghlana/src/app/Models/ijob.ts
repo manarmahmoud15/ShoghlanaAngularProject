@@ -1,5 +1,4 @@
 import { JobStatus } from "../Enums/JobStatus";
-
 import { ExperienceLevel } from "../Enums/experience-level";
 import { IRate } from "./i-rate";
 import { ISkill } from "./i-skill";
@@ -37,7 +36,7 @@ export interface Ijob {
 
     freelancers?: IFreelancer[];
    freelancerName : string ,
-    freelancerImg : string ,
+    // freelancerImg : string ,
     //----------------------------------
 
     acceptedFreelancerId?: number;
