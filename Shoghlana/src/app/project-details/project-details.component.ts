@@ -1,33 +1,104 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { StaticClientJobsService } from '../Services/ClientJob/static-client-jobs.service';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { IClientJob } from '../Models/iclient-job';
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule, DatePipe, Location } from '@angular/common';
+import { ProjectService } from '../Services/Projects/project.service.service';
+import { IProposal } from '../Models/iproposal';
+import { FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ProposalService } from '../Services/proposal.service';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-project-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink, FormsModule, ReactiveFormsModule],
   templateUrl: './project-details.component.html',
-  styleUrl: './project-details.component.css',
+  styleUrls: ['./project-details.component.css'],
+  providers: [DatePipe],
 })
 export class ProjectDetailsComponent implements OnInit {
-  currentID: Number = 0;
-  // clientJob :IClientJob = {}as IClientJob or clientJob !:IClientJob
-  clientJob: IClientJob[] = [];
+  currentID: number = 0;
+  clientJob: IClientJob | undefined;
+  proposalForm: FormGroup;
+
   constructor(
     private _activatedRoute: ActivatedRoute,
-    private _statisClientJobService: StaticClientJobsService ,
-    private _Location : Location
-  ) {}
-  ngOnInit(): void {
-    this.currentID = Number(this._activatedRoute.snapshot.paramMap.get('id'));
-    console.log(this.currentID);
-    this.clientJob = this._statisClientJobService.getClientJobByCatID(
-      this.currentID
-    );
+    private _ProjectService: ProjectService,
+    private _Location: Location,
+    private datePipe: DatePipe,
+    private _proposalService: ProposalService,
+    private fb: FormBuilder
+  ) {
+    this.proposalForm = this.fb.group({
+      Duration: [null, [Validators.required]],
+      Price: [null, [Validators.required]],
+      Description: [null, [Validators.required]],
+      JobId: [null, [Validators.required]],
+      FreelancerId: [1, [Validators.required]], // Assuming the FreelancerId is 1 for now
+      // ReposLinks: [null],
+      // Images:[null]
+    });
   }
+
+  ngOnInit(): void {
+    const id = +this._activatedRoute.snapshot.paramMap.get('id')!;
+    this._ProjectService.getProjectById(id).subscribe({
+      next: (res) => {
+        if (res.isSuccess) {
+          this.clientJob = res.data;
+          this.proposalForm.patchValue({ JobId: id }); // Set the JobId in the form
+        } else {
+          console.error('Unexpected response structure:', res);
+        }
+      },
+      error: (err) => console.log(err),
+    });
+  }
+
   goBack() {
-    this._Location.back()
+    this._Location.back();
+  }
+  getFormattedDate(date: string): string {
+    return this.datePipe.transform(date, 'dd-MM-yyyy, h:mm a') || date;
+  }
+
+  addProposal() {
+
+let formData: FormData;
+formData = new FormData();
+
+formData.append('Duration', this.proposalForm.get('Duration')?.value);
+formData.append('Description', this.proposalForm.get('Description')?.value);
+formData.append('Price', this.proposalForm.get('Price')?.value);
+formData.append('JobId', this.proposalForm.get('JobId')?.value);
+formData.append('FreelancerId', this.proposalForm.get('FreelancerId')?.value);
+
+
+    console.log("Submitting proposal...");
+    if (this.proposalForm.valid) {
+      // const payload = this.proposalForm.value;
+      // console.log("Form is valid:", payload);
+      this._proposalService.postProposal(formData).subscribe({
+        next: () => {
+          swal({
+            // title: "wow!",
+            text: ":) تم ارسال عرضك بنجاح ",
+            icon: "success",
+
+          })        },
+        error: (err) => {
+          console.log('Error response:', err);
+          console.log('Payload sent:',formData);
+          // console.log('Payload sent:', payload);
+          swal({
+            title: " :( فشل ارسال العرض ",
+            icon: "warning",
+            dangerMode: true,
+          })
+        }
+      });
+    } else {
+      console.log("Form is invalid");
+    }
   }
 }

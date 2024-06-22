@@ -1,7 +1,10 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ICategory } from '../Models/icategory';
+import { CategoryService } from '../Services/Category/category.service';
+import { IFreelancer } from '../Models/ifreelancer';
+import { IClient } from '../Models/IClient';
 
 @Component({
   selector: 'app-project-side-bar',
@@ -10,25 +13,61 @@ import { ICategory } from '../Models/icategory';
   templateUrl: './project-side-bar.component.html',
   styleUrls: ['./project-side-bar.component.css'],
 })
-export class ProjectSideBarComponent {
-  category: ICategory[];
-  @Output() categorySelectedChanged: EventEmitter<number[]>;
+export class ProjectSideBarComponent implements OnInit {
 
-  constructor() {
-    this.category = [
-      { id: 1, name: 'أعمال وخدمات ادارية واستشارية', selected: false },
-      { id: 2, name: 'برمجة, تطوير المواقع و التطبيقات', selected: false },
-      { id: 3, name: 'تصميم', selected: false },
-      { id: 4, name: 'فيديو', selected: false },
-      { id: 5, name: 'كتابة و ترجمة ولغات', selected: false },
-    ];
-    this.categorySelectedChanged = new EventEmitter<number[]>();
+  categories!: ICategory[];
+
+  selectedCategories!: ICategory[];
+
+  minBudget: number = 0;
+
+  maxBudget: number = 0;
+
+  @Output() FiltersChangedEvent: EventEmitter<[ICategory[], number, number]>= new EventEmitter<[ICategory[], number, number]>();
+
+  constructor(private categoryService: CategoryService) {}
+
+  ngOnInit(): void {
+    this.fetchAllCategories();
+    this.categories = this.selectedCategories;
   }
-  getSelectedCategories(): number[] {
-    return this.category.filter(cat => cat.selected).map(cat => cat.id);
+
+  fetchAllCategories() {
+    this.categoryService.GetAll().subscribe({
+      next: (res) => {
+        if (res.isSuccess) {
+          this.selectedCategories = res.data || [];
+        } else {
+          console.error('Response failed:', res);
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching categories', err);
+      }
+    });
+  }
+
+  getSelectedCategories(): ICategory[] {
+    return this.categories.filter(cat => cat.selected);
+  }
+
+  resetFilters() {
+    this.minBudget = 0;
+    this.maxBudget = 0;
+    this.categories.forEach(cat => cat.selected = false);
+    this.selectedCategories = [];
+    this.invokeFiltersEventToParent();
+  }
+
+  applyFilters() {
+    this.invokeFiltersEventToParent();
   }
 
   categorySelected() {
-    this.categorySelectedChanged.emit(this.getSelectedCategories());
+    this.invokeFiltersEventToParent();
+  }
+
+  invokeFiltersEventToParent() {
+    this.FiltersChangedEvent.emit([this.getSelectedCategories(), this.minBudget, this.maxBudget]);
   }
 }

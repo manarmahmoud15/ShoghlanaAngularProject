@@ -6,7 +6,7 @@ import { ClientServiceService } from '../Services/Client/client-service.service'
 import { IClient } from '../Models/IClient';
 import { DatePipe } from '@angular/common';
 import { JobStatus } from '../Enums/JobStatus';
-// import $ from 'jquery'; 
+// import $ from 'jquery';
 
 
 @Component({
@@ -24,8 +24,8 @@ export class ClientProfileComponent implements OnInit {
   ClientId! : number
   Client! : IClient
   JobStatus = JobStatus
-  ClientLevel! : number 
-  
+  ClientLevel! : number
+
   constructor(
     private _activatedRoute: ActivatedRoute,
     private ClientService : ClientServiceService,
@@ -45,7 +45,7 @@ export class ClientProfileComponent implements OnInit {
     console.log(this.ClientId);
 
    this.ClientService.GetById(this.ClientId).subscribe({
-    next : (res) => { 
+    next : (res) => {
       console.log(res.data);
       if(res.isSuccess)
         {
@@ -56,25 +56,26 @@ export class ClientProfileComponent implements OnInit {
           this.ClientLevel = Math.ceil(this.Client.completedJobsCount / 10); 
 
           console.log(this.Client.image)
+
         }
-    }, 
+    },
     error : (err) => {console.log(err)}
    });
   }
 
 
 ngAfterViewInit() {
-  // console.log(this.Client.Name) 
+  // console.log(this.Client.Name)
   const blockHeads = document.querySelectorAll('.block-head');
   blockHeads.forEach(blockHead => {
     blockHead.addEventListener('click', () => {
       const targetSelector = blockHead.getAttribute('data-target');
-      
+
       // Check if targetSelector is not null before proceeding
       if (targetSelector !== null) {
         const targetElement = document.querySelector(targetSelector);
         const chevronIcon = blockHead.querySelector('i.fa-chevron-down, i.fa-chevron-up');
-        
+
         if (targetElement && chevronIcon) {
           targetElement.classList.toggle('show');
           chevronIcon.classList.toggle('fa-chevron-down');

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, OnChanges , OnInit, SimpleChanges } from '@angular/core';
 import {
+  FormArray,
   FormControl,
   FormGroup,
   FormsModule,
@@ -48,11 +49,12 @@ export class RegisterComponent implements OnInit {
         Validators.required,
         Validators.pattern(/^01[0125][0-9]{8}$/),
       ]),
+      // phoneNumbers:new FormArray([new FormControl('')])
     });
   }
 
   ngOnInit(): void {
-    this.UserRole = this.UserroleService.get();  
+    this.UserRole = this.UserroleService.get();
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.SocialAuthService.authState.subscribe({
@@ -66,7 +68,7 @@ export class RegisterComponent implements OnInit {
         this.googleAuthData.idToken = result.idToken
         this.googleAuthData.name = result.name
         this.googleAuthData.photoUrl = result.photoUrl
-      //  this.googleAuthData.role = this.UserRole  
+      //  this.googleAuthData.role = this.UserRole
 
         console.log( "role in google obj google" + this.googleAuthData.role)
 
@@ -77,7 +79,7 @@ export class RegisterComponent implements OnInit {
           if(res.isSuccess)
             {
               localStorage.setItem("UserToken" , res.data.token)
-              this._router.navigateByUrl("/home") 
+              this._router.navigateByUrl("/home")
             }
         },
         error : (err) => {console.log(err)}
@@ -92,6 +94,12 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+//   get Phones(){
+//    return this.RegisterForm.get("phoneNumbers") as FormArray
+//   }
+//   addnewphone(){
+// this.Phones.push(new FormControl(''))
+//   }
   handleRegister(RegisterForm: FormGroup) {
     this.isLoading=true;
     if (RegisterForm.valid) {
@@ -101,7 +109,7 @@ export class RegisterComponent implements OnInit {
           console.log(response);
           if (response.isSuccess) {
             this.isLoading=false
-            this._router.navigateByUrl("/signin") 
+            this._router.navigateByUrl("/signin")
           }
         },
         error: (error) => {

@@ -11,13 +11,39 @@
     <p class="bold-text pt-2 pe-2">الأقسام</p>
   </div>
   <div class="categories pe-2">
-    <div class="category-item d-flex align-items-center justify-content-between" *ngFor="let cat of category">
+    <div class="category-item d-flex align-items-center justify-content-between" *ngFor="let cat of categories">
       <div>
         <input class="form-check-input ms-3" type="checkbox" [(ngModel)]="cat.selected" (change)="categorySelected()" />
         <label class="form-check-label">
-          {{cat.name}}
+          {{ cat.title }}
         </label>
       </div>
     </div>
   </div>
+</div>
+<div class="mt-3 text-end w-75">
+  <p class="bold-text pt-2 pe-2">الفلترة بواسطة الميزانية</p>
+  <div class="mb-3">
+    <label for="minBudget" class="form-label">الحد الأدنى</label>
+    <input
+      type="number"
+      class="form-control"
+      id="minBudget"
+      name="minBudget"
+      [(ngModel)]="minBudget"
+      (blur)="applyFilters()"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="maxBudget" class="form-label">الحد الأقصى</label>
+    <input
+      type="number"
+      class="form-control"
+      id="maxBudget"
+      name="maxBudget"
+      [(ngModel)]="maxBudget"
+      (blur)="applyFilters()"
+    />
+  </div>
+  <button class="btn btn-primary" (click)="resetFilters()">إعادة الضبط</button>
 </div>
