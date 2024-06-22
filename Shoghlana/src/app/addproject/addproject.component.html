@@ -133,31 +133,43 @@
             </div>
 
             <div class="d-flex">
-              <div class="col-5 ms-5">
-                <label for="offer-value"> الميزانية المتوقعة </label>
+              <div class="col-5 ms-5  ">
+                <label for="offer-value">  الحد الادنى للميزانية المتوقعة </label>
                 <select class="form-select" required>
                   <option>1-5</option>
                   <option>2-5</option>
                   <option>3</option>
                   <option>4</option>
                 </select>
+
                 <small>اختر ميزانية مناسبة لتحصل على عروض جيدة</small>
               </div>
-              <div class="col-6">
-                <label for="delivery-time">
-                  المدة المتوقعة للتسليم <span> (بالأيام) </span></label
-                >
-                <input
-                  type="number"
-                  id="delivery-time"
-                  name="delivery-time"
-                  class="w-75"
-                  required
-                />
-                <br />
-                <small>متى تحتاج استلام مشروعك</small>
+              <div class="col-5">
+                <label for="offer-value">  الحد الاعلي للميزانية المتوقعة </label>
+                <select class="form-select" required>
+                  <option>1-5</option>
+                  <option>2-5</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
+               
               </div>
+             
             </div>
+            <div>
+              <label for="delivery-time">
+               المدة المتوقعة للتسليم <span> (بالأيام) </span></label
+             >
+             <input
+               type="number"
+               id="delivery-time"
+               name="delivery-time"
+               class="w-75"
+               required
+             />
+             <br />
+             <small>متى تحتاج استلام مشروعك</small>
+           </div>
             <div class="my-3">
               <input type="file" id="file1" name="upload" />
             </div>

@@ -63,7 +63,6 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   addProposal() {
-
 let formData: FormData;
 formData = new FormData();
 
