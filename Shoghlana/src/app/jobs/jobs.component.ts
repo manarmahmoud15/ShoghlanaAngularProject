@@ -29,7 +29,7 @@ export class JobsComponent {
         description: 'تصميم واعمال فنيه واحترافيه',
         price: '25$',
         imgURL: 'https://fakeimg.pl/300/',
-        rate: 5,
+       // rate: 5,
         catID: 1,
       },
       {
@@ -40,7 +40,7 @@ export class JobsComponent {
         description: 'تصميم واعمال فنيه واداريه',
         price: '5$',
         imgURL: 'https://fakeimg.pl/300/',
-        rate: 3,
+       // rate: 3,
         catID: 1,
       },
       {
@@ -51,7 +51,7 @@ export class JobsComponent {
         description: 'تصميم بطاقات اعمال',
         price: '5$',
         imgURL: 'https://fakeimg.pl/300/',
-        rate: 4,
+       // rate: 4,
         catID: 1,
       },
 
@@ -63,7 +63,7 @@ export class JobsComponent {
         description: 'برمجه وتطوير المواقع والتطبيقات',
         price: '25$',
         imgURL: 'https://fakeimg.pl/300/',
-        rate: 2,
+      //  rate: 2,
         catID: 2,
       },
       {
@@ -74,7 +74,7 @@ export class JobsComponent {
         description: 'برمجه مواقع الانترنت',
         price: '25$',
         imgURL: 'https://fakeimg.pl/300/',
-        rate: 0,
+      //  rate: 0,
         catID: 3,
       },
     ]),

@@ -1,0 +1,17 @@
+.feedback-section {
+    border-color: #ccc;
+    background-color: #f9f9f9;
+  }
+  
+  .feedback-section h6 {
+    font-weight: bold;
+  }
+  
+  .feedback-section p {
+    margin-bottom: 0;
+  }
+  
+  .rating {
+    font-weight: bold;
+  }
+  

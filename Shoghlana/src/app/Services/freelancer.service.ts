@@ -15,6 +15,6 @@ export class FreelancerService {
     return this.httpclient.get<any>(`${environment.baseUrl}/Freelancer`);
   }
   getFreelancerById(id:number):Observable<any>{
-return this.httpclient.get<any>(`${environment.baseUrl}Freelancer/${id}`)
+return this.httpclient.get<any>(`${environment.baseUrl}/Freelancer/${id}`)
   }
 }
