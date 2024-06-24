@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
-import { timeout } from 'rxjs';
+import { BehaviorSubject, timeout } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -10,16 +10,20 @@ export class ChatService {
   .configureLogging(signalR.LogLevel.Information)
   .build()
 
+  public messages$ = new BehaviorSubject<any>([]);
+  public connectedUsers$ =new BehaviorSubject<string[]>([]);
+  public messages : any[] =[];
+  public users:any[]=[];
   constructor() { 
     this.start();
     this.connection.on("ReceiveMessage", (user:string , message:string , messageTime : string)=>{
-      console.log("user :" ,user);
-      console.log("msg :" ,message);
-      console.log("msgTime :" ,messageTime)
+
+      this.messages =[...this.messages , {user,message,messageTime}];
+      this.messages$.next(this.messages);
 
     });
     this.connection.on("ConnectedUser" , (users:any)=>{
-      console.log("users :" , users)
+      this.connectedUsers$.next(users);
     })
   }
   public async start (){
