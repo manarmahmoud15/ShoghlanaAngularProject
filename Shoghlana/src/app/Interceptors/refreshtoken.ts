@@ -1,15 +1,29 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
-import { Injectable, Injector } from "@angular/core";
-import { Router } from "@angular/router";
-// import {MatSnackBarModule} from '@angular/material/snack-bar';
-// private _snackbar :MatSnackBar
-import { Observable } from "rxjs";
-"@angular"
-@Injectable()
-export class  Refreshtoken implements HttpInterceptor {
-  constructor(private inject:Injector,private router:Router){}
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    throw new Error("Method not implemented.");
+import { HttpRequest, HttpHandlerFn, HttpEvent, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
+import { inject } from '@angular/core';
+import { AuthService } from '../auth.service';
 
-  }
+export function refreshTokenInterceptor(req: HttpRequest<any>, next: HttpHandlerFn): Observable<HttpEvent<any>> {
+  const authService = inject(AuthService);
+  return next(req).pipe(
+    catchError((error: HttpErrorResponse) => {
+      if (error.status === 401) {
+        return authService.RefreshToken().pipe(
+          switchMap((newToken: string) => {
+            const newRequest = req.clone({
+              setHeaders: {
+                Authorization: `Bearer ${newToken}`
+              }
+            });
+            return next(newRequest);
+          }),
+          catchError(err => {
+            return throwError(err);
+          })
+        );
+      }
+      return throwError(error);
+    })
+  );
 }
