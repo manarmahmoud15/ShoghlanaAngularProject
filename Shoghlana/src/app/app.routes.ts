@@ -66,7 +66,7 @@ export const routes: Routes = [
 
   { path: 'clientProfile/:id', component: ClientProfileComponent },
 
-  {path:'addproject' , loadComponent:()=> 
+  {path:'addproject' , loadComponent:()=>
     import('./addproject/addproject.component').then(obj => obj.AddprojectComponent)
   },
   {path: 'addservice' , loadComponent:()=>

@@ -8,9 +8,12 @@ import { GoogleLoginProvider, SocialAuthServiceConfig } from '@abacritt/angularx
 import { provideStore } from '@ngrx/store';
 import { increaseCounter } from './Store/Counter/counter.action';
 import { counterReducer } from './Store/Counter/counter.reducer';
+import { refreshTokenInterceptor } from './Interceptors/refreshtoken';
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideClientHydration(), provideHttpClient(withFetch(),
-    withInterceptors([authinterceptors]))
+    withInterceptors([refreshTokenInterceptor])
+    // withInterceptors([authinterceptors]
+    )
     ,provideStore({
 counter:counterReducer
     })
@@ -31,7 +34,7 @@ counter:counterReducer
             prompt : 'consent'
           }
         ),
-      
+
       },
     ],
     onError: (err) => {
