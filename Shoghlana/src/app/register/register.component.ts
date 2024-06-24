@@ -18,13 +18,14 @@ import { GoogleAuthData } from '../Models/google-auth-data';
 import { RoleSelectionPopupComponent } from "../role-selection-popup/role-selection-popup.component";
 import { UserRole } from '../Enums/UserRole';
 import { UserRoleServiceService } from '../Services/UserRole/user-role-service.service';
+import swal from 'sweetalert';
 
 @Component({
     selector: 'app-register',
     standalone: true,
-    templateUrl: './register.component.html',
+    templateUrl:'./register.component.html',
     styleUrl: './register.component.css',
-    imports: [CommonModule, FormsModule , ReactiveFormsModule, HttpClientModule, GoogleSigninButtonModule, RoleSelectionPopupComponent]
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, GoogleSigninButtonModule, RoleSelectionPopupComponent]
 })
 export class RegisterComponent implements OnInit {
   isLoading:boolean=false;
@@ -32,6 +33,9 @@ export class RegisterComponent implements OnInit {
   RegisterForm: FormGroup;
   googleAuthData : GoogleAuthData = {} as GoogleAuthData
   UserRole : number = {} as number
+  email: string = '';
+  showModal2: boolean = false;
+
   constructor(private _authoService: AuthService, private _router: Router,
     private SocialAuthService : SocialAuthService,
     private UserroleService : UserRoleServiceService
@@ -100,6 +104,24 @@ export class RegisterComponent implements OnInit {
 //   addnewphone(){
 // this.Phones.push(new FormControl(''))
 //   }
+confirm() {
+  const toemail = this.email; // Ensure this.email is correctly populated with the email address
+  console.log(toemail);
+  this._authoService.ConfirmMail(toemail).subscribe({
+    next: (response) => {
+      console.log(response)
+      console.log(response.isSuccess);
+      if (response.isSuccess) {
+        window.open(`https://mail.google.com/mail/u/0/#inbox=${toemail}`, '_blank');
+        this._router.navigateByUrl("/signin");
+      }
+    },
+    error: (error) => {
+      alert(`Error sending confirmation email: ${error}`)
+    }
+  });
+}
+
   handleRegister(RegisterForm: FormGroup) {
     this.isLoading=true;
     if (RegisterForm.valid) {
@@ -109,7 +131,37 @@ export class RegisterComponent implements OnInit {
           console.log(response);
           if (response.isSuccess) {
             this.isLoading=false
-            this._router.navigateByUrl("/signin")
+            this.email = RegisterForm.value.email;
+            console.log(this.email);
+
+           swal({
+
+            text:" هل تريد تأكيد تسجيل حسابك ؟ ",
+            buttons: {
+              confirm: {
+                  text: "تأكيد",
+                  value: true,
+                  visible: true,
+                  className: "btn-success",
+                  closeModal: true,
+              },
+              cancel: {
+                  text: "إلغاء",
+                  value: null,
+                  visible: true,
+                  className: "btn-danger",
+                  closeModal: true,
+              }
+          }
+          }).then((value) => {
+            if (value) {
+              this.confirm();    // Handle confirmation button click
+            } else {
+                // Handle cancel button click or click outside the modal
+                // Optional: You can omit this part if not needed
+
+            }
+        });
           }
         },
         error: (error) => {
@@ -127,4 +179,5 @@ export class RegisterComponent implements OnInit {
   {
      console.log(role);
   }
+
 }

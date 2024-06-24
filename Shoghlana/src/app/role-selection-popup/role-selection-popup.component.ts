@@ -18,11 +18,11 @@ export class RoleSelectionPopupComponent {
  freelancer : UserRole = UserRole.Freelancer
  client : UserRole = UserRole.Client
   constructor(private UserRoleService : UserRoleServiceService) {
-  //  this.RoleSelected = new EventEmitter<string>();    
+  //  this.RoleSelected = new EventEmitter<string>();
       }
 
 
-      
+
   selectRole(selectedRole : UserRole)
   {
     console.log(selectedRole)
