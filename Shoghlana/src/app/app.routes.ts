@@ -35,6 +35,15 @@ export const routes: Routes = [
     path: 'offers', loadComponent: () => import('./offers/offers.component')
       .then((obj) => obj.OffersComponent)
   },
+  {path:'joinRoom' ,loadComponent:()=>import('./join-room/join-room.component')
+    .then((obj)=>obj.JoinRoomComponent)
+  },
+  {path:'welcome',loadComponent:()=>import('./welcome/welcome.component')
+    .then((obj)=>obj.WelcomeComponent)
+  },
+  {path:'chat' , loadComponent:()=>import('./chat/chat.component')
+    .then((obj)=>obj.ChatComponent)
+  },
     { path: 'projects', loadComponent:()=>import('./projects/projects.component').then((Obj)=>Obj.ProjectsComponent) },
   //  { path : 'projectDetails/:id' , loadComponent:()=> import('./project-details/project-details.component')
       // .then((obj) =>obj.ProjectDetailsComponent)} ,

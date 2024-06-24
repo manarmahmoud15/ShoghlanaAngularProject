@@ -1,0 +1,8 @@
+<div>
+    <h1>{{ title }}</h1>
+    <ul>
+      <li *ngFor="let notification of notifications">{{ notification.message }}</li>
+    </ul>
+    <button (click)="sendTestNotification()">Send Test Notification</button>
+  </div>
+  

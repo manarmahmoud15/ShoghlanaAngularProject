@@ -1,0 +1,12 @@
+.container {
+    max-width: 100%;
+    height: 100vh;
+    margin: auto;
+    background-color: #1dbf73;
+    background-image: linear-gradient(180deg , #1dbf73 25%,  rgb(194, 194, 194) 100%);
+}
+.center {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
