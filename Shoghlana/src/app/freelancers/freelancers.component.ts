@@ -12,23 +12,33 @@ import { FreelancerService } from '../Services/freelancer.service';
   styleUrls: ['./freelancers.component.css']
 })
 export class FreelancersComponent implements OnInit {
+
   FreelancersArr: IFreelancer[] = [];
 
   constructor(private _FreelancerService: FreelancerService) { }
 
   ngOnInit(): void {
+    this.loadFreelancers();
+  }
+
+  loadFreelancers() {
     this._FreelancerService.getAllFreelancers().subscribe({
       next: (res) => {
-        console.log(res); // Log the response to verify its structure
 
+        console.log(res);
         // Ensure the response has the expected structure before mapping
         if (res.isSuccess && Array.isArray(res.data)) {
-          this.FreelancersArr = res.data.map((freelancer: { personalImageBytes: any; }) => {
-            return {
-              ...freelancer,
-              personalImageBytes: freelancer.personalImageBytes ? `data:image/png;base64,${freelancer.personalImageBytes}` : null
-            };
+
+          this.FreelancersArr = res.data;
+
+          this.FreelancersArr.forEach(freelancer => {
+            if (freelancer.personalImageBytes == null || freelancer.personalImageBytes == 'data:image/png;base64,${freelancer.personalImageBytes}') {
+              freelancer.personalImageBytes = '././assets/imgs/default-profile-picture-avatar-png-green.png';
+            } else {
+              freelancer.personalImageBytes = `data:image/png;base64,${freelancer.personalImageBytes}`;
+            }
           });
+
         } else {
           console.error('Unexpected response structure:', res);
         }

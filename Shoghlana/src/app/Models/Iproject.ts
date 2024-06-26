@@ -7,6 +7,11 @@ export interface Iproject{
     description : string,
     poster : string,
     skills : Skill[],
-   // timePublished : Time
+    link : string ,
+    images : string[],
+    skillIDs : number[],
+    freelancerId : number ,
+
+   timePublished : string,
    showSkills? : boolean 
 }

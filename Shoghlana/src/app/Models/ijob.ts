@@ -9,57 +9,62 @@ import { Irate } from "./Irate";
 
 export interface Ijob {
 
-    id: number,
+  id: number,
 
-    title: String,
+  title: String,
 
-    description: String,
+  description: String,
 
-    postTime?: string,
+  postTime?: string,
   // postTime? : Date,
- formattedPostTime? : string,
-    price: string,
+  formattedPostTime?: string,
 
-    minBudget: number;
+  price: string,
 
-    maxBudget: number;
+  minBudget: number;
 
-    imgURL: string,
+  maxBudget: number;
 
-    experienceLevel: ExperienceLevel;
+  imgURL: string,
 
-    status: JobStatus;
+  experienceLevel: ExperienceLevel;
 
-    skills: ISkill[];
+  status: JobStatus;
 
-    proposals?: IProposal[];
+  skills: ISkill[];
 
-    freelancers?: IFreelancer[];
-   freelancerName : string ,
-    // freelancerImg : string ,
-    //----------------------------------
+  proposals?: IProposal[];
 
-    acceptedFreelancerId?: number;
+  freelancers?: IFreelancer[];
 
-    acceptedFreelancerName?: string,
+  freelancerName: string,
 
-    freelancerImg?: string,
+  poster : string ; // doesn't exist in the API models => just added it here to display a default img
 
-    clientId: number;
+  // freelancerImg : string ,
+  //----------------------------------
 
-    clientName: string;
+  acceptedFreelancerId?: number;
 
-    clientImage: string;
+  acceptedFreelancerName?: string,
 
-    categoryTitle?: string;
- catID : Number ,
-    categoryId: number,
+  freelancerImg?: string,
 
-    category: ICategory;
+  clientId: number;
 
-    proposalsCount: number;
+  clientName: string;
 
-    rate?: IRate;
+  clientImage: string;
+
+  categoryTitle?: string;
+  catID: Number,
+  categoryId: number,
+
+  category: ICategory;
+
+  proposalsCount: number;
+
+  rate?: IRate;
   // rate? : Irate,
-  showFeedback? : boolean
+  showFeedback?: boolean
 }
