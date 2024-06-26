@@ -14,7 +14,6 @@ import { CommonModule } from '@angular/common';
 })
 export class ChatComponent implements OnInit ,AfterViewChecked{
 
-
   ChatService = inject(ChatService);
   inputMessage = "";
   messages : any []= [];

@@ -17,6 +17,35 @@
           <a class="nav-link" routerLink="/register">انشاء حساب</a>
         </li>
         <li class="nav-item active">
+          <a class="nav-link" routerLink="/joinRoom"> جوين روم </a>
+        </li>
+        <div class="navbar">
+          <button class="dropdown-button" (click)="toggleDropdown()"><i class="fa-regular fa-comment"></i></button>
+          <div class="dropdown-container" *ngIf="isOpen">
+            <div class="dropdown-content">
+              <p *ngIf="messages.length === 0">No new messages</p>
+              <!-- <div *ngFor="let message of messages">
+                <div [ngClass]="{'incoming_msg': message.user !== loggedInUserName, 'outgoing_msg': message.user === loggedInUserName}">
+                  <div *ngIf="message.user !== loggedInUserName" class="incoming_msg_img">
+                    <img src="https://ptetutorials.com/images/user-profile.png" alt="user">
+                  </div>
+                  <div *ngIf="message.user !== loggedInUserName" class="received_msg">
+                    <div class="received_withd_msg">
+                      <p>{{ message.message }}</p>
+                      <span class="time_date">{{ message.user }} | {{ message.messageTime | date: 'medium' }}</span>
+                    </div>
+                  </div>
+                  <div *ngIf="message.user === loggedInUserName" class="sent_msg">
+                    <p>{{ message.message }}</p>
+                    <span class="time_date">{{ message.user }} | {{ message.messageTime | date: 'medium' }}</span>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+        
+        <li class="nav-item active">
           <a class="nav-link" routerLink="/clientProfile/:id"> الملف الشخصي</a>
         </li>
         <li class="nav-item active">
@@ -42,8 +71,7 @@
         </li>
         <li class="nav-item active">
           <a class="nav-link" routerLink="/home">الرئيسية</a>
-        </li>
-     
+        </li>  
       </ul>
     </div>
   </div>
