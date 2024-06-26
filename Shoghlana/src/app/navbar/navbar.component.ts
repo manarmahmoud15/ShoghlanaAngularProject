@@ -4,6 +4,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Component, HostListener, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ChatService } from '../Services/chat/chat.service';
+import { AuthService } from '../auth.service';
+
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -12,6 +14,24 @@ import { ChatService } from '../Services/chat/chat.service';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent implements OnInit {
+  isLogged:boolean=false;
+  logOut(){
+    this._authService.logOut();
+  }
+constructor(private _authService : AuthService){
+ //using behavoir subject this code works with every change in dom
+  _authService.userdata.subscribe({
+    next:()=>{
+      if(_authService.userdata.getValue()!==null){
+    this.isLogged=true
+  }
+  else{
+    this.isLogged= false
+  }
+    }
+  })
+}
+
   isOpen = false;
   messages: any;
 
@@ -36,4 +56,6 @@ export class NavbarComponent implements OnInit {
     });
 
   }
+
+  
 }

@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { IClientJob } from '../Models/iclient-job';
 import { CommonModule, DatePipe, Location } from '@angular/common';
-import { ProjectService } from '../Services/Projects/project.service.service';
 import { IProposal } from '../Models/iproposal';
 import { FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ProposalService } from '../Services/proposal.service';
 import swal from 'sweetalert';
+import { ProjectService } from '../Services/Projects/project.service';
 
 @Component({
   selector: 'app-project-details',
@@ -41,8 +41,10 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
     const id = +this._activatedRoute.snapshot.paramMap.get('id')!;
-    this._ProjectService.getProjectById(id).subscribe({
+
+    this._ProjectService.GetById(id).subscribe({
       next: (res) => {
         if (res.isSuccess) {
           this.clientJob = res.data;
@@ -51,7 +53,9 @@ export class ProjectDetailsComponent implements OnInit {
           console.error('Unexpected response structure:', res);
         }
       },
-      error: (err) => console.log(err),
+      error: (err) => {
+        console.log(err);
+      },
     });
   }
 

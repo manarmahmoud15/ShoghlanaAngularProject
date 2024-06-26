@@ -5,7 +5,8 @@
       <!-- Team item -->
       <div class="col-xl-3 col-sm-6 mb-4" *ngFor="let freelancer of FreelancersArr">
         <div class="bg-white rounded shadow-lg py-5 px-4">
-          <img [src]="freelancer.personalImageBytes" [alt]="freelancer.name + ' image'" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+          <!-- <img [src]="freelancer.personalImageBytes" [alt]="freelancer.name + ' image'" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm"> -->
+          <img [src]="freelancer.personalImageBytes" alt="Freelancer Image" width="100" height="100">
           <h5 class="mb-0 text">{{freelancer.name}}</h5>
           <span class="small text-uppercase text-muted text">{{freelancer.title}}</span>
           <div>

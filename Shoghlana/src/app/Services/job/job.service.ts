@@ -48,7 +48,7 @@ export class JobService {
     return this._HttpClient.get<any>(`${environment.baseUrl}/job/${Id}`)
   }
 
-  GetByfreelancerId(Id: number): Observable<any> {
+  GetByFreelancerId(Id: number): Observable<any> {
     return this._HttpClient.get<any>(`${environment.baseUrl}/job/freelancer/${Id}`)
   }
 

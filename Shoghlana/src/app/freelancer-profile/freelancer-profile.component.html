@@ -5,27 +5,31 @@
         <a href="#">
           <img
             class="media-object mw-150 border rounded-circle shadow"
-            src="data:image/png;base64,{{freelancer.personalImageBytes}}"
-            alt="{{ freelancer.name }} image"
-            height="250"
-            width="250"
+            [src]="freelancer.personalImageBytes"
+            [alt]="freelancer.name + ' image'"
+              height="250"
+              width="250"
           />
         </a>
       </div>
       <div class="media-body mr-4">
-        <h2 class="media-heading" style="direction: rtl;">{{ freelancer?.name }}</h2>
-        <p class="lead text-muted" *ngIf="freelancer.title; else defaultTitle">{{ freelancer?.title }}</p>
+        <h2 class="media-heading" style="direction: rtl">
+          {{ freelancer.name }}
+        </h2>
+        <p class="lead text-muted" *ngIf="freelancer.title; else defaultTitle">
+          {{ freelancer.title }}
+        </p>
         <ng-template #defaultTitle>
-          <span class="text-danger">
-            لم يضف التخصص بعد
-          </span>
+          <span class="text-danger"> لم يضف التخصص بعد </span>
         </ng-template>
-        
+
         <div class="media-links mt-3">
           <ul class="list-inline">
             <li class="list-inline-item">
               <a href="#" title="Facebook Link">
-                <span class="fa-brands fa-facebook-square fs-3 text-primary"></span>
+                <span
+                  class="fa-brands fa-facebook-square fs-3 text-primary"
+                ></span>
               </a>
             </li>
             <li class="list-inline-item">
@@ -57,35 +61,33 @@
   <div class="row mt-4">
     <div class="col-md-4">
       <div class="card mb-4 shadow-sm">
-        <div class="card-header bg-primary text-white" style="direction: rtl;">
+        <div class="card-header bg-primary text-white" style="direction: rtl">
           <span class="card-icon"><i class="fa fa-trophy m-2"></i></span>
           <span class="card-title ml-2">نبذة عني</span>
         </div>
-        <div class="card-body" style="direction: rtl;">
-          <p *ngIf="freelancer.overview; else defaultOverview">{{ freelancer?.overview }}</p> 
-         
-          <ng-template #defaultOverview >
-          <span class="text-danger">  لم يكتب نبذة شخصية عن نفسه بعد </span>
+        <div class="card-body" style="direction: rtl">
+          <p *ngIf="freelancer.overview; else defaultOverview">
+            {{ freelancer.overview }}
+          </p>
+
+          <ng-template #defaultOverview>
+            <span class="text-danger"> لم يكتب نبذة شخصية عن نفسه بعد </span>
           </ng-template>
-          
         </div>
       </div>
 
       <div class="card mb-4 shadow-sm">
-        <div class="card-header bg-primary text-white" style="direction: rtl;">
+        <div class="card-header bg-primary text-white" style="direction: rtl">
           <span class="card-icon"><i class="fa fa-pencil m-2"></i></span>
           <span class="card-title ml-2">مهاراتي</span>
         </div>
-        <div class="card-body" style="direction: rtl;">
+        <div class="card-body" style="direction: rtl">
           <ul *ngIf="freelancer.skills[0]; else defaultSkills">
             <li *ngFor="let skill of freelancer?.skills">{{ skill.title }}</li>
           </ul>
           <ng-template #defaultSkills>
-            <span class="text-danger">
-              لا توجد مهارات مضافة حتي الان
-            </span>
+            <span class="text-danger"> لا توجد مهارات مضافة حتي الان </span>
           </ng-template>
-          
         </div>
       </div>
     </div>
@@ -97,7 +99,7 @@
             class="nav-link"
             routerLinkActive="active"
             [routerLink]="['/freelancerprofile', freelancer.id, 'portfolio']"
-            [queryParams]="{ portfolio: StringifiedPortfolio }" 
+          >
             >معرض الأعمال</a
           >
         </li>
@@ -105,8 +107,8 @@
           <a
             class="nav-link"
             routerLinkActive="active"
-            [routerLink]="['/freelancerprofile', freelancer?.id, 'workhistory']"
-            [queryParams]="{ workingHistory: StringifiedWorkingHistory }" 
+            [routerLink]="['/freelancerprofile', freelancer.id, 'workhistory']"
+          >
             >المشاريع</a
           >
         </li>
@@ -117,4 +119,3 @@
     </div>
   </div>
 </main>
-

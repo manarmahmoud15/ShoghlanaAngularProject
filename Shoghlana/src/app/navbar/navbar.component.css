@@ -72,6 +72,7 @@
   margin: 0 10px;
 
 }
+
 .dropdown-container {
   position: relative;
   display: inline-block;
@@ -98,6 +99,9 @@
 
 .dropdown-container .dropdown-content {
   display: block;
+}
+.navbar-nav{
+  cursor: pointer;
 }
 
 .navbar-nav .nav-link {
