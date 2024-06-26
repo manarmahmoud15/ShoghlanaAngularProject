@@ -5,7 +5,6 @@ import { Router, RouterLink } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { ProjectSideBarComponent } from '../project-side-bar/project-side-bar.component';
 import { IClientJob } from '../Models/iclient-job';
-import { ProjectService } from '../Services/Projects/project.service.service';
 import { StaticClientJobsService } from '../Services/ClientJob/static-client-jobs.service';
 import { Ijob } from '../Models/ijob';
 import { ICategory } from '../Models/icategory';
@@ -204,5 +203,4 @@ export class ProjectsComponent implements OnInit {
       error: (err) => console.log(err)
     });
   }
-
 }
