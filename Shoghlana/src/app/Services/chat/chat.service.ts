@@ -14,7 +14,7 @@ export class ChatService {
   public connectedUsers$ =new BehaviorSubject<string[]>([]);
   public messages : any[] =[];
   public users:any[]=[];
-  constructor() { 
+  constructor() {
     this.start();
     this.connection.on("ReceiveMessage", (user:string , message:string , messageTime : string)=>{
 
@@ -33,7 +33,7 @@ export class ChatService {
     }
     catch (error){
       console.log(error);
-      
+
     }
   }
 

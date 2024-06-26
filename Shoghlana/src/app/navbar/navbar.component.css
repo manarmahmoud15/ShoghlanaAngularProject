@@ -15,6 +15,9 @@
   margin: 0 10px;
 
 }
+.navbar-nav{
+  cursor: pointer;
+}
 
 .navbar-nav .nav-link {
   position: relative;

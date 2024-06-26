@@ -24,34 +24,34 @@ export const routes: Routes = [
     .then((obj)=>obj.HomeComponent)},
     {path:'signin',loadComponent:()=>import('./login/login.component')
     .then((obj)=>obj.LoginComponent)},
-    {path:'galleryworks',loadComponent:()=>import('./works-gallery/works-gallery.component')
+    {path:'galleryworks' , canActivate:[authGuard], loadComponent:()=>import('./works-gallery/works-gallery.component')
     .then((obj)=>obj.WorksGalleryComponent)},
-    {path:'freelancers',loadComponent:()=>import('./freelancers/freelancers.component')
+    {path:'freelancers',  canActivate:[authGuard],loadComponent:()=>import('./freelancers/freelancers.component')
     .then((obj)=>obj.FreelancersComponent )},
-    {path:'works',loadComponent:()=>import('./work/work.component')
+    {path:'works',  canActivate:[authGuard],loadComponent:()=>import('./work/work.component')
     .then((obj)=>obj.WorkComponent )},
-    { path: 'jobs', loadComponent:()=>import('./jobs/jobs.component').then((obj)=>obj.JobsComponent) },
+    { path: 'jobs',  canActivate:[authGuard], loadComponent:()=>import('./jobs/jobs.component').then((obj)=>obj.JobsComponent) },
         {
-    path: 'offers', loadComponent: () => import('./offers/offers.component')
+    path: 'offers',  canActivate:[authGuard], loadComponent: () => import('./offers/offers.component')
       .then((obj) => obj.OffersComponent)
   },
-  {path:'joinRoom' ,loadComponent:()=>import('./join-room/join-room.component')
+  {path:'joinRoom' ,  canActivate:[authGuard], loadComponent:()=>import('./join-room/join-room.component')
     .then((obj)=>obj.JoinRoomComponent)
   },
-  {path:'welcome',loadComponent:()=>import('./welcome/welcome.component')
+  {path:'welcome',  canActivate:[authGuard],loadComponent:()=>import('./welcome/welcome.component')
     .then((obj)=>obj.WelcomeComponent)
   },
-  {path:'chat' , loadComponent:()=>import('./chat/chat.component')
+  {path:'chat' ,  canActivate:[authGuard], loadComponent:()=>import('./chat/chat.component')
     .then((obj)=>obj.ChatComponent)
   },
-    { path: 'projects', loadComponent:()=>import('./projects/projects.component').then((Obj)=>Obj.ProjectsComponent) },
+    { path: 'projects',  canActivate:[authGuard], loadComponent:()=>import('./projects/projects.component').then((Obj)=>Obj.ProjectsComponent) },
   //  { path : 'projectDetails/:id' , loadComponent:()=> import('./project-details/project-details.component')
       // .then((obj) =>obj.ProjectDetailsComponent)} ,
-      {path : 'clientProfile/:id' , component : ClientProfileComponent}, 
+      {path : 'clientProfile/:id' , component : ClientProfileComponent},
           { path: 'project-details/:id', loadComponent: () => import('./project-details/project-details.component').then((obj) => obj.ProjectDetailsComponent) },
 
-      { 
-      path: 'freelancerprofile/:id',
+      {
+      path: 'freelancerprofile/:id',  canActivate:[authGuard],
       loadComponent: () => import('./freelancer-profile/freelancer-profile.component').then(obj => obj.FreelancerProfileComponent),
       children: [
         //  { path: '', redirectTo: 'portfolio', pathMatch: 'full' },
@@ -59,10 +59,10 @@ export const routes: Routes = [
           { path: 'workhistory', loadComponent: () => import('./freelancer-work-history/freelancer-work-history.component').then(obj => obj.FreelancerWorkHistoryComponent) } ,
           { path: 'edit', loadComponent: () => import('./freelancer-edit-profile/freelancer-edit-profile.component')
             .then(obj => obj.FreelancerEditProfileComponent) }
-          
+
       ]
     },
- 
+
 
   { path: 'clientProfile/:id', component: ClientProfileComponent },
 
