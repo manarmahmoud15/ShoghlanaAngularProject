@@ -69,9 +69,8 @@ export const routes: Routes = [
 
   { path: 'clientProfile/:id', component: ClientProfileComponent },
 
-  {
-    path: 'addproject', loadComponent: () =>
-      import('./addproject/addproject.component').then(obj => obj.AddprojectComponent)
+  {    path: 'addproject', loadComponent: () =>
+      import('./addproject/addproject.component').then(obj => obj.AddprojectComponent)},
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     {path:'register',loadComponent:()=>import('./register/register.component')
     .then((obj)=>obj.RegisterComponent)},
