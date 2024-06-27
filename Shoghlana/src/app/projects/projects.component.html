@@ -8,21 +8,49 @@
           <button
             class="btn btn-primary dropdown-toggle"
             type="button"
-            id="dropdownMenuButton"
+            id="dropdownMenuButton1"
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            الاحدث
+            {{ IsNew ? 'الاحدث' : 'الاقدم' }}
           </button>
           <ul
             class="dropdown-menu text-end"
-            aria-labelledby="dropdownMenuButton"
+            aria-labelledby="dropdownMenuButton1"
           >
-            <li><a class="dropdown-item" href="#">الاقدم</a></li>
-            <li><a class="dropdown-item" href="#">الاقل عروضا</a></li>
-            <li><a class="dropdown-item" href="#">الاكثر عروضا</a></li>
+            <li>
+              <a class="dropdown-item" href="#" (click)="selectNewOption(true); $event.preventDefault();">الاحدث</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" (click)="selectNewOption(false); $event.preventDefault();">الاقدم</a>
+            </li>
           </ul>
         </div>
+        
+        <div class="dropdown">
+          <button
+            class="btn btn-primary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton2"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {{ HasManyProposals ? 'الاكثر عروضا' : 'الاقل عروضا' }}
+          </button>
+          <ul
+            class="dropdown-menu text-end"
+            aria-labelledby="dropdownMenuButton2"
+          >
+            <li>
+              <a class="dropdown-item" href="#" (click)="selectProposalOption(false); $event.preventDefault();">الاقل عروضا</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#" (click)="selectProposalOption(true); $event.preventDefault();">الاكثر عروضا</a>
+            </li>
+          </ul>
+        </div>
+        
+        
         <div class="d-flex align-items-center border p-2 rounded">
           <div class="form-check">
             <input class="form-check-input"

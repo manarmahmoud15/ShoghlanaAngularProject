@@ -18,17 +18,18 @@ export class AuthService {
     private UserRoleService: UserRoleServiceService,
     private _router :Router
   ) {
-var token=localStorage.getItem('token')
-    if(token!==null){
-         this.decodeUserData();
+// var token=localStorage.getItem('token')
+//     if(token!==null){
+//          this.decodeUserData();
          //when refresh he loggged out but with this condition we check if token still in local storage
         // we call decode again
-    }
+  //   }
   }
 
   setEmail(email: string) {
     this.email = email;
   }
+
   decodeUserData() {
     const encodedToken = localStorage.getItem('token');
     if (encodedToken) {

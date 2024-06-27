@@ -25,8 +25,14 @@ export class FreelancerProfileComponent implements OnInit {
 
   currentFreelancerId !: number;
 
-  constructor(private activeRoute: ActivatedRoute, private freelancerService: FreelancerService,
-    private router: Router) {
+  editMode: boolean = false;
+
+
+  constructor(
+    private activeRoute: ActivatedRoute,
+     private freelancerService: FreelancerService,
+    private router: Router
+  ) {
 
     console.log("Freelancer obj ctor :");
 
@@ -89,6 +95,22 @@ export class FreelancerProfileComponent implements OnInit {
         }
       });
     }
+  }
+
+  updateOverview(): void {
+    // this.freelancerService.updateFreelancer(this.freelancer).subscribe({
+    //   next: (res) => {
+    //     if (res.isSuccess) {
+    //       this.editMode = false;
+    //     } else {
+    //       console.error(`Failed to update the overview, Status Code: ${res.Status}`);
+    //       console.error(`Server Message: ${res.Message}`);
+    //     }
+    //   },
+    //   error: (err) => {
+    //     console.error(err);
+    //   }
+    // });
   }
 
   private convertToBase64(bytes: any): string {
