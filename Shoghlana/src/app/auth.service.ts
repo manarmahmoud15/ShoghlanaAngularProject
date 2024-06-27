@@ -18,12 +18,12 @@ export class AuthService {
     private UserRoleService: UserRoleServiceService,
     private _router :Router
   ) {
-var token=localStorage.getItem('token')
-    if(token!==null){
-         this.decodeUserData();
-         //when refresh he loggged out but with this condition we check if token still in local storage
-        // we call decode again
-    }
+// var token=localStorage.getItem('token')
+//     if(token!==null){
+//          this.decodeUserData();
+//          //when refresh he loggged out but with this condition we check if token still in local storage
+//         // we call decode again
+//     }
   }
 
   setEmail(email: string) {
@@ -44,7 +44,11 @@ var token=localStorage.getItem('token')
   getEmail(): string {
     return this.email;
   }
-  register(userdata: object): Observable<any> {
+  register(userdata: any): Observable<any> {
+    console.log(userdata);
+    userdata.role = this.UserRoleService.get();
+    console.log(userdata);
+
     return this._httpClient.post(
       `${environment.baseUrl}/Auth/Register`,
       userdata
