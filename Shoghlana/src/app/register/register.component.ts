@@ -53,12 +53,14 @@ export class RegisterComponent implements OnInit {
         Validators.required,
         Validators.pattern(/^01[0125][0-9]{8}$/),
       ]),
+      role : new FormControl(this.UserroleService.get())
       // phoneNumbers:new FormArray([new FormControl('')])
     });
   }
 
   ngOnInit(): void {
     this.UserRole = this.UserroleService.get();
+    // console.log(this.UserRole)
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.SocialAuthService.authState.subscribe({
