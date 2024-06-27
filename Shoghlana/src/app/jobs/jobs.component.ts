@@ -66,32 +66,32 @@ export class JobsComponent implements OnInit {
     
     this.noJobsAvailable = false ;
 
-    this.jobService.getPaginatedJobs(this.currentPage , this.pageSize , this.selectedCategoryID  , this.minBudget , this.maxBudget).subscribe({
-      next: (res) => {
-        if (res.isSuccess) {
+    // this.jobService.getPaginatedJobs(this.currentPage , this.pageSize , this.selectedCategoryID  , this.minBudget , this.maxBudget).subscribe({
+    //   next: (res) => {
+    //     if (res.isSuccess) {
 
-          console.log("Pagination Succeed");
-          console.log(res);
+    //       console.log("Pagination Succeed");
+    //       console.log(res);
 
-          this.filteredJobs = res.data.items;
+    //       this.filteredJobs = res.data.items;
 
-          this.totalItems = res.data.totalItems || 0;
+    //       this.totalItems = res.data.totalItems || 0;
 
-          this.filteredJobs.forEach(job => {
-            job.postTime = this.datePipe.transform(job.postTime, 'medium') || 'Invalid Date';
-          });
+    //       this.filteredJobs.forEach(job => {
+    //         job.postTime = this.datePipe.transform(job.postTime, 'medium') || 'Invalid Date';
+    //       });
 
-        } else {
+    //     } else {
 
-          this.noJobsAvailable = true;
-          console.error('Response failed:', res);
+    //       this.noJobsAvailable = true;
+    //       console.error('Response failed:', res);
 
-        }
-      },
-      error: (err) => {
-        console.error('Error fetching categories', err);
-      }
-    })
+    //     }
+    //   },
+    //   error: (err) => {
+    //     console.error('Error fetching categories', err);
+    //   }
+    // })
   }
 
   onPageChange(page: number): void {
