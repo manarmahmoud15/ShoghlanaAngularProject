@@ -6,18 +6,25 @@ import { ApiAddProjectService } from '../Services/AddProject/api-add-project.ser
 import { Iproject } from '../Models/Iproject';
 import { IAddProject } from '../Models/iadd-project';
 import swal from 'sweetalert';
+import { SkillsService } from '../Services/Skill/skills.service';
+import { Skill } from '../Models/Skill';
+import { ISkill } from '../Models/i-skill';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-addproject',
   standalone: true,
-  imports: [RouterLink ,CommonModule, RouterLink , FormsModule ,ReactiveFormsModule],
+  imports: [RouterLink ,CommonModule, RouterLink , FormsModule ,ReactiveFormsModule,NgSelectModule],
   templateUrl: './addproject.component.html',
   styleUrl: './addproject.component.css'
 })
 export class AddprojectComponent implements OnInit{
   newProject : IAddProject = {}as IAddProject;
+  SkillsList : ISkill[] = []
   projectForm: FormGroup;
-  constructor(private _addprojectService:ApiAddProjectService , private fb: FormBuilder){
+  constructor(private _addprojectService:ApiAddProjectService , private fb: FormBuilder,
+    private skillService : SkillsService
+  ){
     this.projectForm = this.fb.group({
       title: [null, [Validators.required]],
       description: [null, [Validators.required]],
@@ -28,6 +35,12 @@ export class AddprojectComponent implements OnInit{
     });
   }
   ngOnInit(): void {
+    this.skillService.GetAll().subscribe({
+      next : (res) => {this.SkillsList = res.data
+        console.log(this.SkillsList)
+      },
+      error : (err) => {console.log(err)}
+    })
   }
   addProject() {
     let formData: FormData;

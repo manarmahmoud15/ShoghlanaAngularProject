@@ -7,7 +7,7 @@
       <div dir="rtl">
         <h6> <i class="fa-solid fa-backward-fast ms-2"></i> ابدأ بإنجاز مشروعك </h6>
         <p>
-            تستطيع إنجاز مشروعك بالشكل الذي تريده من خلال مستقل،
+            تستطيع إنجاز مشروعك بالشكل الذي تريده من خلال شغلانة
             أدخل تفاصيل المشروع والميزانية والمدة المتوقعة ليتم مراجعته ونشره
             مجاناً، بعد ذلك سيظهر للمستقلين في صفحة المشاريع ويقدموا عروضهم عليه
             لتختار العرض الأنسب لك ويبدأ المستقل بتنفيذ المشروع.
@@ -50,11 +50,10 @@
               <small>أدرج عنوانا موجزا يصف مشروعك بشكل دقيق</small>
             </div>
             <div class="col-11">
-              <label for="Project-Skills"> مهارات متعلقة بالمشروع </label>
 
               <div class="form-check d-flex justify-content-between">
                 <div class="form-check-item d-flex align-items-center">
-                  <input
+                  <!-- <input
                     class="form-check-input"
                     type="checkbox"
                     value=""
@@ -117,7 +116,14 @@
                   />
                   <label class="form-check-label mx-4" for="checkbox3"
                     >Option 3</label
-                  >
+                  > -->
+                  <!-- <select multiple>
+                    <option selected>أضف مهارة</option>
+                    <option *ngFor="let skill of SkillsList" [value]="skill.id">{{skill.title}}</option>
+                  </select> -->
+                 
+                  
+
                 </div>
               </div>
             </div>
@@ -165,7 +171,16 @@
              <small>متى تحتاج استلام مشروعك</small>
            </div>
 
-
+           <div class="skills-container">
+            <label for="Project-Skills"> مهارات متعلقة بالمشروع </label>
+            <ng-select [items]="SkillsList"
+                       bindLabel="title"
+                       bindValue="id"
+                       placeholder="أضف مهارة"
+                       [multiple]="true">
+            </ng-select>
+          </div>
+<!-- <h1>sa</h1> -->
             <button type="submit" class="btn btn-success mt-3">أضف عرضك</button>
           </form>
           <h1></h1>

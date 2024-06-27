@@ -66,3 +66,21 @@ small {
     color: #16a763;
     font-size: larger;
 }
+
+
+.skills-container {
+  width: 100%; /* Adjust the width as necessary */
+  max-width: 300px; /* Set a max-width to prevent it from becoming too wide */
+  margin: 0 auto; /* Center align, adjust if necessary */
+}
+
+.ng-select {
+  width: 100%;
+}
+
+.ng-select .ng-select-container {
+  font-family: 'Arial', sans-serif; /* Adjust the font if necessary */
+  font-size: 14px; /* Adjust font size */
+  line-height: 1.5; /* Line height for better readability */
+  direction: rtl; /* Ensure right-to-left text direction */
+}
