@@ -53,8 +53,8 @@
         </div>
         
         <li class="nav-item active">
-          <a class="nav-link" routerLink="/clientProfile/:id"> الملف الشخصي</a>
-        </li>
+          <a class="nav-link" [routerLink]="['/clientProfile',clientId]"> الملف الشخصي</a> <!--client profile not freelancer-->
+        </li> 
         <li *ngIf=" isLogged" class="nav-item active">
           <a class="nav-link" routerLink="/projects">مشروع</a>
         </li>

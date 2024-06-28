@@ -1,30 +1,26 @@
 <div class="project container-fluid pt-2">
   <div class="col-12">
-    <div
-      class="col-11 container-fluid justify-content-center align-items-center d-flex my-2"
-    >
+    <div class="col-11 container-fluid justify-content-center align-items-center d-flex my-2">
       <div class="col-3 mx-5">
-      <div dir="rtl">
-        <h6> <i class="fa-solid fa-backward-fast ms-2"></i> ابدأ بإنجاز مشروعك </h6>
-        <p>
-            تستطيع إنجاز مشروعك بالشكل الذي تريده من خلال مستقل،
-            أدخل تفاصيل المشروع والميزانية والمدة المتوقعة ليتم مراجعته ونشره
-            مجاناً، بعد ذلك سيظهر للمستقلين في صفحة المشاريع ويقدموا عروضهم عليه
-            لتختار العرض الأنسب لك ويبدأ المستقل بتنفيذ المشروع.
-        </p>
-      </div>
-        
-        <h6 class="text-end py-3"> <i class="fa-solid fa-plus ms-2"></i>أنشر مشروعك على شغلانة</h6>
+        <div dir="rtl">
+          <h6><i class="fa-solid fa-backward-fast ms-2"></i> ابدأ بإنجاز مشروعك</h6>
+          <p>
+            تستطيع إنجاز مشروعك بالشكل الذي تريده من خلال شغلانة أدخل تفاصيل المشروع
+            والميزانية والمدة المتوقعة ليتم مراجعته ونشره مجاناً، بعد ذلك سيظهر للمستقلين
+            في صفحة المشاريع ويقدموا عروضهم عليه لتختار العرض الأنسب لك ويبدأ المستقل
+            بتنفيذ المشروع.
+          </p>
+        </div>
+
+        <h6 class="text-end py-3"><i class="fa-solid fa-plus ms-2"></i>أنشر مشروعك على شغلانة</h6>
         <p dir="rtl">
-          تساعدك منصة شغلانة على الوصول إلى أفضل المستقلين المحترفين لإنجاز
-          أعمالك عن بعد .<br />
-          بعد إضافة مشروعك على شغلانة ومراجعته ، سيتقدم إليك عدد من العروض من
-          المستقلين المتخصيين يمكنك إختيار العرض الأنسب لك من العروض المقدمة
-          وإعتماده
+          تساعدك منصة شغلانة على الوصول إلى أفضل المستقلين المحترفين لإنجاز أعمالك عن
+          بعد .<br />
+          بعد إضافة مشروعك على شغلانة ومراجعته ، سيتقدم إليك عدد من العروض من المستقلين
+          المتخصيين يمكنك إختيار العرض الأنسب لك من العروض المقدمة وإعتماده
         </p>
         <div dir="rtl">
-          <h6 class="mx-3"> <i class="fa-regular fa-lightbulb ms-2" ></i>نصائح إضافة المشروع</h6>
-
+          <h6 class="mx-3"><i class="fa-regular fa-lightbulb ms-2"></i>نصائح إضافة المشروع</h6>
           <ul>
             <li>أدخل تفاصيل المشروع بدقة</li>
             <li>املأ جميع الحقول ووفّر أمثلة لما تريد</li>
@@ -37,138 +33,157 @@
         <h3 class="mb-4 mx-2">إضافة مشروع</h3>
         <div class="container my-2 py-2">
           <form [formGroup]="projectForm" (ngSubmit)="addProject()">
-            <div class="col-11">
-              <label for="Project-Title">عنوان المشروع</label>
+            <div class="mb-3">
+              <label for="Project-Title" class="form-label">عنوان المشروع</label>
               <input
                 type="text"
                 id="Project-Title"
                 name="Project-Title"
-                class="w-100"
+                class="form-control"
                 formControlName="title"
                 required
               />
-              <small>أدرج عنوانا موجزا يصف مشروعك بشكل دقيق</small>
+              <small class="form-text text-muted">أدرج عنوانا موجزا يصف مشروعك بشكل دقيق</small>
+            <span class="text-danger" *ngIf="projectForm.get('title')?.getError('required') && projectForm.get('title')?.touched">
+                يجب ادخال عنوان المشروع 
+            </span>
             </div>
-            <div class="col-11">
-              <label for="Project-Skills"> مهارات متعلقة بالمشروع </label>
 
-              <div class="form-check d-flex justify-content-between">
-                <div class="form-check-item d-flex align-items-center">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="checkbox1"
-                  />
-                  <label class="form-check-label mx-4" for="checkbox1"
-                    >Option 1</label
-                  >
-                </div>
-                <div class="form-check-item d-flex align-items-center">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="checkbox2"
-                  />
-                  <label class="form-check-label mx-4" for="checkbox2"
-                    >Option
-                  </label>
-                </div>
-                <div class="form-check-item d-flex align-items-center">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="checkbox3"
-                  />
-                  <label class="form-check-label mx-4" for="checkbox3"
-                    >Option 3</label
-                  >
-                </div>
-                <div class="form-check-item d-flex align-items-center">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="checkbox1"
-                  />
-                  <label class="form-check-label mx-4" for="checkbox1"
-                    >Option 1</label
-                  >
-                </div>
-                <div class="form-check-item d-flex align-items-center">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="checkbox2"
-                  />
-                  <label class="form-check-label mx-4" for="checkbox2"
-                    >Option
-                  </label>
-                </div>
-                <div class="form-check-item d-flex align-items-center">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="checkbox3"
-                  />
-                  <label class="form-check-label mx-4" for="checkbox3"
-                    >Option 3</label
-                  >
-                </div>
-              </div>
-            </div>
-            <div class="col-11 mt-3">
-              <label for="description">قم بوصف المشروع</label>
+            <div class="mb-3">
+              <label for="description" class="form-label">قم بوصف المشروع</label>
               <textarea
                 id="description"
                 name="description"
-                class="w-100"
+                class="form-control"
                 rows="4"
                 formControlName="description"
                 required
               ></textarea>
-              <small>أدرج وصفا مفصّلا ودقيقا لمشروعك.</small>
+              <small class="form-text text-muted">أدرج وصفا مفصّلا ودقيقا لمشروعك.</small>
+              <span class="text-danger" *ngIf="projectForm.get('description')?.getError('required') && projectForm.get('description')?.touched">
+                يجب ادخال وصف المشروع 
+            </span>
             </div>
 
-            <div class="d-flex">
-              <div class="col-5 ms-5  ">
-                <label for="minBudget">  الحد الادنى للميزانية المتوقعة </label>
-                <input type="number" id="minBudget" name="minBudget" formControlName="minBudget">
-
-
-                <small>اختر ميزانية مناسبة لتحصل على عروض جيدة</small>
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label for="minBudget" class="form-label">الحد الادنى للميزانية المتوقعة</label>
+                <input
+                  type="number"
+                  id="minBudget"
+                  name="minBudget"
+                  class="form-control"
+                  formControlName="minBudget"
+                  required
+                />
+                <small class="form-text text-muted">اختر ميزانية مناسبة لتحصل على عروض جيدة</small>
+              <div *ngIf="projectForm.get('minBudget')?.errors && projectForm.get('minBudget')?.touched">
+                <span class="text-danger" *ngIf="projectForm.get('minBudget')?.getError('min')">
+                 الحد الادني للميزانية يجب ان يكون اكبر من 0
+                </span>
+                <span class="text-danger" *ngIf="projectForm.get('minBudget')?.getError('required')">
+                      يجب تحديد الحد الادني للميزانية 
+                </span>
               </div>
-              <div class="col-5">
-                <label for="maxBudget">  الحد الاعلي للميزانية المتوقعة </label>
-                <input type="number" id="maxBudget" name="maxBudget" formControlName="maxBudget">
+              </div>
+              <div class="col-md-4">
+                <label for="maxBudget" class="form-label">الحد الاعلي للميزانية المتوقعة</label>
+                <input
+                  type="number"
+                  id="maxBudget"
+                  name="maxBudget"
+                  class="form-control"
+                  formControlName="maxBudget"
+                  required
+                />
+
+                <div *ngIf="projectForm.get('maxBudget')?.errors && projectForm.get('maxBudget')?.touched">
+                  <span class="text-danger" *ngIf="projectForm.get('maxBudget')?.getError('min')">
+                   الحد الاعلي للميزانية يجب ان يكون اكبر من 0
+                  </span>
+                  <span class="text-danger" *ngIf="projectForm.get('maxBudget')?.getError('required')">
+                        يجب تحديد الحد الاعلي للميزانية 
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-4">
+                <div class="skills-container">
+                  <label for="Project-Skills"> مهارات متعلقة بالمشروع </label>
+                  <ng-select class="bg-light" [items]="skillsIds"
+                  bindLabel="title"
+                  bindValue="id"
+                  [multiple]="true"
+                  formControlName="skillsIds">
+       </ng-select>
+       
+       <!-- <div *ngIf="!projectForm.get('skills')?.value" class="placeholder-text">
+        {{ 'أضف مهارة' }}
+      </div> -->
+      
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="delivery-time" class="form-label">المدة المتوقعة للتسليم <span>(بالأيام)</span></label>
+                <input
+                  type="number"
+                  id="delivery-time"
+                  name="delivery-time"
+                  class="form-control"
+                  formControlName="durationInDays"
+                  required
+                />
+                <small class="form-text text-muted">متى تحتاج استلام مشروعك</small>
+                <div *ngIf="projectForm.get('durationInDays')?.errors && projectForm.get('durationInDays')?.touched">
+                  <span class="text-danger" *ngIf="projectForm.get('durationInDays')?.getError('required')">
+يجب تحديد مدة المشروع 
+                  </span>
+                  <span class="text-danger" *ngIf="projectForm.get('durationInDays')?.getError('min')">
+           مدة المشروع لا يجب ان تقل عن 1 يوم 
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="project-category" class="form-label">تصنيف المشروع</label>
+                <select id="project-category" class="form-select" formControlName="categoryId" required>
+                  <option disabled selected>اختر تصنيف</option>
+                  <option [value]="category.id" *ngFor="let category of categories">
+                    {{category.title}}
+                  </option>
+                </select>
+                <div *ngIf="projectForm.get('categoryId')?.errors && projectForm.get('categoryId')?.touched">
+                  <span class="text-danger" *ngIf="projectForm.get('categoryId')?.getError('required')">
+  يجب تحديد تصنيف المشروع 
+                  </span>
                
+                </div>
               </div>
-             
             </div>
-            <div>
-              <label for="delivery-time">
-               المدة المتوقعة للتسليم <span> (بالأيام) </span></label
-             >
-             <input
-               type="number"
-               id="delivery-time"
-               name="delivery-time"
-               class="w-75"
-               formControlName="durationInDays"
-               required
-             />
-             <br />
-             <small>متى تحتاج استلام مشروعك</small>
-           </div>
+            
 
+            <div class="row mb-3">
+              <div class="col-md-12">
+                <label for="experience-level" class="form-label">مستوي الخبرة</label>
+                <select id="experience-level" class="form-select" formControlName="experienceLevel" required>
+                  <option value="" disabled selected>اختر مستوى الخبرة</option>
+                  <option [value]="Beginner">مبتديء</option>
+                  <option [value]="Intermediate">خبرة متوسطة</option>
+                  <option [value]="Expert">مخضرم</option>
+                </select>
+                <div *ngIf="projectForm.get('experienceLevel')?.errors && projectForm.get('experienceLevel')?.touched">
+                  <span class="text-danger" *ngIf="projectForm.get('experienceLevel')?.getError('required')">
+  يجب تحديد مستوي الخبرة المطلوب 
+                  </span>
+                </div>
+              </div>
+            
+            </div>
 
-            <button type="submit" class="btn btn-success mt-3">أضف عرضك</button>
+            <button [disabled]="projectForm.invalid" type="submit" class="btn btn-success mt-3">أضف المشروع</button>
           </form>
-          <h1></h1>
         </div>
       </div>
     </div>

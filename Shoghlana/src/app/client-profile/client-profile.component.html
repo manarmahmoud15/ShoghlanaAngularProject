@@ -94,7 +94,7 @@
                     <div class="col-12">
                         <div class="block">
                             <div class="has-padding pb-0">
-                                <p class="desc-font mb-20" style="line-height: 30px; font-size:16px; direction: rtl;">
+                                <p [ngClass]="{'text-danger': emptyClientDescription}" class="desc-font mb-20" style="line-height: 30px; font-size:16px; direction: rtl;">
                                     {{ Client.description ? Client.description : 'لم يكتب نبذة شخصية عن نفسه' }}
                                 </p>
                             </div>
@@ -253,13 +253,13 @@
                                                                 <span style="margin-right: 5px;">{{job.title}}</span>
                                                             </li>
                                                         </div>
-                                                        <!-- <span class="mx-4 offset-1 col-3" [ngClass]="{
-                                                            'text-success' : job.status === JobStatus.completed,
-                                                            'text-danger' : job.status === JobStatus.Closed,
-                                                            'text-primary' : job.status === JobStatus.Active
+                                                        <span class="mx-4 offset-1 col-3" [ngClass]="{
+                                                            'text-success' : job.status === completed,
+                                                            'text-danger' : job.status === closed,
+                                                            'text-primary' : job.status === active
                                                             }">
                                                             {{job.status === JobStatus.completed? 'مكتمل': job.status === JobStatus.Closed? 'مغلق' : 'قيد التنفيذ' }}
-                                                        </span>  -->
+                                                        </span> 
                                                     </div>
                                                 </td>
                                             </tr>

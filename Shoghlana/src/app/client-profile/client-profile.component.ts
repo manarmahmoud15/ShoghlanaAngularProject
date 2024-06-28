@@ -21,11 +21,14 @@ import { JobStatus } from '../Enums/JobStatus';
 
 export class ClientProfileComponent implements OnInit {
 
-  ClientId! : number
+  ClientId! : Number
   Client! : IClient
   JobStatus = JobStatus
   ClientLevel! : number
-
+  emptyClientDescription : boolean = true
+  completed : JobStatus = JobStatus.completed
+  active : JobStatus = JobStatus.Active
+  closed : JobStatus = JobStatus.Closed
   constructor(
     private _activatedRoute: ActivatedRoute,
     private ClientService : ClientServiceService,
@@ -42,7 +45,11 @@ export class ClientProfileComponent implements OnInit {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.ClientId = Number(this._activatedRoute.snapshot.paramMap.get('id'));
-    console.log(this.ClientId);
+    // if(this.ClientId === null || this.ClientId === undefined)
+    //   {
+    //     this.ClientId = Number (localStorage.getItem('Id'))
+    //   }
+  
 
    this.ClientService.GetById(this.ClientId).subscribe({
     next : (res) => {
@@ -56,7 +63,14 @@ export class ClientProfileComponent implements OnInit {
           this.ClientLevel = Math.ceil(this.Client.completedJobsCount / 10); 
 
           console.log(this.Client.image)
-
+          if(this.Client.description)
+            {
+              this.emptyClientDescription = false
+            }
+            if(this.ClientId)
+              {
+                console.log("client id : " + this.ClientId);
+              }
         }
     },
     error : (err) => {console.log(err)}
