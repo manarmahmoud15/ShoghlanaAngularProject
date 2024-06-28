@@ -29,6 +29,7 @@ export class AuthService {
   setEmail(email: string) {
     this.email = email;
   }
+
   decodeUserData() {
     const encodedToken = localStorage.getItem('token');
     if (encodedToken) {

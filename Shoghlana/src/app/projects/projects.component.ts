@@ -13,6 +13,9 @@ import { CategoryService } from '../Services/Category/category.service';
 import { JobStatus } from '../Enums/JobStatus';
 import { IPaginatedJobsRequestBody } from '../Models/i-paginated-jobs-request-body';
 import { isAscii } from 'buffer';
+import { SearchStatus } from '../Enums/search-status';
+import { ChangeDetectorRef } from '@angular/core';
+
 
 @Component({
   selector: 'app-projects',
@@ -20,7 +23,7 @@ import { isAscii } from 'buffer';
   imports: [CommonModule, RouterLink, FormsModule, ProjectSideBarComponent],
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.css'],
-  providers: [DatePipe]
+  providers: [DatePipe],
 })
 export class ProjectsComponent implements OnInit {
 
@@ -50,11 +53,15 @@ export class ProjectsComponent implements OnInit {
 
   minBudget: number = 0;
 
-  maxBudget: number = 0;
+  maxBudget: number = 10000;
 
   clientId: number = 0;
 
   freelancerId: number = 0;
+
+  HasManyProposals: boolean = false;
+
+  IsNew: boolean = true;
 
   noJobsAvailable: boolean = false;
 
@@ -65,9 +72,16 @@ export class ProjectsComponent implements OnInit {
     Includes: []
   }
 
-  constructor(private jobService: JobService, private datePipe : DatePipe , private router: Router) {
-    // this.filteredJobs = [...this.ClientJob];
-  }
+  searchResultJobsArr: Ijob[] = [];
+
+  searchStatus: SearchStatus = SearchStatus.Ignored;
+
+  constructor(
+    private jobService: JobService,
+    private datePipe: DatePipe,
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) {  }
 
   ngOnInit(): void {
     // this.fetchAllCategories();
@@ -83,6 +97,8 @@ export class ProjectsComponent implements OnInit {
       this.maxBudget,
       this.clientId,
       this.freelancerId,
+      this.HasManyProposals,
+      this.IsNew,
       this.currentPage,
       this.pageSize,
       this.jobsStatus,
@@ -149,6 +165,18 @@ export class ProjectsComponent implements OnInit {
   //   });
   // }
 
+
+  selectNewOption(isNew: boolean): void {
+    this.IsNew = isNew;
+    this.fetchPaginatedJobs();
+    this.cdr.detectChanges();
+  }
+  
+  selectProposalOption(hasManyProposals: boolean): void {
+    this.HasManyProposals = hasManyProposals;
+    this.fetchPaginatedJobs();
+    this.cdr.detectChanges();
+  }
   onCategorySelect(categoryId: number) {
     this.selectedCategoryID = categoryId;
     this.currentPage = 1; // returning it to first page in the new filteration
@@ -170,23 +198,47 @@ export class ProjectsComponent implements OnInit {
     this.selectedCategoryID = 0;
     this.currentPage = 1;
     this.noJobsAvailable = false;
-    this.jobsStatus = JobStatus.Active ;
+    this.jobsStatus = JobStatus.Active;
     this.fetchPaginatedJobs(); // Apply filters after resetting
   }
 
-  filterProjects(event: [ICategory[], number, number]): void {
+  filterProjects(event: [ICategory[], number, number, Ijob[], SearchStatus]): void {
 
-    const [selectedCategories, selectedMinBudget, selectedMaxBudget] = event;
+    const [selectedCategories, selectedMinBudget, selectedMaxBudget, searchResultJobsArr, searchStatus] = event;
 
     this.selectedCategories = selectedCategories;
     this.selectedCategoriesIDs = selectedCategories.map(c => c.id);
     this.requestBody.CategoriesIDs = this.selectedCategoriesIDs;
     this.minBudget = selectedMinBudget;
     this.maxBudget = selectedMaxBudget;
+    this.searchResultJobsArr = searchResultJobsArr;
+    this.searchStatus = searchStatus;
 
-    this.currentPage = 1 ; // always return to the first page if a new filteraion is applied
+    this.currentPage = 1; // always return to the first page if a new filteraion is applied
 
-    this.fetchPaginatedJobs();
+    if (searchStatus == SearchStatus.Ignored) {
+      console.log("Parent : Search Ignored")
+      this.fetchPaginatedJobs();
+    }
+    else if (searchStatus == SearchStatus.Found) {
+      console.log("Parent : Search Found")
+
+      this.filteredJobs = searchResultJobsArr;
+
+      this.totalItems = searchResultJobsArr.length;
+
+      this.pageSize = this.totalItems; // here because I dont want to use pagination (the API doesn't implement pagination at search for now)
+
+      this.filteredJobs.forEach(job => {
+        job.postTime = this.datePipe.transform(job.postTime, 'medium') || 'Invalid Date';
+      });
+    }
+    else // not found
+    {
+      console.log("Parent : Search Not found")
+
+      this.filteredJobs = [];
+    }
   }
 
   navigateToDetails(id: number): void {
