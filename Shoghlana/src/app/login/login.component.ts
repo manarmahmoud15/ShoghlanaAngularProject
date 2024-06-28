@@ -34,6 +34,7 @@ export class LoginComponent {
           console.log('this is response ', response);
           if (response.isSuccess) {
             localStorage.setItem('token', response.token);
+            localStorage.setItem("Id",response.data.id)
             this._authoService.decodeUserData();
             this.isLoading = false;
             this._router.navigateByUrl('/home');

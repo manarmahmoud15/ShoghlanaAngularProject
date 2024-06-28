@@ -84,3 +84,22 @@ small {
   line-height: 1.5; /* Line height for better readability */
   direction: rtl; /* Ensure right-to-left text direction */
 }
+
+/* Adjust the styles to apply a dark background to the dropdown items */
+.custom-ng-select {
+  --ng-select-item-bg: #333; /* Dark background color */
+  --ng-select-item-color: #fff; /* Light text color for contrast */
+}
+
+.custom-ng-select .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+  background-color: var(--ng-select-item-bg);
+  color: var(--ng-select-item-color);
+}
+
+.custom-ng-select .ng-dropdown-panel .ng-dropdown-panel-items .ng-option:hover {
+  background-color: #444; /* Slightly lighter dark color for hover effect */
+}
+
+.custom-ng-select .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.selected {
+  background-color: #555; /* Different dark color for selected items */
+}

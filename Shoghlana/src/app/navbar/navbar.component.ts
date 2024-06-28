@@ -15,6 +15,8 @@ import { AuthService } from '../auth.service';
 })
 export class NavbarComponent implements OnInit {
   isLogged:boolean=false;
+ clientId! : Number
+
   logOut(){
     this._authService.logOut();
   }
@@ -50,6 +52,7 @@ constructor(private _authService : AuthService){
     }
   }
   ngOnInit(): void {
+  this.clientId = Number (localStorage.getItem('Id'));
     this.ChatService.messages$.subscribe(res=>{
       this.messages = res;
       console.log(this.messages)

@@ -11,7 +11,7 @@ export class ClientServiceService {
 
   constructor(private _HttpClient : HttpClient) { }
 
-  GetById(Id : number) : Observable<any>
+  GetById(Id : Number) : Observable<any>
   {
 return this._HttpClient.get<any>(`${environment.baseUrl}/Client/${Id}`)
   }
