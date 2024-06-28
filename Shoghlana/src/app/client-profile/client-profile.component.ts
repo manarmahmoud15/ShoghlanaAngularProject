@@ -26,9 +26,7 @@ export class ClientProfileComponent implements OnInit {
   JobStatus = JobStatus
   ClientLevel! : number
   emptyClientDescription : boolean = true
-  completed : JobStatus = JobStatus.completed
-  active : JobStatus = JobStatus.Active
-  closed : JobStatus = JobStatus.Closed
+ // jobStatus = JobStatus
   constructor(
     private _activatedRoute: ActivatedRoute,
     private ClientService : ClientServiceService,
