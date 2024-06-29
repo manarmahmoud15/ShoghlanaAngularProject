@@ -85,6 +85,7 @@ export class RegisterComponent implements OnInit {
           if(res.isSuccess)
             {
               localStorage.setItem("UserToken" , res.data.token)
+              console.log("client id from backend" + res.data.id)
               localStorage.setItem("Id",res.data.id)
               console.log(localStorage.getItem("Id"));
               this._router.navigateByUrl("/home")
