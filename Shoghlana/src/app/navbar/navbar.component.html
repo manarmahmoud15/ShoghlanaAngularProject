@@ -1,33 +1,41 @@
-<nav class="navbar navbar-expand-lg navbar-light custom-navbar">
-  <div class="ms-auto d-flex align-items-center">
-    <a class="navbar-brand" href="#">
-      <img src="../../assets/imgs/pixelcut-export.png" class="logo ms-2" alt="Logo" width="30px" height="50px">
+<nav class="navbar navbar-expand-lg navbar-light custom-navbar dark:bg-gray-800">
+  <div class="ms-auto d-flex align-items-center dark:bg-gray-800">
+    <a class="navbar-brand dark:text-gray-200" href="#">
+      <img
+        src="../../assets/imgs/pixelcut-export.png"
+        class="logo ms-2"
+        alt="Logo"
+        width="30px"
+        height="50px"
+      />
     </a>
 
     <ul class="navbar-nav">
-    <li *ngIf="isLogged" class="nav-item">
-      <a class="nav-link" (click)="logOut()">تسجيل خروج</a>
-    </li>
-  </ul>
+      <li *ngIf="isLogged" class="nav-item">
+        <a class="nav-link" (click)="logOut()">تسجيل خروج</a>
+      </li>
+    </ul>
   </div>
   <!-- <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button> -->
 
-  <div class="collapse navbar-collapse mt-3 mb-3" id="navbarSupportedContent">
-    <div class="ms-auto">
-      <ul class="navbar-nav">
+  <div class="collapse navbar-collapse mt-3 mb-3 dark:bg-gray-800" id="navbarSupportedContent">
+    <div class="ms-auto dark:bg-gray-800">
+      <ul class="navbar-nav text-gray-900 dark:text-gray-200">
         <li *ngIf="!isLogged" class="nav-item">
-          <a class="nav-link" routerLink="/signin">تسجيل دخول</a>
+          <a class="nav-link dark:hover:text-green-500 dark:text-gray-200" routerLink="/signin">تسجيل دخول</a>
         </li>
-        <li *ngIf="!isLogged"  class="nav-item">
-          <a class="nav-link" routerLink="/register">انشاء حساب</a>
+        <li *ngIf="!isLogged" class="nav-item">
+          <a class="nav-link dark:hover:text-green-500 dark:text-gray-200 " routerLink="/register">انشاء حساب</a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" routerLink="/joinRoom"> جوين روم </a>
+          <a class="nav-link dark:hover:text-green-500 dark:text-gray-200" routerLink="/joinRoom"> جوين روم </a>
         </li>
         <div class="navbar">
-          <button class="dropdown-button" (click)="toggleDropdown()"><i class="fa-regular fa-comment"></i></button>
+          <button class="dropdown-button" (click)="toggleDropdown()">
+            <i class="fa-regular fa-comment"></i>
+          </button>
           <div class="dropdown-container" *ngIf="isOpen">
             <div class="dropdown-content">
               <p *ngIf="messages.length === 0">No new messages</p>
@@ -51,52 +59,59 @@
             </div>
           </div>
         </div>
-        
-        <li class="nav-item active">
-          <a class="nav-link" [routerLink]="['/clientProfile',clientId]"> الملف الشخصي</a> <!--client profile not freelancer-->
-        </li> 
-        <li *ngIf=" isLogged" class="nav-item active">
-          <a class="nav-link" routerLink="/projects">مشروع</a>
-        </li>
-        <li *ngIf=" isLogged" class="nav-item active">
-          <a class="nav-link" routerLink="/addproject">اضف مشروع</a>
-        </li>
-        <li *ngIf=" isLogged" class="nav-item active">
-          <a class="nav-link" routerLink="/addservice">اضف خدمة</a>
-        </li>
-        <li *ngIf=" isLogged" class="nav-item">
-          <a class="nav-link" routerLink="/galleryworks">معرض الأعمال</a>
-        </li>
-        <li *ngIf=" isLogged" class="nav-item">
-          <a class="nav-link" routerLink="/freelancers">رواد الأعمال</a>
-        </li>
-        <li *ngIf=" isLogged" class="nav-item">
-          <a class="nav-link" routerLink="/jobs">المشاريع</a>
-        </li>
-        <li *ngIf=" isLogged" class="nav-item">
-          <a class="nav-link" routerLink="/offers"> عروضي</a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" routerLink="/home">الرئيسية</a>
-        </li>  
 
-        
-
+        <li class="nav-item active">
+          <a class="nav-link" [routerLink]="['/clientProfile', clientId]">
+            الملف الشخصي</a
+          >
+          <!--client profile not freelancer-->
+        </li>
+        <li *ngIf="isLogged" class="nav-item active">
+          <a class="nav-link dark:hover:text-green-500 dark:text-gray-200" routerLink="/projects">مشروع</a>
+        </li>
+        <li *ngIf="isLogged" class="nav-item active">
+          <a class="nav-link dark:hover:text-green-500" routerLink="/addproject">اضف مشروع</a>
+        </li>
+        <li *ngIf="isLogged" class="nav-item active">
+          <a class="nav-link dark:hover:text-green-500" routerLink="/addservice">اضف خدمة</a>
+        </li>
+        <li *ngIf="isLogged" class="nav-item">
+          <a class="nav-link dark:hover:text-green-500" routerLink="/galleryworks">معرض الأعمال</a>
+        </li>
+        <li *ngIf="isLogged" class="nav-item">
+          <a class="nav-link dark:hover:text-green-500" routerLink="/freelancers">رواد الأعمال</a>
+        </li>
+        <li *ngIf="isLogged" class="nav-item">
+          <a class="nav-link dark:hover:text-green-500" routerLink="/jobs">المشاريع</a>
+        </li>
+        <li *ngIf="isLogged" class="nav-item">
+          <a class="nav-link dark:hover:text-green-500" routerLink="/offers"> عروضي</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link dark:hover:text-green-500" routerLink="/home">الرئيسية</a>
+        </li>
       </ul>
     </div>
   </div>
+  <div class="relative mt-4 md:mt-0">
+    <div class="flex items-center">
+      @if(darkModeService.darkModeSignal() === 'dark'){
+        <span (click)="toggleDarkMode()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 dark:text-gray-400">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"
+          />
+        </svg></span>
+      }
+      @else {
+        <span (click)="toggleDarkMode()"> <svg  xmlns="http://www.w3.org/2000/svg"  fill="none"  viewBox="0 0 24 24"  stroke-width="1.5"  stroke="currentColor"  class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+            /> </svg>
+        </span>
+      }
+   
+      
+    </div>
+  </div>
 </nav>
-
-
-
-
-
-
-
-
-
-
-
 
 
 

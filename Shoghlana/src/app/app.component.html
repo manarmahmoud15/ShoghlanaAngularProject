@@ -1,8 +1,11 @@
-
-<app-navbar></app-navbar>
-<router-outlet></router-outlet>
+<div class="min-h-screen min-w-full bg-state-200 dark:bg-state-700" [ngClass]="darkModeService.darkModeSignal()"> 
+  <app-navbar></app-navbar>
+  <router-outlet></router-outlet>
 <app-footer></app-footer>
-<div>
+</div>
+
+
+<!-- <div>
     <h1>{{ title }}</h1>
     <ul>
       <li *ngFor="let notification of notifications">{{ notification }}</li>
@@ -10,3 +13,7 @@
     <button (click)="sendTestNotification()">Send Test Notification</button>
   </div>
   
+
+  <h1 class="text-3xl font-bold underline text-green-700">
+    Hello world!
+  </h1> --> 
