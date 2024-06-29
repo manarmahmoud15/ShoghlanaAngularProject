@@ -10,7 +10,7 @@
       />
     </a>
 
-    <ul class="navbar-nav">
+    <ul class="navbar-nav  dark:bg-gray-800">
       <li *ngIf="isLogged" class="nav-item">
         <a class="nav-link" (click)="logOut()">تسجيل خروج</a>
       </li>
@@ -20,11 +20,12 @@
     <span class="navbar-toggler-icon"></span>
   </button> -->
 
-  <div class="collapse navbar-collapse mt-3 mb-3 dark:bg-gray-800" id="navbarSupportedContent">
+  <div class=" navbar-collapse mt-3 mb-3 dark:bg-gray-800" id="navbarSupportedContent">
     <div class="ms-auto dark:bg-gray-800">
+      
       <ul class="navbar-nav text-gray-900 dark:text-gray-200">
         <li *ngIf="!isLogged" class="nav-item">
-          <a class="nav-link dark:hover:text-green-500 dark:text-gray-200" routerLink="/signin">تسجيل دخول</a>
+          <a class="nav-link text-gray-200 dark:hover:text-green-500 dark:text-gray-200" routerLink="/signin">تسجيل دخول</a>
         </li>
         <li *ngIf="!isLogged" class="nav-item">
           <a class="nav-link dark:hover:text-green-500 dark:text-gray-200 " routerLink="/register">انشاء حساب</a>
@@ -82,7 +83,7 @@
           <a class="nav-link dark:hover:text-green-500" routerLink="/freelancers">رواد الأعمال</a>
         </li>
         <li *ngIf="isLogged" class="nav-item">
-          <a class="nav-link dark:hover:text-green-500" routerLink="/jobs">المشاريع</a>
+          <a class="nav-link text-gray-200 dark:hover:text-green-500" routerLink="/jobs">المشاريع</a>
         </li>
         <li *ngIf="isLogged" class="nav-item">
           <a class="nav-link dark:hover:text-green-500" routerLink="/offers"> عروضي</a>
