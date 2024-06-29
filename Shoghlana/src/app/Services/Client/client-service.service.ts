@@ -15,4 +15,25 @@ export class ClientServiceService {
   {
 return this._HttpClient.get<any>(`${environment.baseUrl}/Client/${Id}`)
   }
+
+  Update( UpdatedClient : IClient) : Observable<any>
+  {
+    const formData : FormData = new FormData()
+    formData.append('Id' , UpdatedClient.Id.toString())
+    formData.append('Image' , UpdatedClient.image)
+    formData.append('Description' , UpdatedClient.description)
+    formData.append('Country' , UpdatedClient.country)
+    formData.append('Name' , UpdatedClient.name)
+    // formData.append('Description' , Description)
+    return this._HttpClient.put<any>(`${environment.baseUrl}/Client`, formData)
+  }
+
+  UpdateOverview( Description : string, Id : Number) : Observable<any>
+  {
+    const formData : FormData = new FormData()
+    formData.append('Id' , Id.toString())
+    formData.append('Image' , Description)
+    // formData.append('Description' , Description)
+    return this._HttpClient.put<any>(`${environment.baseUrl}/Client`, formData)
+  }
 }

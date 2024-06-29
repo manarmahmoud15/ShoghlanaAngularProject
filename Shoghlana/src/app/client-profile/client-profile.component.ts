@@ -1,18 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { log } from 'console';
 import { ClientServiceService } from '../Services/Client/client-service.service';
 import { IClient } from '../Models/IClient';
 import { DatePipe } from '@angular/common';
 import { JobStatus } from '../Enums/JobStatus';
+import { FormsModule } from '@angular/forms';
 // import $ from 'jquery';
 
 
 @Component({
   selector: 'app-client-profile',
   standalone: true,
-  imports: [CommonModule , RouterLink , RouterLinkActive , RouterOutlet, DatePipe ],
+  imports: [CommonModule , RouterLink , RouterLinkActive , RouterOutlet, DatePipe, FormsModule ],
   templateUrl: './client-profile.component.html',
   styleUrl: './client-profile.component.css',
   providers : [DatePipe]
@@ -21,20 +22,142 @@ import { JobStatus } from '../Enums/JobStatus';
 
 export class ClientProfileComponent implements OnInit {
 
-  ClientId! : Number
-  Client! : IClient
+  VisitedClientId! : Number
+  LoggedInClientId! : Number
+  Client : IClient = {} as IClient
+  UpdatedClient : IClient = {} as IClient
   JobStatus = JobStatus
   ClientLevel! : number
-  emptyClientDescription : boolean = true
-  completed : JobStatus = JobStatus.completed
-  active : JobStatus = JobStatus.Active
-  closed : JobStatus = JobStatus.Closed
+  emptyClientDescription : boolean = true 
+  emptyClientCountry : boolean = true 
+  @ViewChild('fileInput') FileInput! : ElementRef
+  imageError! : string 
+  isEditing = false;
+  tempDescription! : string;
+  isEditingName = false;  // New state for editing the name
+  tempName! : string;
+  emptyClientName : boolean = true
+  nameError : string = ''
+
+ // jobStatus = JobStatus
   constructor(
     private _activatedRoute: ActivatedRoute,
     private ClientService : ClientServiceService,
    private datePipe : DatePipe)
   {
 
+  }
+  toggleEdit() {
+    this.isEditing = !this.isEditing;
+  }
+
+  saveDescription() {
+    this.isEditing = false;       
+    this.emptyClientDescription = !this.Client.description;
+    this.UpdatedClient.description = this.tempDescription
+
+    this.ClientService.Update(this.UpdatedClient).subscribe({
+      next : (res) => {
+        console.log(res)
+        if(res.isSuccess)
+          {
+            console.log(res)
+            this.Client = res.data;
+          }
+          else
+          {
+            console.log(res)
+          }
+        }
+    })    
+  }
+
+  cancelEdit() {
+    this.isEditing = false;
+  }
+
+
+  toggleEditName() {
+    this.isEditingName = !this.isEditingName;
+    this.nameError = ''
+  }
+
+  saveName() {
+    if(this.tempName.trim()==='')
+      {
+        this.nameError = 'يجب ادخال الاسم'
+        return;
+      }
+    this.isEditingName = false;
+  this.UpdatedClient.name = this.tempName
+  this.emptyClientName = !this.Client.name
+    this.ClientService.Update(this.UpdatedClient).subscribe({
+      next : (res) => {
+        console.log(res)
+        if(res.isSuccess)
+          {
+            console.log(res)
+            this.Client = res.data;
+          }
+          else
+          {
+            console.log(res)
+          }
+        }
+    })
+  }
+
+  cancelEditName() {
+    this.isEditingName = false;
+    this.nameError = ''
+  }
+
+
+  TriggerFileInput()
+  {
+   this.FileInput.nativeElement.click();
+  }
+
+  SelectedImgChanged(event : any)
+  {
+    const input = event.target as HTMLInputElement;
+const img = event.target.files[0];
+const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+if (!allowedExtensions.exec(img.name)) {
+  this.imageError = '(Jpg , Png, Jpeg) يرجي استخدام ملف';
+  input.value = '';
+  return;
+}
+
+console.log(img);
+this.UpdatedClient.image = img;
+console.log('sent client : ' , this.Client)
+this.ClientService.Update(this.UpdatedClient).subscribe({
+  next : (res) => {
+    console.log(res)
+    if(res.isSuccess)
+      {
+        console.log(res)
+        this.Client = res.data;
+        this.tempDescription = this.Client.description
+        console.log(this.Client)
+        this.imageError = ''
+      }
+      else
+      {
+        console.log(res)
+        console.log(res.data.value.data)
+        this.Client = res.data.value.data
+        this.imageError = res.message
+      //  alert(res.message)
+      }
+    
+//     this.ClientService.GetById(this.VisitedClientId).subscribe({
+//       next : (res) => {this.Client = res.data}
+//     })
+   }
+  
+ })
   }
 
   formattedDateTime()
@@ -44,32 +167,47 @@ export class ClientProfileComponent implements OnInit {
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.ClientId = Number(this._activatedRoute.snapshot.paramMap.get('id'));
+    this.VisitedClientId = Number(this._activatedRoute.snapshot.paramMap.get('id'));
+    this.LoggedInClientId = Number(localStorage.getItem('Id'))
+    console.log("id from local storage : " , this.LoggedInClientId)
+    this.UpdatedClient.Id = this.VisitedClientId;
+
+    console.log("loggedin client id" + this.LoggedInClientId)
+    console.log("visited client id" +this.VisitedClientId)
     // if(this.ClientId === null || this.ClientId === undefined)
     //   {
     //     this.ClientId = Number (localStorage.getItem('Id'))
     //   }
   
 
-   this.ClientService.GetById(this.ClientId).subscribe({
+   this.ClientService.GetById(this.VisitedClientId).subscribe({
     next : (res) => {
       console.log(res.data);
       if(res.isSuccess)
         {
           this.Client = res.data;
-          console.log(res)
-          console.log(this.Client);
+          console.log(this.Client)
+          console.log(this.Client.image)
           console.log(this.Client.country);
           this.ClientLevel = Math.ceil(this.Client.completedJobsCount / 10); 
+
+          this.UpdatedClient.name = this.Client.name;
+          this.UpdatedClient.description = this.Client.description;
+          this.UpdatedClient.country = this.Client.country;
+          this.UpdatedClient.image = this.Client.image;
 
           console.log(this.Client.image)
           if(this.Client.description)
             {
               this.emptyClientDescription = false
             }
-            if(this.ClientId)
+            if(this.VisitedClientId)
               {
-                console.log("client id : " + this.ClientId);
+                console.log("client id : " + this.VisitedClientId);
+              }
+            if(this.Client.country)
+              {
+                this.emptyClientCountry = false
               }
         }
     },

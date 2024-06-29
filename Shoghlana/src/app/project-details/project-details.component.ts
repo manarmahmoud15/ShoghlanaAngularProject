@@ -22,7 +22,6 @@ export class ProjectDetailsComponent implements OnInit {
   clientJob: IClientJob | undefined;
   proposalForm: FormGroup;
   JobStatus = JobStatus;
-
   constructor(
     private _activatedRoute: ActivatedRoute,
     private _ProjectService: ProjectService,

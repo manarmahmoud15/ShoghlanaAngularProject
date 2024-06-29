@@ -5,6 +5,7 @@ import { Component, HostListener, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ChatService } from '../Services/chat/chat.service';
 import { AuthService } from '../auth.service';
+import { DarkModeService } from '../Services/DarkMode/dark-mode.service';
 
 @Component({
   selector: 'app-navbar',
@@ -20,9 +21,12 @@ import { AuthService } from '../auth.service';
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent implements OnInit {
+  darkModeService : DarkModeService = inject(DarkModeService);
+  toggleDarkMode(){
+    this.darkModeService.updateDarkMode()
+  }
   isLogged:boolean=false;
  clientId! : Number
-
   logOut(){
 
     this._authService.logOut();
@@ -41,7 +45,6 @@ export class NavbarComponent implements OnInit {
   }
   isOpen = false;
   messages: any;
-
   toggleDropdown() {
     this.isOpen = !this.isOpen;
   }
@@ -56,6 +59,7 @@ export class NavbarComponent implements OnInit {
   }
   ngOnInit(): void {
   this.clientId = Number (localStorage.getItem('Id'));
+  console.log("id from navbar" + this.clientId)
     this.ChatService.messages$.subscribe(res=>{
 
       this.messages = res;

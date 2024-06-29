@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -12,6 +12,7 @@ import { JobsComponent } from './jobs/jobs.component';
 
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import { SignalrService } from './Services/signal-r.service.spec';
+import { DarkModeService } from './Services/DarkMode/dark-mode.service';
 
 // import { SignalRService } from './Services/signal-r.service';
 
@@ -41,7 +42,7 @@ import { SignalrService } from './Services/signal-r.service.spec';
 export class AppComponent implements OnInit, OnDestroy {
   title = 'signalr-angular-app';
   notifications: any[] = [];
-
+  darkModeService : DarkModeService = inject(DarkModeService)
   constructor(private signalrService: SignalrService) {}
 
   ngOnInit(): void {
