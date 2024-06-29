@@ -1,14 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light custom-navbar dark:bg-gray-800">
   <div class="ms-auto d-flex align-items-center dark:bg-gray-800">
-    <a class="navbar-brand dark:text-gray-200" href="#">
-      <img
-        src="../../assets/imgs/pixelcut-export.png"
-        class="logo ms-2"
-        alt="Logo"
-        width="30px"
-        height="50px"
-      />
-    </a>
+   
 
     <ul class="navbar-nav  dark:bg-gray-800">
       <li *ngIf="isLogged" class="nav-item">
@@ -20,7 +12,16 @@
     <span class="navbar-toggler-icon"></span>
   </button> -->
 
-  <div class=" navbar-collapse mt-3 mb-3 dark:bg-gray-800" id="navbarSupportedContent">
+  <div class=" navbar-collapse mt-3 mb-3 dark:bg-gray-800 " id="navbarSupportedContent">
+    <a class="navbar-brand dark:text-gray-200" href="#">
+      <img
+        src="../../assets/imgs/pixelcut-export.png"
+        class="logo ms-2"
+        alt="Logo"
+        width="30px"
+        height="50px"
+      />
+    </a>
     <div class="ms-auto dark:bg-gray-800">
       
       <ul class="navbar-nav text-gray-900 dark:text-gray-200">
@@ -28,9 +29,9 @@
           <a class="nav-link text-gray-200 dark:hover:text-green-500 dark:text-gray-200" routerLink="/signin">تسجيل دخول</a>
         </li>
         <li *ngIf="!isLogged" class="nav-item">
-          <a class="nav-link dark:hover:text-green-500 dark:text-gray-200 " routerLink="/register">انشاء حساب</a>
+          <a class="nav-link dark:hover:text-green-500 dark:text-gray-200  " routerLink="/register">انشاء حساب</a>
         </li>
-        <li class="nav-item active">
+        <li *ngIf="isLogged" class="nav-item active">
           <a class="nav-link dark:hover:text-green-500 dark:text-gray-200" routerLink="/joinRoom"> جوين روم </a>
         </li>
         <div class="navbar">
@@ -61,7 +62,7 @@
           </div>
         </div>
 
-        <li class="nav-item active">
+        <li *ngIf="isLogged" class="nav-item active">
           <a class="nav-link" [routerLink]="['/clientProfile', clientId]">
             الملف الشخصي</a
           >
