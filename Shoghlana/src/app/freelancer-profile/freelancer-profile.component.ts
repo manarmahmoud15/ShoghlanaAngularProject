@@ -90,7 +90,7 @@ export class FreelancerProfileComponent implements OnInit {
   }
 
 
-  private loadFreelancerData(): void {
+  public loadFreelancerData(): void {
     if (this.currentFreelancerId) {
       this.freelancerService.getFreelancerById(this.currentFreelancerId).subscribe({
         next: (res) => {
@@ -211,7 +211,7 @@ export class FreelancerProfileComponent implements OnInit {
 
           this.freelancer = res.data;
 
-          // this.loadFreelancerData(); // Reload data after successful update
+          this.loadFreelancerData(); // Reload data after successful update
 
         } else {
           console.error(`Failed to update the profile, Status Code: ${res.Status}`);
@@ -228,6 +228,7 @@ export class FreelancerProfileComponent implements OnInit {
     this.freelancer = { ...this.originalFreelancer }; // Revert to the original data
     this.previewImage = null; // Clear the preview image
     this.editMode = false;
+    this.loadFreelancerData();
   }
 
 
