@@ -154,7 +154,7 @@
 .navbar-nav .nav-link {
   position: relative;
   display: inline-block;
-  padding-bottom: 5px;
+  /* padding-bottom: 5px; */
   color: white;
 }
 
@@ -194,9 +194,9 @@
   height: 24px;
 }
 
-.dark:text-gray-400 {
+/* .dark:text-gray-400 {
   color: #9ca3af;
-}
+} */
 
 .dark:hover:text-green-500 {
   color: #10b981;
@@ -206,5 +206,5 @@
   color: #e5e7eb;
 }
 .logo {
-  width: 10%;
+  width: 7%;
 }
