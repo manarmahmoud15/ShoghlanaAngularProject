@@ -1,18 +1,23 @@
 <main class="container mt-4">
   <section id="content" class="page-heading p-5 bg-light rounded shadow-sm">
-    <div class="media d-flex align-items-center flex-row-reverse">
-      <div class="media-right pl-3">
+    <div class="d-flex align-items-center flex-row-reverse">
+      <div class="pl-3">
         <a href="#">
+          <!-- <img class="mw-150 border rounded-circle shadow" [src]="freelancer.personalImageBytes" [alt]="freelancer.name + ' image'" height="250" width="250" /> -->
           <img
-            class="media-object mw-150 border rounded-circle shadow"
-            [src]="freelancer.personalImageBytes"
+            class="mw-150 border rounded-circle shadow"
+            [src]="
+              editMode && previewImage
+                ? previewImage
+                : freelancer.personalImageBytes
+            "
             [alt]="freelancer.name + ' image'"
-              height="250"
-              width="250"
+            height="250"
+            width="250"
           />
         </a>
       </div>
-      <div class="media-body mr-4">
+      <div class="mr-4">
         <h2 class="media-heading" style="direction: rtl">
           {{ freelancer.name }}
         </h2>
@@ -22,8 +27,7 @@
         <ng-template #defaultTitle>
           <span class="text-danger"> لم يضف التخصص بعد </span>
         </ng-template>
-
-        <div class="media-links mt-3">
+        <div class="mt-3">
           <ul class="list-inline">
             <li class="list-inline-item">
               <a href="#" title="Facebook Link">
@@ -54,44 +58,170 @@
             </li>
           </ul>
         </div>
+        <button class="btn btn-secondary mt-3" (click)="toggleEditMode()">
+          Edit Profile
+        </button>
       </div>
     </div>
   </section>
 
   <div class="row mt-4">
     <div class="col-md-4">
-      <div class="card mb-4 shadow-sm">
-        <div class="card-header bg-primary text-white" style="direction: rtl">
-          <span class="card-icon"><i class="fa fa-trophy m-2"></i></span>
-          <span class="card-title ml-2">نبذة عني</span>
+      <ng-container *ngIf="editMode; else viewMode">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header bg-primary text-white" style="direction: rtl">
+            <span class="card-icon"><i class="fa fa-user m-2"></i></span>
+            <span class="card-title ml-2">تعديل الاسم</span>
+          </div>
+          <div class="card-body" style="direction: rtl">
+            <input [(ngModel)]="freelancer.name" class="form-control" />
+          </div>
         </div>
-        <div class="card-body" style="direction: rtl">
-          <p *ngIf="freelancer.overview; else defaultOverview">
-            {{ freelancer.overview }}
-          </p>
 
-          <ng-template #defaultOverview>
-            <span class="text-danger"> لم يكتب نبذة شخصية عن نفسه بعد </span>
-          </ng-template>
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header bg-primary text-white" style="direction: rtl">
+            <span class="card-icon"><i class="fa fa-briefcase m-2"></i></span>
+            <span class="card-title ml-2">تعديل اللقب</span>
+          </div>
+          <div class="card-body" style="direction: rtl">
+            <input [(ngModel)]="freelancer.title" class="form-control" />
+          </div>
         </div>
-      </div>
 
-      <div class="card mb-4 shadow-sm">
-        <div class="card-header bg-primary text-white" style="direction: rtl">
-          <span class="card-icon"><i class="fa fa-pencil m-2"></i></span>
-          <span class="card-title ml-2">مهاراتي</span>
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header bg-primary text-white" style="direction: rtl">
+            <span class="card-icon"><i class="fa fa-image m-2"></i></span>
+            <span class="card-title ml-2">تعديل الصورة</span>
+          </div>
+          <div class="card-body" style="direction: rtl">
+            <input
+              type="file"
+              (change)="onFileChange($event)"
+              class="form-control"
+            />
+          </div>
         </div>
-        <div class="card-body" style="direction: rtl">
-          <ul *ngIf="freelancer.skills[0]; else defaultSkills">
-            <li *ngFor="let skill of freelancer?.skills">{{ skill.title }}</li>
-          </ul>
-          <ng-template #defaultSkills>
-            <span class="text-danger"> لا توجد مهارات مضافة حتي الان </span>
-          </ng-template>
+
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header bg-primary text-white" style="direction: rtl">
+            <span class="card-icon"><i class="fa fa-trophy m-2"></i></span>
+            <span class="card-title ml-2"> تعديل النبذة التعريفية</span>
+          </div>
+          <div class="card-body" style="direction: rtl">
+            <textarea
+              [(ngModel)]="freelancer.overview"
+              class="form-control"
+              rows="5"
+            ></textarea>
+          </div>
         </div>
-      </div>
+
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header bg-primary text-white" style="direction: rtl">
+            <span class="card-icon"><i class="fa fa-pencil m-2"></i></span>
+            <span class="card-title ml-2"> تعديل المهارات</span>
+          </div>
+          <div class="card-body" style="direction: rtl">
+            <div *ngFor="let skill of allSkills">
+              <input
+                type="checkbox"
+                [checked]="isSkillSelected(skill.id)"
+                (change)="onSkillChange($event, skill.id)"
+              />
+              {{ skill.title }}
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header bg-primary text-white" style="direction: rtl">
+            <span class="card-icon"><i class="fa fa-briefcase m-2"></i></span>
+            <span class="card-title ml-2"> تعديل الدولة</span>
+          </div>
+          <div class="card-body" style="direction: rtl">
+            <input [(ngModel)]="freelancer.address" class="form-control" />
+          </div>
+        </div>
+
+        <button class="btn btn-primary" (click)="saveChanges()">
+          حفظ التغييرات
+        </button>
+        <button class="btn btn-secondary ml-2" (click)="cancelEdit()">
+          إلغاء
+        </button>
+      </ng-container>
+      <ng-template #viewMode>
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header bg-primary text-white" style="direction: rtl">
+            <span class="card-icon"><i class="fa fa-user m-2"></i></span>
+            <span class="card-title ml-2">الاسم</span>
+          </div>
+          <div class="card-body" style="direction: rtl">
+            <p>{{ freelancer.name }}</p>
+          </div>
+        </div>
+
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header bg-primary text-white" style="direction: rtl">
+            <span class="card-icon"><i class="fa fa-briefcase m-2"></i></span>
+            <span class="card-title ml-2">اللقب</span>
+          </div>
+          <div class="card-body" style="direction: rtl">
+            <p *ngIf="freelancer.title; else defaultTitle">
+              {{ freelancer.title }}
+            </p>
+            <ng-template #defaultTitle>
+              <span class="text-danger"> لم يضف التخصص بعد </span>
+            </ng-template>
+          </div>
+        </div>
+
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header bg-primary text-white" style="direction: rtl">
+            <span class="card-icon"><i class="fa fa-trophy m-2"></i></span>
+            <span class="card-title ml-2">نبذة عني</span>
+          </div>
+          <div class="card-body" style="direction: rtl">
+            <p *ngIf="freelancer.overview; else defaultOverview">
+              {{ freelancer.overview }}
+            </p>
+            <ng-template #defaultOverview>
+              <span class="text-danger"> لم يكتب نبذة شخصية عن نفسه بعد </span>
+            </ng-template>
+          </div>
+        </div>
+
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header bg-primary text-white" style="direction: rtl">
+            <span class="card-icon"><i class="fa fa-briefcase m-2"></i></span>
+            <span class="card-title ml-2">الدولة</span>
+          </div>
+          <div class="card-body" style="direction: rtl">
+            <p *ngIf="freelancer.address; else defaultCountry">
+              {{ freelancer.address }}
+            </p>
+            <ng-template #defaultCountry>
+              <span class="text-danger"> لم يضف الدولة بعد </span>
+            </ng-template>
+          </div>
+        </div>
+
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header bg-primary text-white" style="direction: rtl">
+            <span class="card-icon"><i class="fa fa-pencil m-2"></i></span>
+            <span class="card-title ml-2">مهاراتي</span>
+          </div>
+          <div class="card-body" style="direction: rtl">
+            <ul *ngIf="freelancer.skills.length > 0; else defaultSkills">
+              <li *ngFor="let skill of freelancer.skills">{{ skill.title }}</li>
+            </ul>
+            <ng-template #defaultSkills>
+              <span class="text-danger"> لا توجد مهارات مضافة حتي الان </span>
+            </ng-template>
+          </div>
+        </div>
+      </ng-template>
     </div>
-
     <div class="col-md-8">
       <ul class="nav nav-tabs mb-3">
         <li class="nav-item ms-auto">
@@ -99,7 +229,6 @@
             class="nav-link"
             routerLinkActive="active"
             [routerLink]="['/freelancerprofile', freelancer.id, 'portfolio']"
-          >
             >معرض الأعمال</a
           >
         </li>
@@ -108,7 +237,6 @@
             class="nav-link"
             routerLinkActive="active"
             [routerLink]="['/freelancerprofile', freelancer.id, 'workhistory']"
-          >
             >المشاريع</a
           >
         </li>

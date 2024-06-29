@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule } 
 import { ProposalService } from '../Services/proposal.service';
 import swal from 'sweetalert';
 import { ProjectService } from '../Services/Projects/project.service';
+import { JobStatus } from '../Enums/JobStatus';
 
 @Component({
   selector: 'app-project-details',
@@ -20,6 +21,7 @@ export class ProjectDetailsComponent implements OnInit {
   currentID: number = 0;
   clientJob: IClientJob | undefined;
   proposalForm: FormGroup;
+  JobStatus = JobStatus;
 
   constructor(
     private _activatedRoute: ActivatedRoute,

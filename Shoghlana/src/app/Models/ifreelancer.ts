@@ -7,10 +7,11 @@ export interface IFreelancer {
     name : string ,
     // description : string ,
     title : string ,
-    skills : Skill[]
+    skills : Skill[],
+    skillIDs : number[],
     // rate : number ,
     address:string
-    personalImageBytes : string ,
+    personalImageBytes: string | File; // Updated to string | File
     overview:string,
     portfolio : Iproject[],
     workingHistory : Ijob[]
