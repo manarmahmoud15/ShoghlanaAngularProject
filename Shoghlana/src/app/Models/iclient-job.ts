@@ -6,7 +6,7 @@ title: string;
 minBudget: string;
 maxBudget: string;
 description:string;
-status: JobStatus;
+status: string;
 clientName: string;
 clientImg: string;
 catID: number;
