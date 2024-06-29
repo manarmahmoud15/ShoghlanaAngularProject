@@ -56,6 +56,7 @@ export class NavbarComponent implements OnInit {
   }
   ngOnInit(): void {
   this.clientId = Number (localStorage.getItem('Id'));
+  console.log("id from navbar" + this.clientId)
     this.ChatService.messages$.subscribe(res=>{
 
       this.messages = res;

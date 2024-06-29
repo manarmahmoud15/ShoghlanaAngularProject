@@ -11,18 +11,32 @@
                     </div>
                     <div class="has-padding">
                         <div class="user-info-column">
-                            <div class="img marked">
-                                <img class="" src="data:image/png;base64,{{Client.image}}" alt="">
-                                <!-- <svg width="82" height="82">
-                                    <circle r="39" cx="41" cy="41" style="stroke-dashoffset: calc(250 - (250 * 67) / 100);"></circle>
-                                </svg> -->
+                            <div class="img marked position-relative">
+                                <img [src]="Client.image ? 'data:image/png;base64,' + Client.image : '../../assets/imgs/default-profile-picture-avatar-png-green.png'" alt="" class="img-fluid rounded-circle">
+                              <i *ngIf="VisitedClientId === LoggedInClientId" class="fa-solid fa-upload text-primary position-absolute upload-icon" (click)="TriggerFileInput()"></i>
+                              <input type="file" accept=".png,.jpg,.jpeg" #fileInput (change)="SelectedImgChanged($event)" class="d-none"/>
                             </div>
-                            <p class="name" *ngIf="Client">
-                                <span style="font-weight: bold; font-size: larger;">{{Client.name}}</span>
-                            </p>
+                            <span *ngIf="imageError" class="text-danger w-100">
+                                {{imageError}}
+                            </span>
+
+
+                                                              <div class="d-flex align-items-center">
+                                                                <div class="flex-grow-1">
+                                                                    <p class="name" *ngIf="!isEditingName" (click)="toggleEditName()" style="cursor: pointer;">
+                                                                        <span style="font-weight: bold; font-size: larger;">{{Client.name}}</span>
+                                                                    </p>
+                                                                    <input *ngIf="isEditingName" [(ngModel)]="tempName" class="form-control" (blur)="saveName()" style="font-weight: bold; font-size: larger;" />
+                                                                    <div *ngIf="nameError" class="text-danger">{{nameError}}</div>
+                                                                </div> 
+                                                                <span *ngIf="VisitedClientId === LoggedInClientId" class="d-inline-block ms-2">
+                                                                    <i class="fa-solid fa-pen ms-1 text-primary" (click)="toggleEditName()" style="cursor: pointer;"></i>
+                                                                </span>
+                                                            </div>
+
                             <div class="">
                                 <div class="dashboard-sidebar-tag">
-                                    <span class="theme-color" style="font-weight: bold;">{{Client.country}}</span>
+                                    <span class="theme-color" [ngClass]="{'text-danger' : emptyClientCountry }" style="font-weight: bold;">{{Client.country? Client.country : 'لم يحدد الجنسية'}}</span>
                                 </div>
                                 <p class="info-content">
                                     <i class="fas fa-layer-group text-primary p-1"></i>
@@ -82,19 +96,30 @@
                     </div>
                 </div>
             </div>
+            
             <div class="col-12 col-lg-9">
                 <ul class="nav nav-tabs block-tabs mb-3 hide-scrollbar-allow-scroll" style="direction: rtl;">
-                    <li class="nav-item text-primary">
-                        <!-- <a href="https://kafiil.com/u/lisa_noman" class="active"> -->
+                    <li class="nav-item text-primary d-flex justify-content-between align-items-center" style="width: 100%;">
+                        <span class="d-inline-block">
                             <i class="fas fa-user"></i> نبذة عني
-                        <!-- </a> -->
+                        </span>
+                        <span class="d-inline-block" *ngIf="VisitedClientId === LoggedInClientId">
+                            <button class="btn btn-outline-light bg-primary text-white ms-3" (click)="toggleEdit()">
+                                تعديل <i class="fa-solid fa-pen ms-1"></i>
+                            </button>
+                        </span> 
                     </li>
                 </ul>
                 <div class="row">
                     <div class="col-12">
                         <div class="block">
                             <div class="has-padding pb-0">
-                                <p [ngClass]="{'text-danger': emptyClientDescription}" class="desc-font mb-20" style="line-height: 30px; font-size:16px; direction: rtl;">
+                                <div *ngIf="isEditing"> 
+                                    <textarea [(ngModel)]="tempDescription" class="form-control" style="direction: rtl; font-size: 16px; line-height: 30px;" rows="4"></textarea>
+                                    <button class="btn btn-primary m-2" (click)="saveDescription()">حفظ</button>
+                                    <button class="btn btn-secondary m-2" (click)="cancelEdit()">إلغاء</button>
+                                </div>
+                                <p *ngIf="!isEditing" [ngClass]="{'text-danger': !Client.description}" class="desc-font mb-20" style="line-height: 30px; font-size: 16px; direction: rtl;">
                                     {{ Client.description ? Client.description : 'لم يكتب نبذة شخصية عن نفسه' }}
                                 </p>
                             </div>
@@ -241,6 +266,7 @@
                                 </p>
                                 <i class="fas fa-chevron-down"></i>
                             </div>
+
                             <div id="block-body-2" class="block-body col-12">
                                 <table class="info-table col-12">
                                     <tbody>
@@ -272,6 +298,7 @@
                                     </tbody>
                                 </table>
                               </div>
+
                         </div>
                     </div>
                 </div>
