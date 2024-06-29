@@ -143,9 +143,16 @@
           </div>
         </div>
 
-        <button class="btn btn-primary" (click)="saveChanges()">
-          حفظ التغييرات
-        </button>
+        <button
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+        (click)="saveChanges()"
+      >
+        حفظ التغييرات
+      </button>
+      <!-- Include the SimpleModalComponent -->
+      <app-save-success-window></app-save-success-window>
         <button class="btn btn-secondary ml-2" (click)="cancelEdit()">
           إلغاء
         </button>

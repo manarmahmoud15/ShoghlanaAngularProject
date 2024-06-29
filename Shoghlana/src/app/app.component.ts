@@ -34,7 +34,8 @@ import { SignalrService } from './Services/signal-r.service.spec';
     RouterLink,
     RouterLinkActive,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule , 
+    // BrowserAnimationsModule
   ],
 })
 export class AppComponent implements OnInit, OnDestroy {
