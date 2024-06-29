@@ -4,3 +4,6 @@
 
 /* @import "~font-awesome/css/font-awesome.min.css";
 @import "~bootstrap/dist/css/bootstrap.min.css"; */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
