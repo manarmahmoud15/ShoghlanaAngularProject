@@ -4,7 +4,6 @@
     background-color: #1dbf73;
     background-image: linear-gradient(180deg, #1dbf73 25%,  rgb(194, 194, 194) 100%);
   }
-  
   .chat_header {
     display: flex;
     justify-content: space-between;

@@ -13,7 +13,7 @@ import { WorksGalleryComponent } from './works-gallery/works-gallery.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { FreelancerEditProfileComponent } from './freelancer-edit-profile/freelancer-edit-profile.component';
-import { ClientProfileComponent } from './client-profile/client-profile.component';
+// import { ClientProfileComponent } from './client-profile/client-profile.component';
 import { AddprojectComponent } from './addproject/addproject.component';
 
 export const routes: Routes = [
@@ -50,7 +50,6 @@ export const routes: Routes = [
   { path: 'projects', loadComponent: () => import('./projects/projects.component').then((Obj) => Obj.ProjectsComponent) },
   //  { path : 'projectDetails/:id' , loadComponent:()=> import('./project-details/project-details.component')
   // .then((obj) =>obj.ProjectDetailsComponent)} ,
-  { path: 'clientProfile/:id', component: ClientProfileComponent },
   { path: 'project-details/:id', loadComponent: () => import('./project-details/project-details.component').then((obj) => obj.ProjectDetailsComponent) },
 
   {
@@ -66,9 +65,6 @@ export const routes: Routes = [
       }
     ]
   },
-
-  { path: 'clientProfile/:id', component: ClientProfileComponent },
-
   {
     path: 'addproject', loadComponent: () =>
       import('./addproject/addproject.component').then(obj => obj.AddprojectComponent)
@@ -118,9 +114,8 @@ export const routes: Routes = [
   { path: 'projects', canActivate: [authGuard], loadComponent: () => import('./projects/projects.component').then((Obj) => Obj.ProjectsComponent) },
   //  { path : 'projectDetails/:id' , loadComponent:()=> import('./project-details/project-details.component')
   // .then((obj) =>obj.ProjectDetailsComponent)} ,
-  { path: 'clientProfile/:id', component: ClientProfileComponent },
+  // { path: 'clientProfile/:id', component: ClientProfileComponent },
   { path: 'project-details/:id', loadComponent: () => import('./project-details/project-details.component').then((obj) => obj.ProjectDetailsComponent) },
-
   {
     path: 'freelancerprofile/:id', canActivate: [authGuard],
     loadComponent: () => import('./freelancer-profile/freelancer-profile.component').then(obj => obj.FreelancerProfileComponent),
@@ -137,7 +132,7 @@ export const routes: Routes = [
   },
 
 
-  { path: 'clientProfile/:id', component: ClientProfileComponent },
+  // { path: 'clientProfile/:id', component: ClientProfileComponent },
 
   {
     path: 'addproject', loadComponent: () =>

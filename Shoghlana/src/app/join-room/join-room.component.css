@@ -4,7 +4,7 @@
 }
 .cardbody-color{
     background-color: #14f98e;
-    background-image: linear-gradient(180deg ,#14f98e 25% , rgb(194, 194, 194) 100%);
+    background-image: #14f98e 
 }
 .profile-image-pic{
     height: 200px;

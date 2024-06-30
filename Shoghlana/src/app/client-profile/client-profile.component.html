@@ -1,75 +1,128 @@
-
 <section class="content">
-    <div class="container pt-40 pb-40">
-        <div class="row">
-            <div class="col-12 col-lg-3">
-                <div class="block">
-                    <div class="block-head" style="direction: rtl;">
-                        <p class="title text-primary">
-                            <i class="fas fa-user"></i> حساب المستخدم
-                        </p>
-                    </div>
-                    <div class="has-padding">
-                        <div class="user-info-column">
-                            <div class="img marked position-relative">
-                                <img [src]="Client.image ? 'data:image/png;base64,' + Client.image : '../../assets/imgs/default-profile-picture-avatar-png-green.png'" alt="" class="img-fluid rounded-circle">
-                              <i *ngIf="VisitedClientId === LoggedInClientId" class="fa-solid fa-upload text-primary position-absolute upload-icon" (click)="TriggerFileInput()"></i>
-                              <input type="file" accept=".png,.jpg,.jpeg" #fileInput (change)="SelectedImgChanged($event)" class="d-none"/>
-                            </div>
-                            <span *ngIf="imageError" class="text-danger w-100">
-                                {{imageError}}
-                            </span>
+  <div class="container pt-40 pb-40">
+    <div class="row">
+      <div class="col-12 col-lg-3">
+        <div class="block">
+          <div class="block-head" style="direction: rtl">
+            <p class="title text-primary">
+              <i class="fas fa-user"></i> حساب المستخدم
+            </p>
+          </div>
+          <div class="has-padding">
+            <div class="user-info-column">
+              <div class="img marked position-relative">
+                <img
+                  [src]="
+                    Client.image
+                      ? 'data:image/png;base64,' + Client.image
+                      : '../../assets/imgs/default-profile-picture-avatar-png-green.png'
+                  "
+                  alt=""
+                  class="img-fluid rounded-circle"
+                />
+                <i
+                  *ngIf="VisitedClientId === LoggedInClientId"
+                  class="fa-solid fa-upload text-primary position-absolute upload-icon"
+                  (click)="TriggerFileInput()"
+                ></i>
+                <input
+                  type="file"
+                  accept=".png,.jpg,.jpeg"
+                  #fileInput
+                  (change)="SelectedImgChanged($event)"
+                  class="d-none"
+                />
+              </div>
+              <span *ngIf="imageError" class="text-danger w-100">
+                {{ imageError }}
+              </span>
+              <div class="d-flex align-items-center">
+                <div class="flex-grow-1">
+                  <p
+                    class="name"
+                    *ngIf="!isEditingName"
+                    (click)="toggleEditName()"
+                    style="cursor: pointer"
+                  >
+                    <span style="font-weight: bold; font-size: larger">{{
+                      Client.name
+                    }}</span>
+                  </p>
+                  <input
+                    *ngIf="isEditingName"
+                    [(ngModel)]="tempName"
+                    class="form-control"
+                    (blur)="saveName()"
+                    style="font-weight: bold; font-size: larger"
+                  />
+                  <div *ngIf="nameError" class="text-danger">
+                    {{ nameError }}
+                  </div>
+                </div>
+                <span
+                  *ngIf="VisitedClientId === LoggedInClientId"
+                  class="d-inline-block ms-2"
+                >
+                  <i
+                    class="fa-solid fa-pen ms-1 text-primary"
+                    (click)="toggleEditName()"
+                    style="cursor: pointer"
+                  ></i>
+                </span>
+              </div>
 
+              <div class="">
+                <div class="dashboard-sidebar-tag">
+                  <span
+                    class="theme-color"
+                    [ngClass]="{ 'text-danger': emptyClientCountry }"
+                    style="font-weight: bold"
+                    >{{
+                      Client.country ? Client.country : "لم يحدد الجنسية"
+                    }}</span
+                  >
+                </div>
+                <p class="info-content">
+                  <i class="fas fa-layer-group text-primary p-1"></i>
+                  <span style="font-weight: bold"
+                    >مشتري مستوي:
+                    <b class="text-primary p-1">{{ ClientLevel }}</b></span
+                  >
+                </p>
+              </div>
 
-                                                              <div class="d-flex align-items-center">
-                                                                <div class="flex-grow-1">
-                                                                    <p class="name" *ngIf="!isEditingName" (click)="toggleEditName()" style="cursor: pointer;">
-                                                                        <span style="font-weight: bold; font-size: larger;">{{Client.name}}</span>
-                                                                    </p>
-                                                                    <input *ngIf="isEditingName" [(ngModel)]="tempName" class="form-control" (blur)="saveName()" style="font-weight: bold; font-size: larger;" />
-                                                                    <div *ngIf="nameError" class="text-danger">{{nameError}}</div>
-                                                                </div> 
-                                                                <span *ngIf="VisitedClientId === LoggedInClientId" class="d-inline-block ms-2">
-                                                                    <i class="fa-solid fa-pen ms-1 text-primary" (click)="toggleEditName()" style="cursor: pointer;"></i>
-                                                                </span>
-                                                            </div>
+              <div>
+                <!-- <a href="#" class="line checked"> -->
+                <span class="right">
+                  <span class="icon text-primary"
+                    ><i class="fas fa-times-circle unverified-icon"></i
+                    ><i class="fas fa-phone m-2"></i
+                  ></span>
+                  <span class="info">
+                    <span class="title text-primary">توثيق الهاتف المحمول</span>
+                    <!-- <span class="desc">تم تفعيل رقم الهاتف المحمول</span> -->
+                  </span>
+                </span>
+                <!-- </a> -->
+              </div>
 
-                            <div class="">
-                                <div class="dashboard-sidebar-tag">
-                                    <span class="theme-color" [ngClass]="{'text-danger' : emptyClientCountry }" style="font-weight: bold;">{{Client.country? Client.country : 'لم يحدد الجنسية'}}</span>
-                                </div>
-                                <p class="info-content">
-                                    <i class="fas fa-layer-group text-primary p-1"></i>
-                                    <span style="font-weight: bold;">مشتري مستوي: <b class="text-primary p-1">{{ClientLevel}}</b></span>
-                                </p>
-                            </div>
-
-                            <div>
-                            <!-- <a href="#" class="line checked"> -->
-                                <span class="right">
-                                    <span class="icon text-primary"><i class="fas fa-times-circle unverified-icon"></i><i class="fas fa-phone m-2"></i></span>
-                                    <span class="info">
-                                        <span class="title text-primary">توثيق الهاتف المحمول</span>
-                                        <!-- <span class="desc">تم تفعيل رقم الهاتف المحمول</span> -->
-                                    </span>
-                                </span>
-                            <!-- </a> -->
-                        </div>
-
-                            <div>
-                            <!-- <a href="#" class="line checked"> -->
-                                <span class="right">
-                                    <span class="icon text-primary"><i class="fas fa-check-circle verified-icon"></i><i class="fa-regular fa-envelope m-2"></i></span>
-                                    <span class="info">
-                                        <span class="title text-primary">توثيق البريد الالكتروني</span>
-                                        <!-- <span class="desc">تم تفعيل رقم الهاتف المحمول</span> -->
-                                    </span>
-                                </span>
-                            <!-- </a> -->
-                        </div>
-
-
-                            <!-- <div class="stars">
+              <div>
+                <!-- <a href="#" class="line checked"> -->
+                <span class="right">
+                  <span class="icon text-primary"
+                    ><i class="fas fa-check-circle verified-icon"></i
+                    ><i class="fa-regular fa-envelope m-2"></i
+                  ></span>
+                  <span class="info">
+                    <span class="title text-primary"
+                      >توثيق البريد الالكتروني</span
+                    >
+                    <!-- <span class="desc">تم تفعيل رقم الهاتف المحمول</span> -->
+                  </span>
+                </span>
+                <!-- </a> -->
+              </div>
+              <!-- <div class="stars">
                                 <i class="fas fa-star "></i>
                                 <i class="fas fa-star "></i>
                                 <i class="fas fa-star "></i>
@@ -80,127 +133,186 @@
                                     <span class="hint-text">(0)</span>
                                 </span>
                             </div> -->
-                            <!-- <p class="info-content">
+              <!-- <p class="info-content">
                                 <i class="fi fi-ye" data-toggle="tooltip" title="" data-original-title="اليمن"></i> |
                                 <i class="far fa-eye"></i>
 
                                 اخر ظهور: <span class="theme-color">منذ شهر</span>
                             </p> -->
-                            <!-- <div class="more-medals">
+              <!-- <div class="more-medals">
                                 <div class="medals">
                                     <i class="fas fa-credit-card user-badge" data-toggle="tooltip" title="" data-original-title="قام المستخدم بشحن رصيده"></i>
                                 </div>
                             </div> -->
-                            <p class="desc-font mb-30"></p>
-                        </div>
-                    </div>
-                </div>
+              <p class="desc-font mb-30"></p>
             </div>
-            
-            <div class="col-12 col-lg-9">
-                <ul class="nav nav-tabs block-tabs mb-3 hide-scrollbar-allow-scroll" style="direction: rtl;">
-                    <li class="nav-item text-primary d-flex justify-content-between align-items-center" style="width: 100%;">
-                        <span class="d-inline-block">
-                            <i class="fas fa-user"></i> نبذة عني
-                        </span>
-                        <span class="d-inline-block" *ngIf="VisitedClientId === LoggedInClientId">
-                            <button class="btn btn-outline-light bg-primary text-white ms-3" (click)="toggleEdit()">
-                                تعديل <i class="fa-solid fa-pen ms-1"></i>
-                            </button>
-                        </span> 
-                    </li>
-                </ul>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="block">
-                            <div class="has-padding pb-0">
-                                <div *ngIf="isEditing"> 
-                                    <textarea [(ngModel)]="tempDescription" class="form-control" style="direction: rtl; font-size: 16px; line-height: 30px;" rows="4"></textarea>
-                                    <button class="btn btn-primary m-2" (click)="saveDescription()">حفظ</button>
-                                    <button class="btn btn-secondary m-2" (click)="cancelEdit()">إلغاء</button>
-                                </div>
-                                <p *ngIf="!isEditing" [ngClass]="{'text-danger': !Client.description}" class="desc-font mb-20" style="line-height: 30px; font-size: 16px; direction: rtl;">
-                                    {{ Client.description ? Client.description : 'لم يكتب نبذة شخصية عن نفسه' }}
-                                </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-9">
+        <ul
+          class="nav nav-tabs block-tabs mb-3 hide-scrollbar-allow-scroll"
+          style="direction: rtl"
+        >
+          <li
+            class="nav-item text-primary d-flex justify-content-between align-items-center"
+            style="width: 100%"
+          >
+            <span class="d-inline-block">
+              <i class="fas fa-user"></i> نبذة عني
+            </span>
+            <span
+              class="d-inline-block"
+              *ngIf="VisitedClientId === LoggedInClientId"
+            >
+              <button
+                class="btn btn-outline-light bg-primary text-white ms-3"
+                (click)="toggleEdit()"
+              >
+                تعديل <i class="fa-solid fa-pen ms-1"></i>
+              </button>
+            </span>
+          </li>
+        </ul>
+        <div class="row">
+          <div class="col-12">
+            <div class="block">
+              <div class="has-padding pb-0">
+                <div *ngIf="isEditing">
+                  <textarea
+                    [(ngModel)]="tempDescription"
+                    class="form-control"
+                    style="direction: rtl; font-size: 16px; line-height: 30px"
+                    rows="4"
+                  ></textarea>
+                  <button
+                    class="btn btn-primary m-2"
+                    (click)="saveDescription()"
+                  >
+                    حفظ
+                  </button>
+                  <button class="btn btn-secondary m-2" (click)="cancelEdit()">
+                    إلغاء
+                  </button>
+                </div>
+                <p
+                  *ngIf="!isEditing"
+                  [ngClass]="{ 'text-danger': !Client.description }"
+                  class="desc-font mb-20"
+                  style="line-height: 30px; font-size: 16px; direction: rtl"
+                >
+                  {{
+                    Client.description
+                      ? Client.description
+                      : "لم يكتب نبذة شخصية عن نفسه"
+                  }}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 w-50">
+              <div class="block collapse-block">
+                <div class="block-head" data-target=".block-body">
+                  <p class="title col-10 text-primary" style="direction: rtl">
+                    <i class="fas fa-chart-pie"></i> الإحصائيات
+                  </p>
+                  <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="block-body col-12">
+                  <table class="info-table col-12">
+                    <tbody>
+                      <tr>
+                        <td style="direction: rtl" class="row w-100">
+                          <div
+                            style="display: flex; justify-content: start"
+                            class="m-2 col-12"
+                          >
+                            <div class="col-8">
+                              <i class="fas fa-calendar d-inline m-1"></i>
+                              <span style="margin-right: 5px" class="d-inline"
+                                >تاريخ التسجيل</span
+                              >
                             </div>
-                        </div>
-                    </div>
+                            <span
+                              class="mx-4 text-success d-inline offset-1 col-3"
+                              >{{ formattedDateTime() }}</span
+                            >
+                          </div>
+                        </td>
+                      </tr>
 
-
-
-
-
-
-
-                    <div class="row">
-                    <div class=" col-md-4 w-50">
-                        <div class="block collapse-block">
-                            <div class="block-head" data-target=".block-body">
-                                <p class="title col-10 text-primary" style="direction: rtl;">
-                                    <i class="fas fa-chart-pie"></i> الإحصائيات
-                                </p>
-                                <i class="fas fa-chevron-down"></i>
+                      <tr>
+                        <td style="direction: rtl" class="row w-100">
+                          <div
+                            style="display: flex; justify-content: start"
+                            class="m-2"
+                          >
+                            <div class="col-8">
+                              <i class="fas fa-tasks m-1"></i>
+                              <span style="margin-right: 5px"
+                                >المشاريع المعروضة</span
+                              >
                             </div>
-                            <div class="block-body col-12">
-                                <table class="info-table col-12">
-                                    <tbody>
-                                        <tr>
-                                            <td style="direction: rtl;" class="row w-100">
-                                                <div style="display: flex; justify-content: start;" class="m-2 col-12">
-                                                    <div class="col-8">
-                                                    <i class="fas fa-calendar d-inline m-1"></i>
-                                                    <span style="margin-right: 5px;" class="d-inline">تاريخ التسجيل</span>
-                                                </div>
-                                                <span class="mx-4 text-success d-inline offset-1 col-3">{{formattedDateTime()}}</span>
-                                                </div>
-                                            </td>
-                                        </tr>
+                            <span class="mx-4 text-success offset-1 col-3">{{
+                              Client.jobsCount
+                            }}</span>
+                          </div>
+                        </td>
+                      </tr>
 
-
-                                        <tr>
-                                            <td style="direction: rtl;" class="row w-100">
-                                                <div style="display: flex; justify-content: start;" class="m-2">
-                                                    <div class="col-8">
-                                                    <i class="fas fa-tasks m-1"></i>
-                                                    <span style="margin-right: 5px;">المشاريع المعروضة</span>
-                                                </div>
-                                                <span class="mx-4 text-success offset-1 col-3">{{Client.jobsCount}}</span>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td style="direction: rtl;" class="row w-100">
-                                                <div style="display: flex; justify-content: start;" class="m-2">
-                                                    <div class="col-8">
-                                                    <i class="fas fa-check-circle m-1"></i>
-                                                    <span style="margin-right: 5px;">المشاريع المكتملة</span>
-                                                </div>
-                                                <span class="mx-4 text-success offset-1 col-3">{{Client.completedJobsCount}}</span>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td style="direction: rtl;" class="row w-100">
-                                                <div style="display: flex; justify-content: start;" class="m-2">
-                                                    <div class="col-8">
-                                                    <i class="fa-solid fa-percent m-1"></i>
-                                                    <span style="margin-right: 5px;">معدل التوظيف</span>
-                                                </div>
-                                                <span class="mx-4 text-success offset-1 col-3">{{Client.jobsCount !== 0 ? Client.completedJobsCount / Client.jobsCount * 100 : 0}} %</span>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                    </tbody>
-                                </table>
+                      <tr>
+                        <td style="direction: rtl" class="row w-100">
+                          <div
+                            style="display: flex; justify-content: start"
+                            class="m-2"
+                          >
+                            <div class="col-8">
+                              <i class="fas fa-check-circle m-1"></i>
+                              <span style="margin-right: 5px"
+                                >المشاريع المكتملة</span
+                              >
                             </div>
-                        </div>
-                    </div>
+                            <span class="mx-4 text-success offset-1 col-3">{{
+                              Client.completedJobsCount
+                            }}</span>
+                          </div>
+                        </td>
+                      </tr>
 
+                      <tr>
+                        <td style="direction: rtl" class="row w-100">
+                          <div
+                            style="display: flex; justify-content: start"
+                            class="m-2"
+                          >
+                            <div class="col-8">
+                              <i class="fa-solid fa-percent m-1"></i>
+                              <span style="margin-right: 5px"
+                                >معدل التوظيف</span
+                              >
+                            </div>
+                            <span class="mx-4 text-success offset-1 col-3"
+                              >{{
+                                Client.jobsCount !== 0
+                                  ? (Client.completedJobsCount /
+                                      Client.jobsCount) *
+                                    100
+                                  : 0
+                              }}
+                              %</span
+                            >
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
 
-                    <!-- <div class="col-12 col-md-4">
+            <!-- <div class="col-12 col-md-4">
                         <div class="block collapse-block">
                             <div class="block-head" onclick="toggleBlockBody(this)">
                                 <p class="title">
@@ -226,7 +338,7 @@
                         </div>
                     </div> -->
 
-                    <!-- <div class="col-12 col-md-4">
+            <!-- <div class="col-12 col-md-4">
                         <div class="block">
                             <div class="block-head">
                                 <p class="title">
@@ -255,59 +367,73 @@
                             </div>
                         </div>
                     </div> -->
+            <div class="col-md-4 w-50">
+              <div class="block collapse-block">
+                <div class="block-head" data-target="#block-body-2">
+                  <p class="title col-10 text-primary" style="direction: rtl">
+                    <i class="fas fa-tasks"></i>
+                    المشاريع
+                  </p>
+                  <i class="fas fa-chevron-down"></i>
+                </div>
 
-
-                    <div class="col-md-4 w-50">
-                        <div class="block collapse-block">
-                            <div class="block-head" data-target="#block-body-2">
-                                <p class="title col-10 text-primary" style="direction: rtl;">
-                                    <i class="fas fa-tasks"></i>
-                                    المشاريع
-                                </p>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-
-                            <div id="block-body-2" class="block-body col-12">
-                                <table class="info-table col-12">
-                                    <tbody>
-                                        <ng-container *ngIf="Client.jobsCount > 0; else NoProjects">
-                                            <tr *ngFor="let job of Client.jobs" class="row w-100">
-                                                <td style="direction: rtl;" class="col-12">
-                                                    <div style="display: flex; justify-content: start;" class="m-2 col-12">
-                                                        <div class="col-7 d-inline">
-                                                            <li>
-                                                                <span style="margin-right: 5px;">{{job.title}}</span>
-                                                            </li>
-                                                        </div>
-                                                        <span class="mx-4 offset-1 col-3" [ngClass]="{
-                                                            'text-success' : job.status === JobStatus.completed,
-                                                            'text-danger' : job.status === JobStatus.Closed,
-                                                            'text-primary' : job.status === JobStatus.Active
-
-                                                            }">
-                                                            {{job.status === JobStatus.completed? 'مكتمل': job.status === JobStatus.Closed? 'مغلق' : 'قيد التنفيذ' }}
-                                                        </span>  -->
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </ng-container>
-                                        <ng-template #NoProjects>
-                                            <tr style="direction: rtl;" class="text-danger">
-                                                <td colspan="2">لا توجد مشاريع حتى الآن</td>
-                                            </tr>
-                                        </ng-template>
-                                    </tbody>
-                                </table>
+                <div id="block-body-2" class="block-body col-12">
+                  <table class="info-table col-12">
+                    <tbody>
+                      <ng-container
+                        *ngIf="Client.jobsCount > 0; else NoProjects"
+                      >
+                        <tr *ngFor="let job of Client.jobs" class="row w-100">
+                          <td style="direction: rtl" class="col-12">
+                            <div
+                              style="display: flex; justify-content: start"
+                              class="m-2 col-12"
+                            >
+                              <div class="col-7 d-inline">
+                                <li>
+                                  <span style="margin-right: 5px">{{
+                                    job.title
+                                  }}</span>
+                                </li>
                               </div>
-
-                        </div>
-                    </div>
+                              <span
+                                class="mx-4 offset-1 col-3"
+                                [ngClass]="{
+                                  'text-success':
+                                    job.status === JobStatus.completed,
+                                  'text-danger':
+                                    job.status === JobStatus.Closed,
+                                  'text-primary':
+                                    job.status === JobStatus.Active
+                                }"
+                              >
+                                {{
+                                  job.status === JobStatus.completed
+                                    ? "مكتمل"
+                                    : job.status === JobStatus.Closed
+                                    ? "مغلق"
+                                    : "قيد التنفيذ"
+                                }}
+                              </span>
+                            </div>
+                          </td>
+                        </tr>
+                      </ng-container>
+                      <ng-template #NoProjects>
+                        <tr style="direction: rtl" class="text-danger">
+                          <td colspan="2">لا توجد مشاريع حتى الآن</td>
+                        </tr>
+                      </ng-template>
+                    </tbody>
+                  </table>
                 </div>
-
-                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </section>
 
 <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
