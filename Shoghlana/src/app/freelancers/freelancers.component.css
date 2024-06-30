@@ -6,6 +6,7 @@
 .text{
   font-family: "Marhey", sans-serif;
   font-optical-sizing: auto;
+  font-size: 50px;
   /* font-weight: <weight>;
   font-style: normal; */
 }
