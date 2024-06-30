@@ -19,13 +19,14 @@ import { RoleSelectionPopupComponent } from "../role-selection-popup/role-select
 import { UserRole } from '../Enums/UserRole';
 import { UserRoleServiceService } from '../Services/UserRole/user-role-service.service';
 import swal from 'sweetalert';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-register',
     standalone: true,
     templateUrl:'./register.component.html',
     styleUrl: './register.component.css',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, GoogleSigninButtonModule, RoleSelectionPopupComponent]
+    imports: [TranslateModule,CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, GoogleSigninButtonModule, RoleSelectionPopupComponent]
 })
 export class RegisterComponent implements OnInit {
   isLoading:boolean=false;
@@ -38,7 +39,9 @@ export class RegisterComponent implements OnInit {
 
   constructor(private _authoService: AuthService, private _router: Router,
     private SocialAuthService : SocialAuthService,
-    private UserroleService : UserRoleServiceService
+    private UserroleService : UserRoleServiceService,
+    private __translateService: TranslateService
+
   ) {
     this.RegisterForm = new FormGroup({
       username: new FormControl(null, [
@@ -56,6 +59,9 @@ export class RegisterComponent implements OnInit {
       role : new FormControl(this.UserroleService.get())
       // phoneNumbers:new FormArray([new FormControl('')])
     });
+    const lang = localStorage.getItem('language') || 'en';
+    this.__translateService.setDefaultLang(lang);
+    this.__translateService.use(lang);
   }
 
   ngOnInit(): void {

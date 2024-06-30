@@ -9,10 +9,11 @@ import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { JobsComponent } from './jobs/jobs.component';
-
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import { SignalrService } from './Services/signal-r.service.spec';
 import { DarkModeService } from './Services/DarkMode/dark-mode.service';
+import {TranslateLoader , TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 // import { SignalRService } from './Services/signal-r.service';
 
@@ -22,6 +23,7 @@ import { DarkModeService } from './Services/DarkMode/dark-mode.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   imports: [
+   
     RouterOutlet,
     LoginComponent,
     RegisterComponent,
@@ -35,7 +37,9 @@ import { DarkModeService } from './Services/DarkMode/dark-mode.service';
     RouterLink,
     RouterLinkActive,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
+    TranslateModule
   ],
 })
 export class AppComponent implements OnInit, OnDestroy {

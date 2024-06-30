@@ -6,7 +6,7 @@
       <form (ngSubmit)="handleRegister(RegisterForm)" [formGroup] = "RegisterForm" class="form px-3 pt-1 pb-4">
         <h5 class="text-center" style="color: #1dbf73;">مرحبا بك</h5>
         <div class="flex-column">
-          <label for="username">الاسم</label>
+          <label for="username">{{ "UserName" | translate }}</label>
         </div>
         <div class="inputForm">
           <i class="fas fa-user fa-lg me-1 fa-fw"></i>
