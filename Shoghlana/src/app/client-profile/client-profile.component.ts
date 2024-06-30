@@ -170,7 +170,7 @@ this.ClientService.Update(this.UpdatedClient).subscribe({
     this.VisitedClientId = Number(this._activatedRoute.snapshot.paramMap.get('id'));
     this.LoggedInClientId = Number(localStorage.getItem('Id'))
     console.log("id from local storage : " , this.LoggedInClientId)
-    this.UpdatedClient.id = this.VisitedClientId;
+    this.UpdatedClient.Id = this.VisitedClientId;
 
     console.log("loggedin client id" + this.LoggedInClientId)
     console.log("visited client id" +this.VisitedClientId)

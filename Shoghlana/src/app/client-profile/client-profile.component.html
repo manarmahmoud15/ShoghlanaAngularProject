@@ -10,8 +10,8 @@
           </div>
           <div class="has-padding">
             <div class="user-info-column">
-              <div class="img marked position-relative">
-                <img
+              <div class="img marked position-relative ms-5">
+                <img 
                   [src]="
                     Client.image
                       ? 'data:image/png;base64,' + Client.image
@@ -22,7 +22,7 @@
                 />
                 <i
                   *ngIf="VisitedClientId === LoggedInClientId"
-                  class="fa-solid fa-upload text-primary position-absolute upload-icon"
+                  class="fa-solid fa-upload text-primary upload-icon me-5"
                   (click)="TriggerFileInput()"
                 ></i>
                 <input
@@ -36,6 +36,7 @@
               <span *ngIf="imageError" class="text-danger w-100">
                 {{ imageError }}
               </span>
+
               <div class="d-flex align-items-center">
                 <div class="flex-grow-1">
                   <p
@@ -70,6 +71,7 @@
                   ></i>
                 </span>
               </div>
+
 
               <div class="">
                 <div class="dashboard-sidebar-tag">
