@@ -13,7 +13,7 @@ import { WorksGalleryComponent } from './works-gallery/works-gallery.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { FreelancerEditProfileComponent } from './freelancer-edit-profile/freelancer-edit-profile.component';
-// import { ClientProfileComponent } from './client-profile/client-profile.component';
+import { ClientProfileComponent } from './client-profile/client-profile.component';
 import { AddprojectComponent } from './addproject/addproject.component';
 
 export const routes: Routes = [
