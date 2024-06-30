@@ -16,14 +16,14 @@ export class AuthService {
   constructor(
     private _httpClient: HttpClient,
     private UserRoleService: UserRoleServiceService,
-    private _router :Router
+    private _router: Router
   ) {
-// var token=localStorage.getItem('token')
-//     if(token!==null){
-//          this.decodeUserData();
-//          //when refresh he loggged out but with this condition we check if token still in local storage
-//         // we call decode again
-//     }
+    // var token=localStorage.getItem('token')
+    //     if(token!==null){
+    //          this.decodeUserData();
+    //          //when refresh he loggged out but with this condition we check if token still in local storage
+    //         // we call decode again
+    //     }
   }
 
   setEmail(email: string) {
@@ -58,7 +58,7 @@ export class AuthService {
   login(userdata: object): Observable<any> {
     return this._httpClient.post(`${environment.baseUrl}/Auth/Token`, userdata);
   }
-  logOut(){
+  logOut() {
     localStorage.removeItem('token');
     this.userdata.next(null);
     this._router.navigateByUrl('/signin');
