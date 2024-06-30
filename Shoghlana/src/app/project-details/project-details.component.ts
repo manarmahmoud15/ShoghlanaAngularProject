@@ -25,6 +25,7 @@ export class ProjectDetailsComponent implements OnInit {
   clientJob: IClientJob | undefined;
   proposalForm: FormGroup;
   freelancerId : any;
+  freelancerDetails : any[] =[];
   JobStatus = JobStatus;
   constructor(
     private _activatedRoute: ActivatedRoute,
@@ -46,41 +47,96 @@ export class ProjectDetailsComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  // ngOnInit(): void {
     
+  //   const id = +this._activatedRoute.snapshot.paramMap.get('id')!;
+
+  //   this._ProjectService.GetById(id).subscribe({
+  //     next: (res) => {
+
+  //       if (res.isSuccess) {
+  //         this.clientJob = res.data;
+  //         this.proposalForm.patchValue({ JobId: id }); // Set the JobId in the form
+  //       } else {
+  //         console.error('Unexpected response structure:', res);
+  //       }
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //     },
+  //   });
+  //   this._proposalService.getProposalByJobId(id).subscribe({
+  //     next: (res) => {
+  //       this.proposalDetails = res.data;
+  //       console.log('detailss', this.proposalDetails);
+    
+  //       if (Array.isArray(this.proposalDetails)) {
+  //         this.proposalDetails.forEach((proposal: { freelancerId: any; }) => {
+  //           const freelancerId = proposal.freelancerId;
+  //           console.log('freelancerId', freelancerId);
+    
+  //           this._freelancer.getFreelancerById(freelancerId).subscribe({
+  //             next: (freelancerRes) => {
+  //               console.log('freelancer', freelancerRes);
+  //             },
+  //             error: (err) => {
+  //               console.error('Error fetching freelancer data', err);
+  //             }
+  //           });
+  //         });
+  //       } else {
+  //         console.error('Unexpected response data format', res.data);
+  //       }
+  //     },
+  //     error: (err) => {
+  //       console.error('Error fetching proposal data', err);
+  //     }
+  //   });
+    
+  // }
+
+  ngOnInit(): void {
     const id = +this._activatedRoute.snapshot.paramMap.get('id')!;
+    console.log('Route ID:', id);
 
     this._ProjectService.GetById(id).subscribe({
       next: (res) => {
-
+        console.log('Project response:', res);
         if (res.isSuccess) {
           this.clientJob = res.data;
-          this.proposalForm.patchValue({ JobId: id }); // Set the JobId in the form
+          this.proposalForm.patchValue({ JobId: id });
         } else {
           console.error('Unexpected response structure:', res);
         }
       },
       error: (err) => {
-        console.log(err);
-      },
+        console.error('Error fetching project data:', err);
+      }
     });
+
     this._proposalService.getProposalByJobId(id).subscribe({
       next: (res) => {
+        console.log('Proposal response:', res);
         this.proposalDetails = res.data;
-        console.log('detailss', this.proposalDetails);
-    
+        console.log('Proposal details:', this.proposalDetails);
+
         if (Array.isArray(this.proposalDetails)) {
-          this.proposalDetails.forEach((proposal: { freelancerId: any; }) => {
+          this.proposalDetails.forEach((proposal: { freelancerId: any }) => {
             const freelancerId = proposal.freelancerId;
-            console.log('freelancerId', freelancerId);
-    
+            console.log('Freelancer ID:', freelancerId);
+
             this._freelancer.getFreelancerById(freelancerId).subscribe({
               next: (freelancerRes) => {
-                console.log('freelancer', freelancerRes);
+                console.log('Freelancer data:', freelancerRes);
+                if (freelancerRes && typeof freelancerRes === 'object') {
+                  this.freelancerDetails.push(freelancerRes.data);
+                } else {
+                  console.error('Unexpected freelancer response format', freelancerRes);
+                }
               },
               error: (err) => {
-                console.error('Error fetching freelancer data', err);
-              }
+                console.error('Error fetching freelancer data:', err);
+              },
             });
           });
         } else {
@@ -88,10 +144,9 @@ export class ProjectDetailsComponent implements OnInit {
         }
       },
       error: (err) => {
-        console.error('Error fetching proposal data', err);
-      }
+        console.error('Error fetching proposal data:', err);
+      },
     });
-    
   }
 
   goBack() {
