@@ -8,6 +8,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ClientServiceService {
+  Update(UpdatedClient: IClient) {
+    throw new Error('Method not implemented.');
+  }
 
   constructor(private _HttpClient : HttpClient) { }
 
