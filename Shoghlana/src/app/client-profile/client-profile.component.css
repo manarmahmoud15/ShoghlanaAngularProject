@@ -172,7 +172,7 @@ body {
 
 .img.marked {
     width: 150px; /* Adjust the size as needed */
-    height: 150px; /* Adjust the size as needed */
+    height: 100px; /* Adjust the size as needed */
 }
 
 .img.marked img {
