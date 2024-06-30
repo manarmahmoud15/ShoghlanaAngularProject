@@ -22,7 +22,7 @@ return this._HttpClient.get<any>(`${environment.baseUrl}/Client/${Id}`)
   Update( UpdatedClient : IClient) : Observable<any>
   {
     const formData : FormData = new FormData()
-    formData.append('Id' , UpdatedClient.id.toString())
+    formData.append('Id' , UpdatedClient.Id.toString())
     formData.append('Image' , UpdatedClient.image)
     formData.append('Description' , UpdatedClient.description)
     formData.append('Country' , UpdatedClient.country)
