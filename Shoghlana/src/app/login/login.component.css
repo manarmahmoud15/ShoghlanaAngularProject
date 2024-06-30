@@ -6,7 +6,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
   padding: 30px;
   width: 450px;
   border-radius: 20px;
@@ -22,7 +22,7 @@
 }
 
 .flex-column > label {
-  color: #151717;
+  /* color: #151717; */
   font-weight: 600;
 }
 
@@ -62,7 +62,7 @@
 
 .flex-row > div > label {
   font-size: 14px;
-  color: black;
+  /* color: black; */
   font-weight: 400;
 }
 
@@ -75,7 +75,7 @@
 }
 .p {
   text-align: center;
-  color: black;
+  /* color: black; */
   font-size: 14px;
   margin: 5px 0;
 }
