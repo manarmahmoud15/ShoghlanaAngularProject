@@ -8,6 +8,7 @@ import { ProposalService } from '../Services/proposal.service';
 import swal from 'sweetalert';
 import { ProjectService } from '../Services/Projects/project.service';
 import { JobStatus } from '../Enums/JobStatus';
+import { FreelancerService } from '../Services/freelancer.service';
 
 @Component({
   selector: 'app-project-details',
@@ -23,6 +24,7 @@ export class ProjectDetailsComponent implements OnInit {
   proposalDetails : any;
   clientJob: IClientJob | undefined;
   proposalForm: FormGroup;
+  freelancerId : any;
   JobStatus = JobStatus;
   constructor(
     private _activatedRoute: ActivatedRoute,
@@ -30,6 +32,7 @@ export class ProjectDetailsComponent implements OnInit {
     private _Location: Location,
     private datePipe: DatePipe,
     private _proposalService: ProposalService,
+    private _freelancer : FreelancerService,
     private fb: FormBuilder
   ) {
     this.proposalForm = this.fb.group({
@@ -62,12 +65,33 @@ export class ProjectDetailsComponent implements OnInit {
       },
     });
     this._proposalService.getProposalByJobId(id).subscribe({
-      next:(res)=>
-         {
-          this.proposalDetails = res.data
-          console.log('prop' , this.proposalDetails)
-         }
-    })
+      next: (res) => {
+        this.proposalDetails = res.data;
+        console.log('detailss', this.proposalDetails);
+    
+        if (Array.isArray(this.proposalDetails)) {
+          this.proposalDetails.forEach((proposal: { freelancerId: any; }) => {
+            const freelancerId = proposal.freelancerId;
+            console.log('freelancerId', freelancerId);
+    
+            this._freelancer.getFreelancerById(freelancerId).subscribe({
+              next: (freelancerRes) => {
+                console.log('freelancer', freelancerRes);
+              },
+              error: (err) => {
+                console.error('Error fetching freelancer data', err);
+              }
+            });
+          });
+        } else {
+          console.error('Unexpected response data format', res.data);
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching proposal data', err);
+      }
+    });
+    
   }
 
   goBack() {
