@@ -35,7 +35,8 @@ import { DarkModeService } from './Services/DarkMode/dark-mode.service';
     RouterLink,
     RouterLinkActive,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule , 
+    // BrowserAnimationsModule
   ],
 })
 export class AppComponent implements OnInit, OnDestroy {

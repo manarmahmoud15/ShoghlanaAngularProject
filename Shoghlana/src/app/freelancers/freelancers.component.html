@@ -3,14 +3,29 @@
   <div class="container">
     <div class="row text-center">
       <!-- Team item -->
-      <div class="col-xl-3 col-sm-6 mb-4" *ngFor="let freelancer of FreelancersArr">
+      <div
+        class="col-xl-3 col-sm-6 mb-4"
+        *ngFor="let freelancer of FreelancersArr"
+      >
         <div class="bg-white rounded shadow-lg py-5 px-4">
           <!-- <img [src]="freelancer.personalImageBytes" [alt]="freelancer.name + ' image'" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm"> -->
-          <img [src]="freelancer.personalImageBytes" alt="Freelancer Image" width="100" height="100">
-          <h5 class="mb-0 text">{{freelancer.name}}</h5>
-          <span class="small text-uppercase text-muted text">{{freelancer.title}}</span>
+          <img
+            class="mw-150 border rounded-circle shadow"
+            [src]="freelancer.personalImageBytes"
+            alt="Freelancer Image"
+            width="100"
+            height="100"
+          />
+          <h5 class="mb-0 text">{{ freelancer.name }}</h5>
+          <span class="small text-uppercase text-muted text">{{
+            freelancer.title
+          }}</span>
           <div>
-            <a [routerLink]="['/freelancerprofile', freelancer.id]" class="btn display mt-2">عرض الملف الشخصي</a>
+            <a
+              [routerLink]="['/freelancerprofile', freelancer.id]"
+              class="btn display mt-2"
+              >عرض الملف الشخصي</a
+            >
           </div>
           <ul class="social mb-0 list-inline mt-3 text-center">
             <li class="list-inline-item">
@@ -35,7 +50,8 @@
             </li>
           </ul>
         </div>
-      </div><!-- End -->
+      </div>
+      <!-- End -->
     </div>
   </div>
 </div>
