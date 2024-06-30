@@ -19,6 +19,9 @@ export class ProposalService {
   getProposalById(id: number): Observable<any> {
     return this.httpclient.get<any>(`${this.baseUrl}/${id}`);
   }
+  getProposalByJobId(id: number): Observable<any> {
+    return this.httpclient.get<any>(`${this.baseUrl}/GetByJobId/${id}`);
+  }
 
   postProposal(proposalData: any): Observable<any> {
     return this.httpclient.post<any>(this.baseUrl, proposalData);

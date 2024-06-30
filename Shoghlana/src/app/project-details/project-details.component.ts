@@ -19,6 +19,8 @@ import { JobStatus } from '../Enums/JobStatus';
 })
 export class ProjectDetailsComponent implements OnInit {
   currentID: number = 0;
+  proposalID :any ;
+  proposalDetails : any;
   clientJob: IClientJob | undefined;
   proposalForm: FormGroup;
   JobStatus = JobStatus;
@@ -47,6 +49,7 @@ export class ProjectDetailsComponent implements OnInit {
 
     this._ProjectService.GetById(id).subscribe({
       next: (res) => {
+
         if (res.isSuccess) {
           this.clientJob = res.data;
           this.proposalForm.patchValue({ JobId: id }); // Set the JobId in the form
@@ -58,6 +61,13 @@ export class ProjectDetailsComponent implements OnInit {
         console.log(err);
       },
     });
+    this._proposalService.getProposalByJobId(id).subscribe({
+      next:(res)=>
+         {
+          this.proposalDetails = res.data
+          console.log('prop' , this.proposalDetails)
+         }
+    })
   }
 
   goBack() {
@@ -105,4 +115,5 @@ formData.append('FreelancerId', this.proposalForm.get('FreelancerId')?.value);
       console.log("Form is invalid");
     }
   }
+    
 }

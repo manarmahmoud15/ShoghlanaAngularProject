@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="col-11 container-fluid justify-content-center align-items-center d-flex my-2" *ngIf="clientJob">
-      <div class="col-4 container">
+      <div class=" container">
         <h6 class="text-end py-3">معلومات المشروع</h6>
         <hr />
         <div class="text-end projectdetails">
@@ -59,22 +59,25 @@
           <h5>أضف عرضك</h5>
           <hr />
           <form [formGroup]="proposalForm" (ngSubmit)="addProposal()">
-            <div class="d-flex">
-              <div class="col-6">
+            <div class="row">
+              <div class="col-md-6 mb-3">
                 <label for="deliveryTime">مدة التسليم بالأيام</label>
-                <input formControlName="Duration" type="number" id="deliveryTime" name="deliveryTime" placeholder="مدة التسليم" class="w-75" required />
+                <input formControlName="Duration" type="number" id="deliveryTime" name="deliveryTime" placeholder="مدة التسليم" class="w-75 form-control" required />
               </div>
-              <div class="col-6">
+              <div class="col-md-6 mb-3">
                 <label for="offerValue">قيمة العرض بالدولار</label>
-                <input formControlName="Price" type="number" id="offerValue" name="offerValue" placeholder="قيمة العرض" class="w-75" required />
+                <input formControlName="Price" type="number" id="offerValue" name="offerValue" placeholder="قيمة العرض" class="w-75 form-control" required />
               </div>
             </div>
             <div class="col-11 mt-3">
               <label for="offerDetails">تفاصيل العرض</label>
-              <textarea formControlName="Description" id="offerDetails" name="offerDetails" class="w-100" rows="4" required></textarea>
+              <textarea formControlName="Description" id="offerDetails" name="offerDetails" class="w-100 form-control" rows="4" required></textarea>
             </div>
             <button type="submit" class="btn btn-success mt-3">أضف عرضك</button>
           </form>
+        </div>
+        <div class="container my-2 py-2">
+          <h4>العروض المقدمة</h4>
         </div>
       </div>
     </div>
