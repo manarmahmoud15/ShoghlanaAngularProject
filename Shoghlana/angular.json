@@ -3,15 +3,6 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-"i18n-receipt-demo":{
-  "i18n": {
-    "sourceLocale":"en-US",
-    "locales": {
-      "en": "src/assets/i18n/en.json",
-      "ar": "src/assets/i18n/ar.json"
-    }
-  }
-},
     "apppf": {
       "projectType": "application",
       "schematics": {},
@@ -22,7 +13,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "localize":["ar"],
             "outputPath": "dist/apppf",
             "index": "src/index.html",
             "browser": "src/main.ts",
