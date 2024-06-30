@@ -1,57 +1,42 @@
-<h1 class="text-center my-4 text">الفري لانسرز</h1>
+<h1 class="text text-center my-4">الفري لانسرز</h1>
+
 <div dir="rtl" class="container-fluid">
   <div class="container">
-    <div class="row text-center">
-      <!-- Team item -->
-      <div
-        class="col-xl-3 col-sm-6 mb-4"
-        *ngFor="let freelancer of FreelancersArr"
-      >
-        <div class="bg-white rounded shadow-lg py-5 px-4">
-          <!-- <img [src]="freelancer.personalImageBytes" [alt]="freelancer.name + ' image'" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm"> -->
-          <img
-            class="mw-150 border rounded-circle shadow"
-            [src]="freelancer.personalImageBytes"
-            alt="Freelancer Image"
-            width="100"
-            height="100"
-          />
-          <h5 class="mb-0 text">{{ freelancer.name }}</h5>
-          <span class="small text-uppercase text-muted text">{{
-            freelancer.title
-          }}</span>
-          <div>
-            <a
-              [routerLink]="['/freelancerprofile', freelancer.id]"
-              class="btn display mt-2"
-              >عرض الملف الشخصي</a
-            >
+    <div class="row justify-content-center">
+      <!-- Team items -->
+      <div class="col-xl-3 col-sm-6 mb-4" *ngFor="let freelancer of FreelancersArr">
+        <div class="bg-white rounded shadow-lg text-center">
+          <div class="py-3 px-3 d-flex flex-column align-items-center">
+            <img
+              class="border rounded-circle shadow mb-1"
+              [src]="freelancer.personalImageBytes"
+              alt="Freelancer Image"
+              height="150"
+              width="150"
+            />
+            <h5 class="mb-0">{{ freelancer.name }}</h5>
+            <span class="small text-uppercase text-muted">{{ freelancer.title }}</span>
           </div>
-          <ul class="social mb-0 list-inline mt-3 text-center">
+          <div>
+            <a [routerLink]="['/freelancerprofile', freelancer.id]" class="btn btn-primary mt-2">عرض الملف الشخصي</a>
+          </div>
+          <ul class="social mb-0 list-inline mt-3">
             <li class="list-inline-item">
-              <a href="#" class="social-link">
-                <i class="fa-brands fa-facebook-f"></i>
-              </a>
+              <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
             </li>
             <li class="list-inline-item">
-              <a href="#" class="social-link">
-                <i class="fa-brands fa-twitter"></i>
-              </a>
+              <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
             </li>
             <li class="list-inline-item">
-              <a href="#" class="social-link">
-                <i class="fa-brands fa-instagram"></i>
-              </a>
+              <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
             </li>
             <li class="list-inline-item">
-              <a href="#" class="social-link">
-                <i class="fa-brands fa-linkedin"></i>
-              </a>
+              <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
             </li>
           </ul>
         </div>
       </div>
-      <!-- End -->
+      <!-- End of Team items -->
     </div>
   </div>
 </div>
