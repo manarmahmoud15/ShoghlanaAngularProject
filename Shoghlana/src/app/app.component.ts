@@ -37,14 +37,11 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
     RouterLink,
     RouterLinkActive,
     ReactiveFormsModule,
-<<<<<<< HEAD
     FormsModule,
     HttpClientModule,
-    TranslateModule
-=======
+    TranslateModule,
     FormsModule , 
     // BrowserAnimationsModule
->>>>>>> 55cf81a4e53d0afbe2093cfc470ac3becc351753
   ],
 })
 export class AppComponent implements OnInit, OnDestroy {
