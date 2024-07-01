@@ -1,66 +1,148 @@
-<div class="project container-fluid d-flex pt-5">
+<div class="project container-fluid d-flex pt-5 overflow-hidden">
   <div class="col-md-8 h-50 mx-5">
+
     <div class="container py-1 d-flex justify-content-between align-items-center">
       <div class="col-8 d-flex justify-content-start align-items-center gap-3">
 
-        <div class="d-flex align-items-center border p-2 rounded ">
-          <div class="form-check mx-3">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="statusFilter"
-              id="statusAll"
-            />
-            <label class="form-check-label" for="statusAll"> الكل </label>
-          </div>
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="statusFilter"
-              id="statusOpen"
-              checked
-            />
-            <label class="form-check-label" for="statusOpen"> مفتوح </label>
+        <div class="d-flex align-items-center border p-1 rounded bg-light">
+          <div class="row w-100">
+            <div class="col-sm-3 col-6">
+              <div class="form-check">
+                <input [checked]="true" (click)="FilterProposals(4)"
+                  class="form-check-input"
+                  type="radio"
+                  name="statusFilter"
+                  id="statusAll"
+                />
+                <label class="form-check-label" for="statusAll"> الكل </label>
+              </div>
+            </div>
+            <div class="col-sm-3 col-6">
+              <div class="form-check">
+                <input (click)="FilterProposals(Approved)"
+                  class="form-check-input"
+                  type="radio"
+                  name="statusFilter"
+                  id="statusOpen"
+                  checked
+                />
+                <label class="form-check-label" for="statusOpen"> المقبولة </label>
+              </div>
+            </div>
+            <div class="col-sm-3 col-6">
+              <div class="form-check">
+                <input (click)="FilterProposals(Rejected)"
+                  class="form-check-input"
+                  type="radio"
+                  name="statusFilter"
+                  id="statusRejected"
+                  checked
+                />
+                <label class="form-check-label" for="statusRejected"> المرفوضة </label>
+              </div>
+            </div>
+            <div class="col-sm-3 col-6">
+              <div class="form-check">
+                <input (click)="FilterProposals(Waiting)"
+                  class="form-check-input"
+                  type="radio"
+                  name="statusFilter"
+                  id="statusWaiting"
+                  checked
+                />
+                <label class="form-check-label" for="statusWaiting"> بانتظار الرد </label>
+              </div>
+            </div>
           </div>
         </div>
+        
+        
       </div>
       <div class="col-4">
         <h6 class="text-end">المشاريع <i class="fa-brands fa-rocketchat"></i></h6>
       </div>
     </div>
-     <div class="jobs-container mt-3" *ngFor="let proposal of Proposals">
-      <div class="container job-item my-3 p-3 border rounded">
-        <div class="row justify-content-between align-items-center">
-          <!-- <div class="col-4">
-            <p class="price"> 25$</p>
-          </div> -->
-          <div class="col-12 d-flex justify-content-end align-items-center">
-            <div class="d-flex flex-column text-end me-3">
-              <div class="d-flex ">
-                <p class="status ms-1 p-1">مغلق</p>
 
-                  <p class="title">Coding</p>
+    <div *ngIf="FilteredProposals.length > 0; else EmptyProposals">
+      <div *ngFor="let proposal of FilteredProposals" dir="rtl">
+      <div class="jobs-container mt-3">
+        <div class="job-item card my-3">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="proposal-details me-3 text-end">
+                <div class="status-and-title d-flex align-items-center m-3">
+                 
+                  <p class="title text-primary mb-0">{{proposal.jobTitle}}</p>
 
+                  <span
+                  class="status mx-2"
+                  [ngClass]="{
+                    'text-success': proposal.status === ProposalStatus.Approved,
+                    'text-danger': proposal.status === ProposalStatus.Rejected,
+                    'text-primary': proposal.status === ProposalStatus.Waiting
+                  }"
+                >
+                  {{
+                    proposal.status === ProposalStatus.Approved
+                      ? 'تم قبولك'
+                      : proposal.status === ProposalStatus.Rejected
+                      ? 'تم الرفض'
+                      : 'بانتظار الرد'
+                  }}
+                </span>
+
+                </div>
+                <div class="additional-info d-flex flex-wrap m-3">
+                  <p class="clientName me-2 mb-0">
+                    <i class="fa-solid fa-user me-1"></i>{{proposal.clientName}}
+                  </p>
+                  <p class="clientName me-2 mb-0">
+                    <i class="fa-solid fa-calendar-xmark me-1"></i>مدة التنفيذ
+                    {{ proposal.duration }} ايام
+                  </p>
+                  <p class="clientName mb-0">
+                    <i class="fa-solid fa-money-check-dollar me-1"></i>{{ proposal.price }}
+                  </p>
+                </div>
+                <p class="description m-4">{{ proposal.description }}</p>
               </div>
-              <div class="d-flex">
-                <p class="clientName ps-2"><i class="fa-solid fa-user ps-1 "></i>Client name </p>
-                <p class="clientName pe-2"><i class="fa-solid fa-calendar-xmark ps-1"></i>مدة التنفيذ  {{proposal.Duration}}  ايام </p>
-                <p class="clientName pe-2"><i class="fa-solid fa-money-check-dollar ps-1"></i> {{proposal.Price}}</p>
-
-            </div>
-              <p class="Description"> {{proposal.Description}}</p>
-
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-md-4 justify-content-center align-items-center">
-
-<h1>hi</h1>
+</div>
+<ng-template #EmptyProposals>
+  <div class="text-center m-5">
+    <span class="text-danger fs-4">لم تقدم علي اي عروض بعد</span>
   </div>
+</ng-template>
+
+
+<div class="col-md-4 d-flex flex-column ">
+  <div class="m-2 w-75" dir="rtl">
+    <label for="searchClientName" class="form-label">اسم صاحب المشروع</label>
+    <input
+      type="text"
+      id="searchClientName"
+      class="form-control" 
+      [(ngModel)]="ClientName"   
+      (input)="FilterByClientName()" 
+    />
+  </div>
+  <div class="m-2 w-75" dir="rtl">
+    <label for="searchJobTitle" class="form-label">عنوان المشروع</label>
+    <input
+      type="text"
+      id="searchJobTitle"
+      class="form-control"
+      [(ngModel)]="JobTitle"
+      (input)="FilterByJobTitle()"
+    />
+  </div>
+</div>
+
 </div>
 
 

@@ -9,11 +9,11 @@ export interface IProposal {
 
   approvedTime?: string; // known when the client approves
 
-  Duration: number; // given from the freelancer
+  duration: number; // given from the freelancer
 
-  Description: string;
+  description: string;
 
-  Price: number;
+  price: number;
 
   status: ProposalStatus;
 
@@ -26,4 +26,6 @@ export interface IProposal {
  freelancerId: number
 
  jobId: number
+ clientName? : string
+ jobTitle? : string
 }
