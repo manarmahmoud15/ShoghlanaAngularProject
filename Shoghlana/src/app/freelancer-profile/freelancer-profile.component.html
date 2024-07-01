@@ -1,4 +1,4 @@
-<main class="container mt-4">
+<main class="container mt-4 text">
   <section id="content" class="page-heading p-5 bg-light rounded shadow-sm">
     <div class="d-flex align-items-center flex-row-reverse">
       <div class="pl-3">
@@ -18,10 +18,14 @@
         </a>
       </div>
       <div class="mr-4">
-        <h2 class="media-heading" style="direction: rtl">
+        <h2 class="media-heading custom-title" style="direction: rtl">
           {{ freelancer.name }}
         </h2>
-        <p class="lead text-muted" *ngIf="freelancer.title; else defaultTitle">
+        <p
+          class="lead text-muted custom-title"
+          style="direction: rtl"
+          *ngIf="freelancer.title; else defaultTitle"
+        >
           {{ freelancer.title }}
         </p>
         <ng-template #defaultTitle>
@@ -58,9 +62,26 @@
             </li>
           </ul>
         </div>
-        <button class="btn btn-secondary mt-3" (click)="toggleEditMode()">
-          Edit Profile
-        </button>
+        <div class="text-center">
+          <button
+            class="btn btn-secondary mt-3"
+            style="direction: rtl"
+            (click)="toggleEditMode()"
+          >
+            تعديل البروفايل
+          </button>
+        </div>
+        <div class="text-center">
+          <button class="btn btn-success mt-3">
+            <a
+              class="nav-link"
+              style="direction: rtl"
+              routerLinkActive="active"
+              [routerLink]="['/offers']"
+              >العروض
+            </a>
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -144,15 +165,15 @@
         </div>
 
         <button
-        class="btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-        (click)="saveChanges()"
-      >
-        حفظ التغييرات
-      </button>
-      <!-- Include the SimpleModalComponent -->
-      <app-save-success-window></app-save-success-window>
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+          (click)="saveChanges()"
+        >
+          حفظ التغييرات
+        </button>
+        <!-- Include the SimpleModalComponent -->
+        <app-save-success-window></app-save-success-window>
         <button class="btn btn-secondary ml-2" (click)="cancelEdit()">
           إلغاء
         </button>

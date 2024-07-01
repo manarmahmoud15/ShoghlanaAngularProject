@@ -1,7 +1,8 @@
-<div class="container">
+<div class="container text">
   <div class="row justify-content-end">
     <div *ngFor="let job of WorkingHistory" class="col-auto ">
-      <div class="card ms-auto" style="width: 18rem; direction: rtl">
+      <div class="card ms-auto custom-card p-2" style="width: 18rem; direction: rtl">
+        <h5 class="card-title custom-title my-1">{{ job.title }}</h5>
         <img
           class="card-img-top"
           [src]="job.poster"
@@ -11,7 +12,6 @@
           width="250"
         />
         <div class="card-body" style="direction: rtl">
-          <h5 class="card-title">{{ job.title }}</h5>
           <p class="card-text">{{ job.description }}</p>
           <button (click)="ToggleFeedback(job.id)" class="btn btn-primary">
             {{ job.showFeedback ? "اخفاء التقييم" : "عرض التقييم" }}

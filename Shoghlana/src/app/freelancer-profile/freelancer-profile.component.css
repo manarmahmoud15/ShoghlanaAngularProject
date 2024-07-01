@@ -3,6 +3,12 @@
     font-optical-sizing: auto;
   }
 
+.custom-title {
+    font-weight: bold;
+    font-size: 1.5rem; /* Adjust the size as needed */
+  }
+
+
   .lighter-bg-secondary {
     background-color: #aab2b8;
 }

@@ -3,10 +3,17 @@
 /* // <uniquifier>: Use a unique and descriptive class name
 // <weight>: Use a value from 300 to 700 */
 
+.custom-title {
+  font-weight: bold;
+  font-size: 2rem; /* Adjust the size as needed */
+  /* background-color:rgba(140, 140, 128, 0.137);  */
+  padding: 10px; /* Add padding to the heading */
+}
+
 .text{
   font-family: "Marhey", sans-serif;
   font-optical-sizing: auto;
-  font-size: 50px;
+  /* font-size: 50px; */
   /* font-weight: <weight>;
   font-style: normal; */
 }

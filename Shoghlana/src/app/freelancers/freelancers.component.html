@@ -1,11 +1,11 @@
-<h1 class="text text-center my-4">الفري لانسرز</h1>
+<h1 class="custom-title text-center my-4">الفري لانسرز</h1>
 
 <div dir="rtl" class="container-fluid">
   <div class="container">
     <div class="row justify-content-center">
       <!-- Team items -->
-      <div class="col-xl-3 col-sm-6 mb-4" *ngFor="let freelancer of FreelancersArr">
-        <div class="bg-white rounded shadow-lg text-center">
+      <div class="col-xl-3 col-sm-6 mb-4 p-3" *ngFor="let freelancer of FreelancersArr">
+        <div class="bg-white rounded shadow-lg text-center p-2">
           <div class="py-3 px-3 d-flex flex-column align-items-center">
             <img
               class="border rounded-circle shadow mb-1"
@@ -14,13 +14,13 @@
               height="150"
               width="150"
             />
-            <h5 class="mb-0">{{ freelancer.name }}</h5>
-            <span class="small text-uppercase text-muted">{{ freelancer.title }}</span>
+            <h5 class="text my-1">{{ freelancer.name }}</h5>
+            <span class="text small text-uppercase text-muted">{{ freelancer.title }}</span>
           </div>
           <div>
-            <a [routerLink]="['/freelancerprofile', freelancer.id]" class="btn btn-primary mt-2">عرض الملف الشخصي</a>
+            <a [routerLink]="['/freelancerprofile', freelancer.id]" class="text btn btn-primary mt-2">عرض الملف الشخصي</a>
           </div>
-          <ul class="social mb-0 list-inline mt-3">
+          <ul class="social mb-2 list-inline mt-3">
             <li class="list-inline-item">
               <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
             </li>

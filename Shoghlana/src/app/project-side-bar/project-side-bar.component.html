@@ -22,12 +22,13 @@
     >
       <div>
         <input
+        id="categ"
           class="form-check-input ms-3"
           type="checkbox"
           [(ngModel)]="cat.selected"
           (change)="categorySelected()"
         />
-        <label class="form-check-label">
+        <label class="form-check-label" for="categ">
           {{ cat.title }}
         </label>
       </div>
