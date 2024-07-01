@@ -81,7 +81,7 @@ export class ProjectsComponent implements OnInit {
     private datePipe: DatePipe,
     private router: Router,
     private cdr: ChangeDetectorRef
-  ) {  }
+  ) { }
 
   ngOnInit(): void {
     // this.fetchAllCategories();
@@ -89,6 +89,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   fetchPaginatedJobs(): void {
+
 
     this.noJobsAvailable = false;
 
@@ -171,7 +172,7 @@ export class ProjectsComponent implements OnInit {
     this.fetchPaginatedJobs();
     this.cdr.detectChanges();
   }
-  
+
   selectProposalOption(hasManyProposals: boolean): void {
     this.HasManyProposals = hasManyProposals;
     this.fetchPaginatedJobs();
@@ -193,6 +194,9 @@ export class ProjectsComponent implements OnInit {
   // }
 
   resetFilters() {
+    // reintialize again because the search changer their values
+    this.currentPage = 1;
+    this.pageSize = 5;
     this.minBudget = 0;
     this.maxBudget = 0;
     this.selectedCategoryID = 0;
@@ -200,6 +204,8 @@ export class ProjectsComponent implements OnInit {
     this.noJobsAvailable = false;
     this.jobsStatus = JobStatus.Active;
     this.fetchPaginatedJobs(); // Apply filters after resetting
+    this.calculateTotalPages();
+    this.calculateTotalPages();
   }
 
   filterProjects(event: [ICategory[], number, number, Ijob[], SearchStatus]): void {
@@ -219,6 +225,10 @@ export class ProjectsComponent implements OnInit {
     if (searchStatus == SearchStatus.Ignored) {
       console.log("Parent : Search Ignored")
       this.fetchPaginatedJobs();
+      // reintialize again because the search changer their values
+    this.currentPage = 1;
+    this.pageSize = 5;
+    // this.calculateTotalPages();
     }
     else if (searchStatus == SearchStatus.Found) {
       console.log("Parent : Search Found")
