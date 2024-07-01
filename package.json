@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@aspnet/signalr": "^1.0.27",
     "jquery": "^3.7.1",
     "ngx-toastr": "^19.0.0",
     "toastr": "^2.1.4"

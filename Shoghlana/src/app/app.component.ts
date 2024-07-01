@@ -10,10 +10,10 @@ import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { ProjectDetailsComponent } from './project-details/project-details.component';
-import { SignalrService } from './Services/signal-r.service.spec';
 import { DarkModeService } from './Services/DarkMode/dark-mode.service';
-import {TranslateLoader , TranslateModule} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { SignalrService } from './Services/SignalR/signalr.service';
 
 // import { SignalRService } from './Services/signal-r.service';
 
@@ -23,7 +23,6 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   imports: [
-   
     RouterOutlet,
     LoginComponent,
     RegisterComponent,
@@ -40,29 +39,24 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
     FormsModule,
     HttpClientModule,
     TranslateModule,
-    FormsModule , 
+    FormsModule,
     // BrowserAnimationsModule
   ],
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'signalr-angular-app';
   notifications: any[] = [];
-  darkModeService : DarkModeService = inject(DarkModeService)
+  darkModeService: DarkModeService = inject(DarkModeService);
   constructor(private signalrService: SignalrService) {}
 
   ngOnInit(): void {
-    this.signalrService.startConnection();
-    this.signalrService.addNotificationListener((data: any) => {
-      this.notifications.push(data.message);
-    });
+    this.signalrService.startConntection();
+    setTimeout(() => {
+      this.signalrService.askServerListener();
+      this.signalrService.askServer();
+    }, 2000);
   }
-
   ngOnDestroy(): void {
-    this.signalrService.stopConnection();
-  }
-
-  // For testing: Method to manually send a notification
-  sendTestNotification(): void {
-    this.signalrService.triggerNotification('Test Notification from Angular');
+    this.signalrService.hubConnection?.off('askServerResponse');
   }
 }
