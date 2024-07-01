@@ -9,6 +9,8 @@ import swal from 'sweetalert';
 import { ProjectService } from '../Services/Projects/project.service';
 import { JobStatus } from '../Enums/JobStatus';
 import { FreelancerService } from '../Services/freelancer.service';
+import { IndividualchatService } from '../Services/individualChat/individualchat.service';
+import { User } from '../Models/user';
 
 @Component({
   selector: 'app-project-details',
@@ -25,7 +27,9 @@ export class ProjectDetailsComponent implements OnInit {
   clientJob: IClientJob | undefined;
   proposalForm: FormGroup;
   freelancerId : any;
+  freelancerName : any;
   freelancerDetails : any[] =[];
+  apiErrorMessage: string[] = [];
   JobStatus = JobStatus;
   constructor(
     private _activatedRoute: ActivatedRoute,
@@ -34,7 +38,8 @@ export class ProjectDetailsComponent implements OnInit {
     private datePipe: DatePipe,
     private _proposalService: ProposalService,
     private _freelancer : FreelancerService,
-    private fb: FormBuilder
+    private fb: FormBuilder ,
+    private _individualChatService : IndividualchatService
   ) {
     this.proposalForm = this.fb.group({
       Duration: [null, [Validators.required]],
@@ -130,6 +135,8 @@ export class ProjectDetailsComponent implements OnInit {
                 console.log('Freelancer data:', freelancerRes);
                 if (freelancerRes && typeof freelancerRes === 'object') {
                   this.freelancerDetails.push(freelancerRes.data);
+                  this.freelancerName = freelancerRes.data.name;
+                  console.log('name',this.freelancerName)
                 } else {
                   console.error('Unexpected freelancer response format', freelancerRes);
                 }
@@ -149,6 +156,20 @@ export class ProjectDetailsComponent implements OnInit {
     });
   }
 
+  chat(){
+    this.apiErrorMessage =[];
+    const user: User = { name: this.freelancerName };
+      this._individualChatService.registerUser(user).subscribe({
+        next:()=> {
+          console.log('openChat')
+        },
+        error: err=>{
+          if(typeof(err.error) !== 'object'){
+            this.apiErrorMessage.push(err.error)
+          }
+        }
+      })
+  }
   goBack() {
     this._Location.back();
   }
@@ -194,6 +215,5 @@ formData.append('FreelancerId', this.proposalForm.get('FreelancerId')?.value);
       console.log("Form is invalid");
     }
   }
-  
-    
+
 }
