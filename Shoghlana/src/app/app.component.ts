@@ -11,9 +11,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import { DarkModeService } from './Services/DarkMode/dark-mode.service';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { SignalrService } from './Services/SignalR/signalr.service';
+import {TranslateLoader , TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 // import { SignalRService } from './Services/signal-r.service';
 
@@ -23,6 +22,7 @@ import { SignalrService } from './Services/SignalR/signalr.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   imports: [
+   
     RouterOutlet,
     LoginComponent,
     RegisterComponent,
@@ -39,24 +39,13 @@ import { SignalrService } from './Services/SignalR/signalr.service';
     FormsModule,
     HttpClientModule,
     TranslateModule,
-    FormsModule,
+    FormsModule , 
     // BrowserAnimationsModule
   ],
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent {
   title = 'signalr-angular-app';
   notifications: any[] = [];
-  darkModeService: DarkModeService = inject(DarkModeService);
-  constructor(private signalrService: SignalrService) {}
+  darkModeService : DarkModeService = inject(DarkModeService)
 
-  ngOnInit(): void {
-    this.signalrService.startConntection();
-    setTimeout(() => {
-      this.signalrService.askServerListener();
-      this.signalrService.askServer();
-    }, 2000);
-  }
-  ngOnDestroy(): void {
-    this.signalrService.hubConnection?.off('askServerResponse');
-  }
 }

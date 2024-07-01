@@ -194,5 +194,6 @@ formData.append('FreelancerId', this.proposalForm.get('FreelancerId')?.value);
       console.log("Form is invalid");
     }
   }
+  
     
 }
