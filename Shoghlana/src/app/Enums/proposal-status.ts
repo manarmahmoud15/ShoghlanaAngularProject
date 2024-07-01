@@ -4,4 +4,6 @@ export enum ProposalStatus {
     Waiting = 1 ,
 
     Rejected = 2,
+
+    All = 4,
 }

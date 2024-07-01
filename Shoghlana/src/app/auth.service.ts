@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   private email: string = '';
   userdata = new BehaviorSubject(null);
-  constructor(
+  constructor( 
     private _httpClient: HttpClient,
     private UserRoleService: UserRoleServiceService,
     private _router: Router
@@ -31,10 +31,11 @@ export class AuthService {
   }
 
   decodeUserData() {
+    console.log('hello from decode func') 
     const encodedToken = localStorage.getItem('token');
-    if (encodedToken) {
+    if (encodedToken) { 
       const decodedToken: any = jwtDecode(encodedToken); // Directly decode the token
-      console.log(decodedToken);
+      console.log('we have decoded token' +decodedToken);
       //this.userdata = decodedToken;
       this.userdata.next(decodedToken); //its behaviour subject (observer) so we use next not equal
     } else {
@@ -60,8 +61,10 @@ export class AuthService {
   }
   logOut() {
     localStorage.removeItem('token');
-    this.userdata.next(null);
+    localStorage.removeItem('Id');
     this._router.navigateByUrl('/signin');
+    this.userdata.next(null);
+    console.log(this.userdata) 
   }
 
   ConfirmMail(toemail: string): Observable<any> {
@@ -107,4 +110,18 @@ export class AuthService {
   getToken(): string {
     return localStorage.getItem('token') || '';
   }
+
+
+//   CheckIfLoggedin() 
+// {
+//   if(localStorage.getItem('Id'))
+//     {
+//       return true
+//     }
+//     else
+//     {
+//       return false
+//     }
+// }
+
 }

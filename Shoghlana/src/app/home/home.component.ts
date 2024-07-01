@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,8 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 export class HomeComponent {
   count!: number;
   counter: Observable<number>;
-  constructor(  private _translateService: TranslateService,private store: Store<{ counter: number }>) {
+  constructor(  private _translateService: TranslateService,
+    private store: Store<{ counter: number }>, private _authService : AuthService) {
     //type of store is generic just as the store i wanna use
     this.counter = this.store.select('counter');
     // this.counter.subscribe((newVal)=>{
@@ -26,4 +28,9 @@ export class HomeComponent {
     this._translateService.use(lang);
   }
 
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this._authService.decodeUserData(); 
+  }
 }

@@ -1,19 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Component } from '@angular/core';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
-  Validators,
+  Validators
 } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -36,14 +37,21 @@ export class LoginComponent {
             localStorage.setItem('token', response.token);
             localStorage.setItem("Id",response.data.id)
             this._authoService.decodeUserData();
+            this._authoService.userdata.next(response.data)  // navbar keep track for changes
             this.isLoading = false;
             this._router.navigateByUrl('/home');
+          }
+          else
+          {
+            this.isLoading = false;
+            this.apiError = response.message;
+           // alert(this.apiError);
           }
         },
         error: (error) => {
           this.isLoading = false;
           this.apiError = error.error.errors;
-          alert(this.apiError);
+         // alert(this.apiError);
         },
       });
     }
