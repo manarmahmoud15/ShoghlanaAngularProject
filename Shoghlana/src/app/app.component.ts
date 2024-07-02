@@ -13,6 +13,7 @@ import { ProjectDetailsComponent } from './project-details/project-details.compo
 import { DarkModeService } from './Services/DarkMode/dark-mode.service';
 import {TranslateLoader , TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { IndividualChatComponent } from './individualChat/individual-chat/individual-chat.component';
 
 // import { SignalRService } from './Services/signal-r.service';
 
@@ -40,6 +41,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
     HttpClientModule,
     TranslateModule,
     FormsModule , 
+    IndividualChatComponent
     // BrowserAnimationsModule
   ],
 })

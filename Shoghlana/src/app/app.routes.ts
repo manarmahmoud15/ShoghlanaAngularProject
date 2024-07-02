@@ -52,7 +52,8 @@ export const routes: Routes = [
   // .then((obj) =>obj.ProjectDetailsComponent)} ,
   { path: 'clientProfile/:id', component: ClientProfileComponent },
   { path: 'project-details/:id', loadComponent: () => import('./project-details/project-details.component').then((obj) => obj.ProjectDetailsComponent) },
-
+  {path: 'individualChat' , loadComponent:()=>import('./individualChat/individual-chat/individual-chat.component')
+    .then((obj)=>obj.IndividualChatComponent)},
   {
     path: 'freelancerprofile/:id',
     loadComponent: () => import('./freelancer-profile/freelancer-profile.component').then(obj => obj.FreelancerProfileComponent),

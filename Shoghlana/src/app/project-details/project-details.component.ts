@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { IClientJob } from '../Models/iclient-job';
 import { CommonModule, DatePipe, Location } from '@angular/common';
 import { IProposal } from '../Models/iproposal';
@@ -11,11 +11,12 @@ import { JobStatus } from '../Enums/JobStatus';
 import { FreelancerService } from '../Services/freelancer.service';
 import { IndividualchatService } from '../Services/individualChat/individualchat.service';
 import { User } from '../Models/user';
+import { IndividualChatComponent } from '../individualChat/individual-chat/individual-chat.component';
 
 @Component({
   selector: 'app-project-details',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, ReactiveFormsModule , IndividualChatComponent],
   templateUrl: './project-details.component.html',
   styleUrls: ['./project-details.component.css'],
   providers: [DatePipe],
@@ -30,6 +31,7 @@ export class ProjectDetailsComponent implements OnInit {
   freelancerName : any;
   freelancerDetails : any[] =[];
   apiErrorMessage: string[] = [];
+  openChat = false;
   JobStatus = JobStatus;
   constructor(
     private _activatedRoute: ActivatedRoute,
@@ -39,7 +41,8 @@ export class ProjectDetailsComponent implements OnInit {
     private _proposalService: ProposalService,
     private _freelancer : FreelancerService,
     private fb: FormBuilder ,
-    private _individualChatService : IndividualchatService
+    private _individualChatService : IndividualchatService ,
+    private router : Router 
   ) {
     this.proposalForm = this.fb.group({
       Duration: [null, [Validators.required]],
@@ -101,6 +104,7 @@ export class ProjectDetailsComponent implements OnInit {
   // }
 
   ngOnInit(): void {
+
     const id = +this._activatedRoute.snapshot.paramMap.get('id')!;
     console.log('Route ID:', id);
 
@@ -154,14 +158,21 @@ export class ProjectDetailsComponent implements OnInit {
         console.error('Error fetching proposal data:', err);
       },
     });
+
+    this._individualChatService.myName = { name: 'Initial Name' };
   }
 
   chat(){
     this.apiErrorMessage =[];
+    this.openChat = true ;
     const user: User = { name: this.freelancerName };
       this._individualChatService.registerUser(user).subscribe({
         next:()=> {
-          console.log('openChat')
+          // console.log('openchar')
+          // this.router.navigate(['individualChat']);
+          this._individualChatService.myName = user
+          console.log('myname',this._individualChatService.myName)
+          this.openChat =true
         },
         error: err=>{
           if(typeof(err.error) !== 'object'){
@@ -169,6 +180,9 @@ export class ProjectDetailsComponent implements OnInit {
           }
         }
       })
+  }
+  closeChat(){
+    this.openChat =false;
   }
   goBack() {
     this._Location.back();

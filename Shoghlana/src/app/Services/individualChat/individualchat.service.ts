@@ -9,7 +9,7 @@ import { User } from '../../Models/user';
   providedIn: 'root'
 })
 export class IndividualchatService {
-
+  myName :User | undefined;;
   constructor(private httpClient:HttpClient) { }
   
   registerUser (user :User){
