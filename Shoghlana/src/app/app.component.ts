@@ -14,6 +14,9 @@ import { DarkModeService } from './Services/DarkMode/dark-mode.service';
 import {TranslateLoader , TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { IndividualChatComponent } from './individualChat/individual-chat/individual-chat.component';
+import { ApplicationRef } from '@angular/core';
+
+
 
 // import { SignalRService } from './Services/signal-r.service';
 
@@ -23,7 +26,6 @@ import { IndividualChatComponent } from './individualChat/individual-chat/indivi
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   imports: [
-   
     RouterOutlet,
     LoginComponent,
     RegisterComponent,
@@ -46,6 +48,15 @@ import { IndividualChatComponent } from './individualChat/individual-chat/indivi
   ],
 })
 export class AppComponent {
+  constructor(private appRef: ApplicationRef) {
+    this.appRef.isStable.subscribe(stable => {
+      if (stable) {
+        console.log('Application is stable');
+      } else {
+        console.log('Application is not stable yet');
+      }
+    });
+  }
   title = 'signalr-angular-app';
   notifications: any[] = [];
   darkModeService : DarkModeService = inject(DarkModeService)
