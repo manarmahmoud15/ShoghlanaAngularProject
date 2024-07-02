@@ -6,6 +6,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ChatService } from '../Services/chat/chat.service';
 import { AuthService } from '../auth.service';
 import { DarkModeService } from '../Services/DarkMode/dark-mode.service';
+import { data } from 'jquery';
 
 @Component({
   selector: 'app-navbar',
@@ -25,14 +26,21 @@ export class NavbarComponent implements OnInit {
   toggleDarkMode(){
     this.darkModeService.updateDarkMode()
   }
-  isLogged:boolean=false;
- clientId! : Number
-  logOut(){
+
+
+
+isLogged:boolean=false;
+ Id! : Number
+ isFreelancer : boolean = false
+ isClient : boolean = false
+
+ logOut(){
 
     this._authService.logOut();
   }
   constructor(private _authService: AuthService) {
     //using behavoir subject this code works with every change in dom
+
     _authService.userdata.subscribe({
       next: () => {
         if (_authService.userdata.getValue() !== null) {
@@ -58,12 +66,22 @@ export class NavbarComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-  this.clientId = Number (localStorage.getItem('Id'));
-  console.log("id from navbar" + this.clientId)
+  this.Id = Number (localStorage.getItem('Id'));
+  console.log("id from navbar" + this.Id)
+
+  if (localStorage.getItem('Role') === 'Client')
+    {
+      this.isClient = true
+    }
+    else
+    {
+      this.isFreelancer = true 
+    }
     this.ChatService.messages$.subscribe(res=>{
 
       this.messages = res;
       console.log(this.messages);
     });
+
   }
 }

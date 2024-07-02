@@ -23,6 +23,11 @@ export class ProposalService {
     return this.httpclient.get<any>(`${this.baseUrl}/GetByJobId/${id}`);
   }
 
+  getProposalByFreelancerId(id : Number) : Observable<any>
+  {
+    return this.httpclient.get<any>(`${this.baseUrl}/GetByFreelancerId/${id}`)
+  }
+
   postProposal(proposalData: any): Observable<any> {
     return this.httpclient.post<any>(this.baseUrl, proposalData);
   }

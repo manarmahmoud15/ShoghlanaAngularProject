@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component, OnChanges , OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnChanges , OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import {
   FormArray,
   FormControl,
@@ -9,7 +9,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { error, log } from 'console';
 import { Router } from '@angular/router';
@@ -28,14 +28,15 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
     styleUrl: './register.component.css',
     imports: [TranslateModule,CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, GoogleSigninButtonModule, RoleSelectionPopupComponent]
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
   isLoading:boolean=false;
   apiError:string=''
   RegisterForm: FormGroup;
-  googleAuthData : GoogleAuthData = {} as GoogleAuthData
+  googleAuthData : GoogleAuthData | null = {} as GoogleAuthData
   UserRole : number = {} as number
   email: string = '';
   showModal2: boolean = false;
+  private authStateSubscription! : Subscription
 
   constructor(private _authoService: AuthService, private _router: Router,
     private SocialAuthService : SocialAuthService,
@@ -69,36 +70,48 @@ export class RegisterComponent implements OnInit {
     // console.log(this.UserRole)
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.SocialAuthService.authState.subscribe({
+    console.log("hello from external auth func")
+    this.authStateSubscription = this.SocialAuthService.authState.subscribe({
       next : (result) => {
         console.log(result);
         console.log("role before adding to google obj" + this.UserRole)
         // this.googleAuthData = result
-        this.googleAuthData.email = result.email
-        this.googleAuthData.firstName = result.firstName
-        this.googleAuthData.id = result.id
-        this.googleAuthData.idToken = result.idToken
-        this.googleAuthData.name = result.name
-        this.googleAuthData.photoUrl = result.photoUrl
-      //  this.googleAuthData.role = this.UserRole
-
-        console.log( "role in google obj google" + this.googleAuthData.role)
-
-        console.log(this.googleAuthData);
-
-      this._authoService.GoogleAuthentication(this.googleAuthData).subscribe({
-        next : (res) => {console.log(res);
-          if(res.isSuccess)
-            {
-              localStorage.setItem("UserToken" , res.data.token)
-              console.log("client id from backend" + res.data.id)
-              localStorage.setItem("Id",res.data.id)
-              console.log(localStorage.getItem("Id"));
-              this._router.navigateByUrl("/home")
-            }
-        },
-        error : (err) => {console.log(err)}
-      })
+        if(this.googleAuthData)
+          {
+            this.googleAuthData.email = result.email
+            this.googleAuthData.firstName = result.firstName
+            this.googleAuthData.id = result.id
+            this.googleAuthData.idToken = result.idToken
+            this.googleAuthData.name = result.name
+            this.googleAuthData.photoUrl = result.photoUrl
+          //  this.googleAuthData.role = this.UserRole 
+    
+            console.log( "role in google obj google" + this.googleAuthData.role)
+    
+            console.log(this.googleAuthData);
+    
+          this._authoService.GoogleAuthentication(this.googleAuthData).subscribe({
+            next : (res) => {console.log(res);
+              if(res.isSuccess)
+                {
+                  localStorage.setItem("token" , res.data.token)
+                  console.log("client id from backend" + res.data.id)
+                  localStorage.setItem("Id",res.data.id)
+                  localStorage.setItem("Role",res.data.roles)
+                  this._authoService.userdata.next(res.data);
+        console.log(this._authoService.userdata)   // here 
+                  console.log(localStorage.getItem("Id"));
+                  this._router.navigateByUrl("/home")
+                }
+                this.clearAuthState()
+            },
+            error : (err) => {console.log(err)
+              this.clearAuthState();
+            },
+            complete : () => {this.clearAuthState()}
+          })
+          }
+        
     },
     error : (err) => {
       console.log(err);
@@ -107,8 +120,15 @@ export class RegisterComponent implements OnInit {
       console.log("Completed");
     }
     });
+   
+   // alert("hello from register")
   }
 
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.clearAuthState()
+  }
 //   get Phones(){
 //    return this.RegisterForm.get("phoneNumbers") as FormArray
 //   }
@@ -174,6 +194,11 @@ confirm() {
             }
         });
           }
+          else
+          {
+            this.isLoading=false
+            this.apiError=response.message
+          }
         },
         error: (error) => {
           this.isLoading=false
@@ -185,10 +210,73 @@ confirm() {
     }
   }
 
+  
 
   OnRoleSelected(role : string)
   {
      console.log(role);
   }
 
+
+  // externalAuthentication() : void
+  // {
+  //   console.log("hello from external auth func")
+  //       this.authStateSubscription = this.SocialAuthService.authState.subscribe({
+  //         next : (result) => {
+  //           console.log(result);
+  //           console.log("role before adding to google obj" + this.UserRole)
+  //           // this.googleAuthData = result
+  //           if(this.googleAuthData)
+  //             {
+  //               this.googleAuthData.email = result.email
+  //               this.googleAuthData.firstName = result.firstName
+  //               this.googleAuthData.id = result.id
+  //               this.googleAuthData.idToken = result.idToken
+  //               this.googleAuthData.name = result.name
+  //               this.googleAuthData.photoUrl = result.photoUrl
+  //             //  this.googleAuthData.role = this.UserRole
+        
+  //               console.log( "role in google obj google" + this.googleAuthData.role)
+        
+  //               console.log(this.googleAuthData);
+        
+  //             this._authoService.GoogleAuthentication(this.googleAuthData).subscribe({
+  //               next : (res) => {console.log(res);
+  //                 if(res.isSuccess)
+  //                   {
+  //                     localStorage.setItem("token" , res.data.token)
+  //                     console.log("client id from backend" + res.data.id)
+  //                     localStorage.setItem("Id",res.data.id)
+  //                     this._authoService.userdata.next(res.data);
+  //           console.log(this._authoService.userdata)   // here 
+  //                     console.log(localStorage.getItem("Id"));
+  //                     this._router.navigateByUrl("/home")
+  //                   }
+  //                   this.clearAuthState()
+  //               },
+  //               error : (err) => {console.log(err)
+  //                 this.clearAuthState();
+  //               },
+  //               complete : () => {this.clearAuthState()}
+  //             })
+  //             }
+            
+  //       },
+  //       error : (err) => {
+  //         console.log(err);
+  //       },
+  //       complete : () => {
+  //         console.log("Completed");
+  //       }
+  //       });
+    
+ // }
+
+  private clearAuthState(): void {
+    this.googleAuthData = null;
+    // Unsubscribe from the authState observable
+    if (this.authStateSubscription) {
+      this.authStateSubscription.unsubscribe();
+    }
+  }
 }
