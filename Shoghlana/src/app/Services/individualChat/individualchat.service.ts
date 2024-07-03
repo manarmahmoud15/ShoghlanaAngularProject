@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment.development';
 import { User } from '../../Models/user';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { error } from 'console';
+import { Message } from '../../Models/message';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,9 @@ import { error } from 'console';
 export class IndividualchatService {
   myName: User | null = null;
   private individualChatConnection?: HubConnection;
-  OnlineUsers: string[] = []
+  OnlineUsers: string[] = [];
+  messages :Message[]=[];
+  private _individualChatService: any;
   constructor(private httpClient: HttpClient) {}
 
   registerUser(user: User): Observable<any> {
@@ -31,18 +34,21 @@ export class IndividualchatService {
 
     this.individualChatConnection.start().catch((err) => console.log(err));
 
-    this.individualChatConnection.on('UserConnected' , ()=>{
-      console.log('the server has called here')
+    this.individualChatConnection.on('UserConnected', () => {
+      console.log('the server has called here');
       if (this.myName) {
         this.addUserConnectionId(this.myName);
       }
-    })
+    });
 
-    this.individualChatConnection.on('OnlineUsers' , (OnlineUsers)=>{
+    this.individualChatConnection.on('OnlineUsers', (OnlineUsers) => {
       this.OnlineUsers = [...OnlineUsers];
+    });
+    this.individualChatConnection.on('NewMessage' ,(NewMessage:Message)=>{
+      this.messages = [...this.messages , NewMessage]
     })
-
   }
+
 
   stopChatConnection() {
     this.individualChatConnection?.stop().catch((err) => console.log(err));
@@ -50,9 +56,22 @@ export class IndividualchatService {
 
   async addUserConnectionId(name: User) {
     try {
-      await this.individualChatConnection?.invoke('AddUserConnectionId', name.name);
+      await this.individualChatConnection?.invoke(
+        'AddUserConnectionId',
+        name.name
+      );
     } catch (error) {
       console.error('Error invoking AddUserConnectionId:', error);
     }
+  }
+  async sendMessage(content: string) {
+    if (!this.myName) {
+      throw new Error("User name is not set.");
+    }
+    const message: Message = {
+      from: this.myName.name,
+      content: content
+    };
+    return this.individualChatConnection?.invoke('ReceiveMessage' , message)
   }
 }
