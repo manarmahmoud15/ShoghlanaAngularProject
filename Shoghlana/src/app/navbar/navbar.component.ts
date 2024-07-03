@@ -29,27 +29,20 @@ export class NavbarComponent implements OnInit {
 
 
 
-isLogged:boolean=false;
+isLogged:boolean=false; 
  Id! : Number
  isFreelancer : boolean = false
  isClient : boolean = false
 
- logOut(){
 
+ logOut(){
     this._authService.logOut();
   }
+
   constructor(private _authService: AuthService) {
     //using behavoir subject this code works with every change in dom
 
-    _authService.userdata.subscribe({
-      next: () => {
-        if (_authService.userdata.getValue() !== null) {
-          this.isLogged = true;
-        } else {
-          this.isLogged = false;
-        }
-      },
-    });
+   
   }
   isOpen = false;
   messages: any;
@@ -66,17 +59,79 @@ isLogged:boolean=false;
     }
   }
   ngOnInit(): void {
-  this.Id = Number (localStorage.getItem('Id'));
-  console.log("id from navbar" + this.Id)
 
-  if (localStorage.getItem('Role') === 'Client')
-    {
-      this.isClient = true
-    }
-    else
-    {
-      this.isFreelancer = true 
-    }
+    this._authService.userdata.subscribe({
+      next: () => {
+        if (this._authService.userdata.getValue() !== null) {
+          this.isLogged = true;
+        } else {
+          this.isLogged = false; 
+        }
+      },
+    });
+
+    this._authService.Id.subscribe({
+      next : () => {
+        if(this._authService.Id.getValue() !== null)
+          {
+            this.Id = Number (this._authService.Id.getValue())  // test
+            console.log('id from navbar ' + this.Id)
+          }
+      }
+    })
+
+    this._authService.IsClient.subscribe({
+      next : () => {
+        if(this._authService.IsClient.getValue() !== null)
+          {
+              this.isClient = true
+              console.log(this._authService.IsClient.getValue()) 
+          }
+          else
+          {
+            this.isClient = false
+            console.log(this._authService.IsClient.getValue()) 
+          }
+      }
+    })
+
+    this._authService.IsFreelancer.subscribe({
+      next : () => {
+        if(this._authService.IsFreelancer.getValue() !== null)
+          {
+              this.isFreelancer = true
+              console.log(this._authService.IsFreelancer.getValue()) 
+          }
+          else
+          {
+            this.isFreelancer = false
+            console.log(this._authService.IsFreelancer.getValue()) 
+          }
+      }
+    })
+
+  //  this.Id = this._authService.getId()
+  //  console.log("id from navbar" + this.Id)
+
+  // if (localStorage.getItem('Role'))
+  //   {
+  //     this.roles.push(String (localStorage.getItem('Role')))
+
+  //     if(this.roles[0] === 'Client')
+  //       {
+  //         this.isClient = true
+  //         console.log(this.roles[0]) 
+  //       }
+  //       else if(this.roles[0] === 'Freelancer')
+  //       {
+  //          this.isFreelancer = true
+  //         console.log(this.roles[0]) 
+  //       }
+
+  //       console.log('is freelancer' + this.isFreelancer)
+  //       console.log('is client' + this.isClient)
+  //   }
+   
     this.ChatService.messages$.subscribe(res=>{
 
       this.messages = res;

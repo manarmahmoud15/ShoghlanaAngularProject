@@ -12,18 +12,87 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   private email: string = '';
+  private roles : string[] = [] 
+  // isFreelancer : boolean = false
+  // isClient : boolean = false
+
+  IsFreelancer = new BehaviorSubject(null);
+  IsClient = new BehaviorSubject(null);
   userdata = new BehaviorSubject(null);
+  Id = new BehaviorSubject(null);
+
   constructor( 
     private _httpClient: HttpClient,
     private UserRoleService: UserRoleServiceService,
     private _router: Router
   ) {
+
+    if(typeof localStorage !== 'undefined')
+      {
+        if(localStorage.getItem('token'))
+          {
+            this.decodeUserData()  // user data will not be assigned to null
+    
+            const id : any = localStorage.getItem('Id');
+            this.Id.next(id)
+            if(localStorage.getItem('Role') === 'Freelancer')
+              {
+                 const role : any = 'Freelancer'
+                 this.IsFreelancer.next(role);
+              }
+              else
+              {
+                this.IsFreelancer.next(null);
+              }
+    
+              if(localStorage.getItem('Role') === 'Client')
+                {
+                   const role : any = 'Client'
+                   this.IsClient.next(role);
+                }
+                else
+                {
+                  this.IsClient.next(null);
+                }
+          }
+      }
+   
     // var token=localStorage.getItem('token')
     //     if(token!==null){
     //          this.decodeUserData();
     //          //when refresh he loggged out but with this condition we check if token still in local storage
     //         // we call decode again
     //     }
+  }
+
+
+  GetRole() : string
+  {
+if (localStorage.getItem('Role'))
+    {
+      this.roles.push(String (localStorage.getItem('Role')))
+
+      return this.roles[0];
+      // if(this.roles[0] === 'Client')
+      //   {
+      //     this.isClient = true
+      //     console.log(this.roles[0]) 
+      //   }
+      //   else if(this.roles[0] === 'Freelancer')
+      //   {
+      //      this.isFreelancer = true
+      //     console.log(this.roles[0]) 
+      //   }
+
+      //   else
+      //   {
+      //     this.isFreelancer = false;
+      //     this.isClient = false;
+      //   }
+      //   console.log('is freelancer' + this.isFreelancer)
+      //   console.log('is client' + this.isClient)
+    }
+  return 'No roles'
   }
 
   setEmail(email: string) {
@@ -46,6 +115,7 @@ export class AuthService {
   getEmail(): string {
     return this.email;
   }
+
   register(userdata: any): Observable<any> {
     console.log(userdata);
     userdata.role = this.UserRoleService.get();
@@ -62,8 +132,13 @@ export class AuthService {
   logOut() {
     localStorage.removeItem('token');
     localStorage.removeItem('Id');
+    localStorage.removeItem('Role');
     this._router.navigateByUrl('/signin');
     this.userdata.next(null);
+    this.IsFreelancer.next(null);
+    this.IsClient.next(null);
+    this.Id.next(null);
+    console.log(this.IsClient)
     console.log(this.userdata) 
   }
 
@@ -111,6 +186,15 @@ export class AuthService {
     return localStorage.getItem('token') || '';
   }
 
+
+  // getId() : Number | null   // set in local storage after successful login
+  // {
+  //   if (typeof localStorage !== 'undefined')
+  //     {
+  //       return (Number (localStorage.getItem('Id'))) 
+  //     }
+  //     return null
+  // }
 
 //   CheckIfLoggedin() 
 // {
