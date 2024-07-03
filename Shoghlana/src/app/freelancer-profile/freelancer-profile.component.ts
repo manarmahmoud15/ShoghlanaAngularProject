@@ -229,13 +229,13 @@ export class FreelancerProfileComponent implements OnInit {
       const maxSize = 1 * 1024 * 1024; // Maximum size in bytes (1 MB)
   
       if (!validExtensions.includes(file.type)) {
-        alert('Only .png  , .jpeg and .jpg files are allowed.');
+        alert('الامتدادات المسموح بها : png , jpg and jpeg');
         input.value = ''; // Clear the input
         return;
       }
   
       if (file.size > maxSize) {
-        alert('The file size must be less than 1 MB.');
+        alert('يجب ألا يتعدى حجم الصورة 1 ميجابايت');
         input.value = ''; // Clear the input
         return;
       }

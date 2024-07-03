@@ -6,6 +6,7 @@ import { ProjectService } from '../Services/Projects/project.service';
 import { SkillsService } from '../Services/Skill/skills.service';
 import { ISkill } from '../Models/i-skill';
 import { CommonModule } from '@angular/common';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 @Component({
   selector: 'app-freelancer-portfolio',
@@ -23,6 +24,7 @@ export class FreelancerPortfolioComponent implements OnInit {
   allSkills: ISkill[] = [];
   showAddProjectForm: boolean = false;
   maxFileSize = 1 * 1024 * 1024; // 1 MB in bytes
+  posterFile: File | null = null;
 
   constructor(
     private projectService: ProjectService,
@@ -33,8 +35,10 @@ export class FreelancerPortfolioComponent implements OnInit {
     this.projectForm = this.formBuilder.group({
       title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       description: ['', Validators.maxLength(500)],
-      link: [''],
-      poster: [null, Validators.required], // Initialize poster form control
+      link: ['', [
+        Validators.pattern(/^(ftp|http|https):\/\/[^ "]+$/)
+      ]],
+       poster: [null, Validators.required], // Initialize poster form control
       skills: [] // Initialize skills form control as an empty array (optional)
     });
   }
@@ -49,7 +53,7 @@ export class FreelancerPortfolioComponent implements OnInit {
     });
   }
 
- 
+
 
   deleteProject(projectId: number): void {
     this.projectService.deleteProject(projectId).subscribe({
@@ -74,46 +78,33 @@ export class FreelancerPortfolioComponent implements OnInit {
   }
 
   onAddSubmit(): void {
-    
-    console.log("Submitting ADD");
-
-  // Check overall form validity
-  console.log("Form Valid:", this.projectForm.valid);
-
-  // Loop through each form control to check individual validity
-  Object.keys(this.projectForm.controls).forEach(key => {
-    const control = this.projectForm.get(key);
-    console.log(`Control ${key} Valid:`, control?.valid);
-  });
-
-
     if (this.projectForm.valid) {
-      const formData = this.projectForm.value;
-
       const uploadData = new FormData();
+      const formData = this.projectForm.value;
+  
       uploadData.append('title', formData.title);
       uploadData.append('description', formData.description);
-
+      uploadData.append('freelancerId', this.freelancerId.toString());
+      
       if (formData.link) {
         uploadData.append('link', formData.link);
       }
-
-      if (formData.poster instanceof File) {
-        uploadData.append('poster', formData.poster);
+      
+      // Check if posterFile exists and append it to FormData
+      if (this.posterFile) {
+        uploadData.append('poster', this.posterFile, this.posterFile.name);
       }
-
+      
       if (formData.skills && formData.skills.length > 0) {
         formData.skills.forEach((skillId: number) => uploadData.append('skillIDs', skillId.toString()));
       }
-
-      uploadData.append('freelancerId', this.freelancerId.toString());
-
+      
       this.projectService.addProject(this.freelancerId, uploadData).subscribe({
         next: (res) => {
           if (res.isSuccess) {
             console.log('Project added successfully');
             this.cancelAdd();
-            this.loadPortfolio(); // Reload portfolio after add
+            this.loadPortfolio();
           } else {
             console.error("Error adding the project");
             console.log(res.Message);
@@ -125,6 +116,7 @@ export class FreelancerPortfolioComponent implements OnInit {
       });
     }
   }
+  
 
 
   cancelAdd(): void {
@@ -181,6 +173,12 @@ export class FreelancerPortfolioComponent implements OnInit {
     }
   }
 
+  // get posterErrorMessage() {
+  //   if (this.projectForm.get('poster')?.hasError('required')) {
+  //     return 'Image is required.';
+  //   }
+  // }
+
   // Helper function to get skill title by ID
   getSkillTitle(skillId: number): string {
     console.log("Getting Skill Title for ID : ", skillId);
@@ -191,43 +189,34 @@ export class FreelancerPortfolioComponent implements OnInit {
   onSubmit(): void {
     if (this.projectForm.valid && this.editingProject) {
       const formData = this.projectForm.value;
-
-      const updatedProject = {
-        ...this.editingProject,
-        title: formData.title,
-        description: formData.description,
-        link: formData.link,
-        poster: formData.poster,
-        skillIDs: formData.skills || [] // Set skillIDs to an empty array if no skills are selected
-      };
-
+  
       const uploadData = new FormData();
-      uploadData.append('projectId', updatedProject.id.toString());
-      uploadData.append('title', updatedProject.title);
-      uploadData.append('description', updatedProject.description);
-
+      uploadData.append('projectId', this.editingProject.id.toString());
+      uploadData.append('title', formData.title);
+      uploadData.append('description', formData.description);
+  
       if (formData.link) {
-        uploadData.append('link', updatedProject.link);
+        uploadData.append('link', formData.link);
       }
-
-      // Handle the poster file if it exists
-      if (formData.poster instanceof File) {
-        uploadData.append('poster', formData.poster);
+  
+      // Handle the poster file if it exists or keep existing poster data
+      if (this.posterFile) {
+        uploadData.append('poster', this.posterFile, this.posterFile.name);
       }
-
+  
       // Append skills as individual fields if they exist
-      if (updatedProject.skillIDs.length > 0) {
-        updatedProject.skillIDs.forEach((skillID: number) => uploadData.append('skillIDs', skillID.toString()));
+      if (formData.skills && formData.skills.length > 0) {
+        formData.skills.forEach((skillID: number) => uploadData.append('skillIDs', skillID.toString()));
       }
-
+  
       // Additional fields if necessary
       uploadData.append('freelancerId', this.freelancerId.toString());
-
+  
       this.projectService.updateProject(this.freelancerId, uploadData).subscribe({
         next: (res) => {
           if (res.isSuccess) {
             console.log('Project updated successfully');
-            this.cancelEdit();
+            this.cancelEdit(); // Reset form after successful update
             this.loadPortfolio(); // Reload portfolio after update
           } else {
             console.error("Error updating the project");
@@ -240,26 +229,27 @@ export class FreelancerPortfolioComponent implements OnInit {
       });
     }
   }
+  
 
   editProject(project: Iproject): void {
     this.editingProject = project;
 
     // Convert base64 poster to File object if necessary
-    let posterFile: File | null = null;
-    if (project.poster && project.poster.startsWith('data:image/')) {
-      try {
-        posterFile = this.dataURLtoFile(project.poster, 'poster.png');
-      } catch (error) {
-        console.error("Error converting poster to file:", error);
-      }
-    }
+    // let posterFile: File | null = null;
+    // if (project.poster && project.poster.startsWith('data:image/')) {
+    //   try {
+    //     posterFile = this.dataURLtoFile(project.poster, 'poster.png');
+    //   } catch (error) {
+    //     console.error("Error converting poster to file:", error);
+    //   }
+    // }
 
     // Patch the form with project data
     this.projectForm.patchValue({
       title: project.title,
       description: project.description,
       link: project.link,
-      poster: posterFile, // Assign the poster file object if available, null otherwise
+      poster: project.poster, // Assign the poster file object if available, null otherwise
       skills: project.skillIDs // Populate skills array in the form with project's skill IDs
     });
 
@@ -294,34 +284,37 @@ export class FreelancerPortfolioComponent implements OnInit {
     this.projectForm.reset();
   }
 
-  // onFileSelected(event: any): void {
-  //   if (event.target.files && event.target.files.length > 0) {
-  //     const file = event.target.files[0];
-  //     this.projectForm.patchValue({
-  //       poster: file
-  //     });
-  //   }
-  // }
 
-  onFileSelected(event: any): void {
-    if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0];
-      const validExtensions = ['image/png', 'image/jpeg', 'image/jpg'];
+  onFileSelected(event: any) {
 
-      if (!validExtensions.includes(file.type)) {
-        alert('Invalid file type. Only PNG, JPG, and JPEG are allowed.');
-        return;
-      }
-
-      if (file.size > this.maxFileSize) {
-        alert('File size exceeds the 1 MB limit.');
-        return;
-      }
-
-      this.projectForm.patchValue({
-        poster: file
-      });
+    const file = event.target.files[0];
+    
+    if (!file) {
+      return; // Handle the case where no file is selected
     }
+    
+    const fileSize = file.size; // Check file size
+    const fileType = file.type; // Check file type
+    
+    // Ensure projectForm and poster control exist and are not null
+    const posterControl = this.projectForm.get('poster');
+    if (!posterControl) {
+      return; // Handle the case where poster control doesn't exist
+    }
+    
+    // Reset previous error state
+    posterControl.setErrors(null);
+    
+    // Check conditions and set errors if necessary
+    if (!fileType.match(/image\/(png|jpg|jpeg)/)) {
+      posterControl.setErrors({ 'invalidType': true });
+    } else if (fileSize > this.maxFileSize) {
+      posterControl.setErrors({ 'maxSizeExceeded': true });
+    }
+    
+    this.posterFile =file;
+    // Mark the control as touched to trigger validation messages display
+    posterControl.markAsTouched();
   }
 
   // Inside FreelancerPortfolioComponent class
@@ -329,4 +322,5 @@ export class FreelancerPortfolioComponent implements OnInit {
     const control = this.projectForm.get(controlName);
     return !!control && control.touched && control.hasError(errorName);
   }
+  
 }
