@@ -97,6 +97,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
             next : (res) => {console.log(res);
               if(res.isSuccess)
                 {
+
+                  this._authoService.logOut()   // if user tried to navigate to register via url >> allowed >> if try to login using gmail while he is already logged in >> make logout first to avoid conflicts 
+
+                  console.log('continuing after logout')
                   localStorage.setItem("token" , res.data.token)
                   console.log("client id from backend" + res.data.id)
                   localStorage.setItem("Id",res.data.id)
@@ -120,8 +124,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
                     } 
 
                   this._authoService.userdata.next(res.data);
-        console.log(this._authoService.userdata)   // here 
+                  console.log(this._authoService.userdata)   // here 
                   console.log(localStorage.getItem("Id"));
+                  console.log('before navigation to home')
                   this._router.navigateByUrl("/home");
                   this.UserroleService.set(null); 
                 }
