@@ -220,15 +220,29 @@ export class FreelancerProfileComponent implements OnInit {
 
 
   onFileChange(event: Event): void {
-
     const input = event.target as HTMLInputElement;
-
+  
     if (input.files && input.files.length > 0) {
       const file = input.files[0]; // Get the first file from the input
-
+  
+      const validExtensions = ['image/png', 'image/jpeg']; // Allowed file types
+      const maxSize = 1 * 1024 * 1024; // Maximum size in bytes (1 MB)
+  
+      if (!validExtensions.includes(file.type)) {
+        alert('Only .png  , .jpeg and .jpg files are allowed.');
+        input.value = ''; // Clear the input
+        return;
+      }
+  
+      if (file.size > maxSize) {
+        alert('The file size must be less than 1 MB.');
+        input.value = ''; // Clear the input
+        return;
+      }
+  
       // Assuming this.freelancer.personalImageBytes should be updated with the file data
       this.freelancer.personalImageBytes = file;
-
+  
       // You may want to display the selected file in your UI
       const reader = new FileReader();
       reader.onload = () => {
@@ -238,6 +252,7 @@ export class FreelancerProfileComponent implements OnInit {
       reader.readAsDataURL(file);
     }
   }
+  
 
   // Method to save changes including file upload
   saveChanges(): void {

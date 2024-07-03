@@ -1,232 +1,232 @@
-<!-- Button for adding new project -->
-<div class="container mt-4" dir="rtl">
-  <button class="btn btn-success mb-3 text" (click)="showAddForm()">
-    إضافة مشروع جديد
-  </button>
-</div>
-
-<!-- Form for adding new project -->
-<div class="container mt-4 text" *ngIf="showAddProjectForm" dir="rtl">
-  <form [formGroup]="projectForm" (ngSubmit)="onAddSubmit()">
-    <div class="mb-3">
-      <label for="title" class="form-label">العنوان</label>
-      <input
-        type="text"
-        class="form-control"
-        id="title"
-        formControlName="title"
-      />
-      <small *ngIf="hasError('title', 'required')" class="text-danger">
-        العنوان مطلوب
-      </small>
-      <small *ngIf="hasError('title', 'minlength')" class="text-danger">
-        يجب أن يكون 3 أحرف على الأقل
-      </small>
-      <small *ngIf="hasError('title', 'maxlength')" class="text-danger">
-        لا يمكن أن يزيد عن 100 حرف
-      </small>
-    </div>
-    <div class="mb-3">
-      <label for="description" class="form-label">الوصف</label>
-      <textarea
-        class="form-control"
-        id="description"
-        rows="3"
-        formControlName="description"
-      ></textarea>
-      <small *ngIf="hasError('description', 'maxlength')" class="text-danger">
-        لا يمكن أن يزيد عن 500 حرف
-      </small>
-    </div>
-    <div class="mb-3">
-      <label for="link" class="form-label">رابط المشروع</label>
-      <input
-        type="text"
-        class="form-control"
-        id="link"
-        formControlName="link"
-      />
-      <!-- Add validation message for link if needed -->
-    </div>
-    <div class="mb-3">
-      <label for="posterFile" class="form-label">أضف صورة غلاف</label>
-      <input
-        type="file"
-        class="form-control"
-        id="posterFile"
-        (change)="onFileSelected($event)"
-        accept="image/*"
-      />
-      <small *ngIf="hasError('poster', 'required')" class="text-danger">
-        صورة الغلاف مطلوبة
-      </small>
-    </div>
-    <div class="mb-3">
-      <label for="skills" class="form-label">المهارات</label>
-      <select
-        multiple
-        class="form-control"
-        id="skills"
-        formControlName="skills"
-      >
-        <option *ngFor="let skill of allSkills" [value]="skill.id">
-          {{ skill.title }}
-        </option>
-      </select>
-      <!-- Add any validation message for skills if needed -->
-    </div>
-    <button type="submit" class="btn btn-primary">حفظ</button>
-    <button type="button" class="btn btn-secondary ms-2" (click)="cancelAdd()">
-      إلغاء
+  <!-- Button for adding new project -->
+  <div class="container mt-4" dir="rtl">
+    <button class="btn btn-success mb-3 text" (click)="showAddForm()">
+      إضافة مشروع جديد
     </button>
-  </form>
-</div>
+  </div>
 
-<div class="container mt-4 text">
-  <div class="row justify-content-end">
-    <div *ngFor="let project of portfolio" class="col-auto mb-4">
-      <div
-        class="card ms-auto text-center p-2 my-1 shadow"
-        style="width: 18rem; direction: rtl"
-      >
-        <h4 class="text card-title custom-title p-2">{{ project.title }}</h4>
-        <img
-          class="card-img-top"
-          [src]="project.poster"
-          [alt]="project.title + ' image'"
-          [title]="project.title + ' image'"
-          height="250"
-          width="250"
+  <!-- Form for adding new project -->
+  <div class="container mt-4 text" *ngIf="showAddProjectForm" dir="rtl">
+    <form [formGroup]="projectForm" (ngSubmit)="onAddSubmit()">
+      <div class="mb-3">
+        <label for="title" class="form-label">العنوان</label>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          formControlName="title"
         />
-        <div class="card-body" style="direction: rtl">
-          <!-- <h5 class="card-title">{{ project.title }}</h5> -->
-          <p class="text card-text">{{ project.description }}</p>
+        <small *ngIf="hasError('title', 'required')" class="text-danger">
+          العنوان مطلوب
+        </small>
+        <small *ngIf="hasError('title', 'minlength')" class="text-danger">
+          يجب أن يكون 3 أحرف على الأقل
+        </small>
+        <small *ngIf="hasError('title', 'maxlength')" class="text-danger">
+          لا يمكن أن يزيد عن 100 حرف
+        </small>
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">الوصف</label>
+        <textarea
+          class="form-control"
+          id="description"
+          rows="3"
+          formControlName="description"
+        ></textarea>
+        <small *ngIf="hasError('description', 'maxlength')" class="text-danger">
+          لا يمكن أن يزيد عن 500 حرف
+        </small>
+      </div>
+      <div class="mb-3">
+        <label for="link" class="form-label">رابط المشروع</label>
+        <input
+          type="text"
+          class="form-control"
+          id="link"
+          formControlName="link"
+        />
+        <!-- Add validation message for link if needed -->
+      </div>
+      <div class="mb-3">
+        <label for="posterFile" class="form-label">أضف صورة غلاف</label>
+        <input
+          type="file"
+          class="form-control"
+          id="posterFile"
+          (change)="onFileSelected($event)"
+          accept="image/*"
+        />
+        <small *ngIf="hasError('poster', 'required')" class="text-danger">
+          صورة الغلاف مطلوبة
+        </small>
+      </div>
+      <div class="mb-3">
+        <label for="skills" class="form-label">المهارات</label>
+        <select
+          multiple
+          class="form-control"
+          id="skills"
+          formControlName="skills"
+        >
+          <option *ngFor="let skill of allSkills" [value]="skill.id">
+            {{ skill.title }}
+          </option>
+        </select>
+        <!-- Add any validation message for skills if needed -->
+      </div>
+      <button type="submit" class="btn btn-primary">حفظ</button>
+      <button type="button" class="btn btn-secondary ms-2" (click)="cancelAdd()">
+        إلغاء
+      </button>
+    </form>
+  </div>
 
-          <div class="text-center mt-3">
-            <div class="row text-center">
-              <div class="col-4">
-                <button
-                  (click)="editProject(project)"
-                  class="text btn btn-secondary p-3"
-                >
-                  تعديل
-                </button>
-              </div>
-              <div class="col-4">
-                <button
-                  (click)="ToggleProjectSkills(project.id)"
-                  class="text btn btn-primary"
-                >
-                  {{ project.showSkills ? "اخفاء المهارات" : "عرض المهارات" }}
-                </button>
-              </div>
-              <div class="col-4">
-                <button
-                  (click)="deleteProject(project.id)"
-                  class="text btn btn-danger p-3"
-                >
-                  حذف
-                </button>
+  <div class="container mt-4 text">
+    <div class="row justify-content-end">
+      <div *ngFor="let project of portfolio" class="col-auto mb-4">
+        <div
+          class="card ms-auto text-center p-2 my-1 shadow"
+          style="width: 18rem; direction: rtl"
+        >
+          <h4 class="text card-title custom-title p-2">{{ project.title }}</h4>
+          <img
+            class="card-img-top"
+            [src]="project.poster"
+            [alt]="project.title + ' image'"
+            [title]="project.title + ' image'"
+            height="250"
+            width="250"
+          />
+          <div class="card-body" style="direction: rtl">
+            <!-- <h5 class="card-title">{{ project.title }}</h5> -->
+            <p class="text card-text">{{ project.description }}</p>
+
+            <div class="text-center mt-3">
+              <div class="row text-center">
+                <div class="col-4">
+                  <button
+                    (click)="editProject(project)"
+                    class="text btn btn-secondary p-3"
+                  >
+                    تعديل
+                  </button>
+                </div>
+                <div class="col-4">
+                  <button
+                    (click)="ToggleProjectSkills(project.id)"
+                    class="text btn btn-primary"
+                  >
+                    {{ project.showSkills ? "اخفاء المهارات" : "عرض المهارات" }}
+                  </button>
+                </div>
+                <div class="col-4">
+                  <button
+                    (click)="deleteProject(project.id)"
+                    class="text btn btn-danger p-3"
+                  >
+                    حذف
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div *ngIf="project.showSkills" class="mt-3">
-            <ul *ngIf="project.skills.length > 0; else defaultSkills">
-              <li *ngFor="let skill of project.skills" class="text">
-                {{ getSkillTitle(skill.id) }}
-              </li>
-            </ul>
-            <ng-template #defaultSkills>
-              <span class="text text-danger">لا توجد مهارات لهذا العمل</span>
-            </ng-template>
+            <div *ngIf="project.showSkills" class="mt-3">
+              <ul *ngIf="project.skills.length > 0; else defaultSkills">
+                <li *ngFor="let skill of project.skills" class="text">
+                  {{ getSkillTitle(skill.id) }}
+                </li>
+              </ul>
+              <ng-template #defaultSkills>
+                <span class="text text-danger">لا توجد مهارات لهذا العمل</span>
+              </ng-template>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- Form for adding/editing project -->
-<div class="container mt-4 text" *ngIf="editingProject" dir="rtl">
-  <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
-    <div class="mb-3">
-      <label for="title" class="form-label">العنوان</label>
-      <input
-        type="text"
-        class="form-control"
-        id="title"
-        formControlName="title"
-      />
-      <!-- Display error message if title is required and form is submitted -->
-      <small *ngIf="hasError('title', 'required')" class="text-danger">
-        العنوان مطلوب
-      </small>
-      <small *ngIf="hasError('title', 'minlength')" class="text-danger">
-        يجب ألا يقل عن 3 أحرف على الأقل
-      </small>
-      <small *ngIf="hasError('title', 'maxlength')" class="text-danger">
-        يجب ألا يزيد عن 100 حرف
-      </small>
-    </div>
-    <div class="mb-3">
-      <label for="description" class="form-label">الوصف</label>
-      <textarea
-        class="form-control"
-        id="description"
-        rows="3"
-        formControlName="description"
-      ></textarea>
-      <small *ngIf="hasError('description', 'maxlength')" class="text-danger">
-        لا يجب أن يزيد عن 500 حرف
-      </small>
-    </div>
-    <div class="mb-3">
-      <label for="link" class="form-label">رابط المشروع</label>
-      <input
-        type="text"
-        class="form-control"
-        id="link"
-        formControlName="link"
-      />
-      <!-- Add validation message for link if needed -->
-    </div>
-    <div class="mb-3">
-      <label for="posterFile" class="form-label">أضف صورة غلاف</label>
-      <input
-        type="file"
-        class="form-control"
-        id="posterFile"
-        (change)="onFileSelected($event)"
-        accept="image/*"
-      />
-      <small *ngIf="hasError('poster', 'required')" class="text-danger">
-        صورة الغلاف مطلوبة
-      </small>
-    </div>
-    <div class="mb-3">
-      <label for="skills" class="form-label">المهارات</label>
-      <select
-        multiple
-        class="form-control"
-        id="skills"
-        formControlName="skills"
+  <!-- Form for adding/editing project -->
+  <div class="container mt-4 text" *ngIf="editingProject" dir="rtl">
+    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="title" class="form-label">العنوان</label>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          formControlName="title"
+        />
+        <!-- Display error message if title is required and form is submitted -->
+        <small *ngIf="hasError('title', 'required')" class="text-danger">
+          العنوان مطلوب
+        </small>
+        <small *ngIf="hasError('title', 'minlength')" class="text-danger">
+          يجب ألا يقل عن 3 أحرف على الأقل
+        </small>
+        <small *ngIf="hasError('title', 'maxlength')" class="text-danger">
+          يجب ألا يزيد عن 100 حرف
+        </small>
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">الوصف</label>
+        <textarea
+          class="form-control"
+          id="description"
+          rows="3"
+          formControlName="description"
+        ></textarea>
+        <small *ngIf="hasError('description', 'maxlength')" class="text-danger">
+          لا يجب أن يزيد عن 500 حرف
+        </small>
+      </div>
+      <div class="mb-3">
+        <label for="link" class="form-label">رابط المشروع</label>
+        <input
+          type="text"
+          class="form-control"
+          id="link"
+          formControlName="link"
+        />
+        <!-- Add validation message for link if needed -->
+      </div>
+      <div class="mb-3">
+        <label for="posterFile" class="form-label">أضف صورة غلاف</label>
+        <input
+          type="file"
+          class="form-control"
+          id="posterFile"
+          (change)="onFileSelected($event)"
+          accept=".png, .jpg, .jpeg"
+          />
+        <small *ngIf="hasError('poster', 'required')" class="text-danger">
+          صورة الغلاف مطلوبة
+        </small>
+      </div>
+      <div class="mb-3">
+        <label for="skills" class="form-label">المهارات</label>
+        <select
+          multiple
+          class="form-control"
+          id="skills"
+          formControlName="skills"
+        >
+          <option *ngFor="let skill of allSkills" [value]="skill.id">
+            {{ skill.title }}
+          </option>
+        </select>
+        <!-- Add any validation message for skills if needed -->
+      </div>
+      <button type="submit" class="btn btn-primary">حفظ</button>
+      <button
+        type="button"
+        class="btn btn-secondary ms-2"
+        (click)="cancelEdit()"
+        [disabled]="!editingProject"
       >
-        <option *ngFor="let skill of allSkills" [value]="skill.id">
-          {{ skill.title }}
-        </option>
-      </select>
-      <!-- Add any validation message for skills if needed -->
-    </div>
-    <button type="submit" class="btn btn-primary">حفظ</button>
-    <button
-      type="button"
-      class="btn btn-secondary ms-2"
-      (click)="cancelEdit()"
-      [disabled]="!editingProject"
-    >
-      إلغاء
-    </button>
-      
-  </form>
-</div>
+        إلغاء
+      </button>
+        
+    </form>
+  </div>

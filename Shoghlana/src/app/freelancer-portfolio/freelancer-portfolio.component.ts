@@ -22,6 +22,7 @@ export class FreelancerPortfolioComponent implements OnInit {
   freelancerId!: number;
   allSkills: ISkill[] = [];
   showAddProjectForm: boolean = false;
+  maxFileSize = 1 * 1024 * 1024; // 1 MB in bytes
 
   constructor(
     private projectService: ProjectService,
@@ -47,6 +48,8 @@ export class FreelancerPortfolioComponent implements OnInit {
       }
     });
   }
+
+ 
 
   deleteProject(projectId: number): void {
     this.projectService.deleteProject(projectId).subscribe({
@@ -122,6 +125,7 @@ export class FreelancerPortfolioComponent implements OnInit {
       });
     }
   }
+
 
   cancelAdd(): void {
     this.showAddProjectForm = false;
@@ -290,9 +294,30 @@ export class FreelancerPortfolioComponent implements OnInit {
     this.projectForm.reset();
   }
 
+  // onFileSelected(event: any): void {
+  //   if (event.target.files && event.target.files.length > 0) {
+  //     const file = event.target.files[0];
+  //     this.projectForm.patchValue({
+  //       poster: file
+  //     });
+  //   }
+  // }
+
   onFileSelected(event: any): void {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
+      const validExtensions = ['image/png', 'image/jpeg', 'image/jpg'];
+
+      if (!validExtensions.includes(file.type)) {
+        alert('Invalid file type. Only PNG, JPG, and JPEG are allowed.');
+        return;
+      }
+
+      if (file.size > this.maxFileSize) {
+        alert('File size exceeds the 1 MB limit.');
+        return;
+      }
+
       this.projectForm.patchValue({
         poster: file
       });
