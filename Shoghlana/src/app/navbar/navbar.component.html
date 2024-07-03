@@ -4,7 +4,7 @@
 
     <ul class="navbar-nav  dark:bg-gray-800">
       <li *ngIf="isLogged" class="nav-item">
-        <a class="nav-link" (click)="logOut()">تسجيل خروج</a>
+        <a style="cursor: pointer;" class="nav-link" (click)="logOut()">تسجيل خروج</a>
       </li>
     </ul>
   </div>
@@ -65,31 +65,35 @@
           </div>
         </div>
 
-        <li *ngIf="isLogged" class="nav-item active">
+        <li *ngIf="isLogged && isClient" class="nav-item active">
           <a class="nav-link" [routerLink]="['/clientProfile', Id]">
             الملف الشخصي</a
           >
+          <li *ngIf="isLogged && isFreelancer" class="nav-item active">
+            <a class="nav-link" [routerLink]="['/freelancerprofile', Id]">
+              الملف الشخصي</a
+            >
           <!--client profile not freelancer-->
         </li>
         <li *ngIf="isLogged" class="nav-item active">
           <a class="nav-link dark:hover:text-green-500 dark:text-gray-200" routerLink="/projects">مشروع</a>
         </li>
-        <li *ngIf="isLogged" class="nav-item active">
+        <li *ngIf="isLogged && isClient" class="nav-item active">
           <a class="nav-link dark:hover:text-green-500" routerLink="/addproject">اضف مشروع</a>
         </li>
-        <li *ngIf="isLogged" class="nav-item active">
+        <li *ngIf="isLogged && isFreelancer" class="nav-item active">
           <a class="nav-link dark:hover:text-green-500" routerLink="/addservice">اضف خدمة</a>
         </li>
-        <li *ngIf="isLogged" class="nav-item">
+        <li *ngIf="isLogged && isFreelancer" class="nav-item">
           <a class="nav-link dark:hover:text-green-500" routerLink="/galleryworks">معرض الأعمال</a>
         </li>
-        <li *ngIf="isLogged" class="nav-item">
+        <li *ngIf="isLogged && isClient" class="nav-item">
           <a class="nav-link dark:hover:text-green-500" routerLink="/freelancers">رواد الأعمال</a>
         </li>
-        <li *ngIf="isLogged" class="nav-item">
+        <!-- <li *ngIf="isLogged" class="nav-item">
           <a class="nav-link text-gray-200 dark:hover:text-green-500" routerLink="/jobs">المشاريع</a>
-        </li>
-        <li *ngIf="isLogged" class="nav-item">
+        </li> -->
+        <li *ngIf="isLogged && isFreelancer" class="nav-item">
           <a class="nav-link dark:hover:text-green-500" routerLink="/offers"> عروضي</a>
         </li>
         <li class="nav-item active">

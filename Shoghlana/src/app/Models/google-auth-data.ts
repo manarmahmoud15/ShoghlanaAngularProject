@@ -7,5 +7,5 @@ export interface GoogleAuthData {
     id : string,
     idToken : string,
     photoUrl : string,
-    role : number
+    role : number | null
 }
