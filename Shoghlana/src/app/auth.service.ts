@@ -138,8 +138,8 @@ if (localStorage.getItem('Role'))
     this.IsFreelancer.next(null);
     this.IsClient.next(null);
     this.Id.next(null);
-    console.log(this.IsClient)
-    console.log(this.userdata) 
+    // console.log(this.IsClient)
+    // console.log(this.userdata) 
   }
 
   ConfirmMail(toemail: string): Observable<any> {

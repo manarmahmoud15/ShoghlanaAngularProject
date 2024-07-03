@@ -37,8 +37,10 @@ export class LoginComponent {
         next: (response) => {
           console.log('this is response ', response);
 
-          if (response.isSuccess) {
+          if (response.isSuccess) 
+            {
 
+            this._authoService.logOut();  // if user tried to navigate to signin via url >> allowed >> if try to login using another account while he is already logged in >> make logout first to avoid conflicts 
             localStorage.setItem('token', response.token);
             localStorage.setItem("Id",response.data.id);
             if(localStorage.getItem('Id'))
