@@ -10,6 +10,7 @@ import { environment } from '../../../environments/environment.development';
 export class ApiAddProjectService {
   private baseUrl = `${environment.baseUrl}/job`;
   constructor(private httpClient:HttpClient) { }
+  
   AddProject(projectData: any): Observable<any> {
     projectData.CategoryId = Number(projectData.categoryId);
     projectData.experienceLevel = Number(projectData.experienceLevel);

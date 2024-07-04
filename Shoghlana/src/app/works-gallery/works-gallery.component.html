@@ -1,222 +1,84 @@
-<div dir="rtl" class=" gallery container-fluid ">
+<div dir="rtl" class="gallery container-fluid">
   <div class="row d-flex justify-content-center">
-    <div class="col-md-3 mt-3 ">
-<div class="firstbtn">
-<button class="btn px-3 py-2"><i class="fa-solid fa-plus ms-2"></i>أضف نماذج من أعمالك</button>
-</div>
-<div class="coloum mb-3 pe-2">
-  <p class="bold-text pt-2 pe-2">الأقسام</p> <hr>
-<p> <i class="fa-solid fa-briefcase mx-auto"></i> أعمال وخدمات ادارية واستشارية</p><hr>
-<p><i class="fa-solid fa-code mx-auto "></i> برمجة, تطوير المواقع و التطبيقات</p><hr>
-<p><i class="fa-brands fa-figma  mx-auto  "></i>تصميم</p><hr>
-<p> <i class="fa-solid fa-video  mx-auto  "></i>فيديو</p><hr>
-<p> <i class="fa-solid fa-book  mx-auto "></i>كتابة و ترجمة ولغات</p>
-</div>
+    <!-- Sidebar Section -->
+    <div class="col-md-3 mt-3">
+      <!-- <div class="firstbtn mb-3">
+        <button class="btn btn-primary px-3 py-2">
+          <i class="fa-solid fa-plus ms-2"></i> أضف نماذج من أعمالك
+        </button>
+      </div> -->
+
+      <div class="d-flex flex-column ">
+        <div class="m-2 w-75" dir="rtl">
+          <label for="searchClientName" class="form-label text">اسم العمل</label>
+          <input
+            type="text"
+            id="searchClientName"
+            class="form-control text" 
+           [(ngModel)]="ProjectName"
+           (input)="FilterProjects()"
+          />
+        </div>
+      </div>
+      
+      <!-- <div class="coloum mb-3 pe-2">
+        <p class="bold-text pt-2 pe-2">الأقسام</p>
+        <hr>
+        <p><i class="fa-solid fa-briefcase mx-auto"></i> أعمال وخدمات ادارية واستشارية</p>
+        <hr>
+        <p><i class="fa-solid fa-code mx-auto"></i> برمجة, تطوير المواقع و التطبيقات</p>
+        <hr>
+        <p><i class="fa-brands fa-figma mx-auto"></i> تصميم</p>
+        <hr>
+        <p><i class="fa-solid fa-video mx-auto"></i> فيديو</p>
+        <hr>
+        <p><i class="fa-solid fa-book mx-auto"></i> كتابة و ترجمة ولغات</p>
+      </div> -->
     </div>
+
+    <!-- Main Gallery Section -->
     <div class="col-md-9 mt-3">
       <div class="GalleryWork">
-        <p class="bold-text pt-2 pe-2">معرض الأعمال</p>
-
+        <p class="bold-text pt-2 pe-2 text">معرض الأعمال</p>
       </div>
-
-<div class="row row-cols-1 row-cols-md-3 mt-2 mb-2">
-
-
-    <div class="col mb-2" >
-      <div class="card h-100" appHighlight externalColor="#16a763">
-        <div class="badge position-absolute top-2 start-2 bg-success text-white"><i class="fa-regular fa-heart"></i></div>
-        <img src="../../assets/imgs/Nerd-amico.png" height="250px" class="card-img-top" alt="..." />
-        <div class="card-body text-end">
-          <h5 class="card-title bold-text">شعارات | logo Design</h5>
-          <div class="d-flex">
-
-            <div class="freelancerInfo d-flex ms-auto float-left">
-              <img
-              src="../../assets/imgs/Nerd-amico.png"
-                height="50px"
-                class="border rounded-circle border-light"
-              />
-              <div class="info">
-                <p class="card-text mb-0 bold-text">Asmaa Hassan</p>
-                <p class="card-text">Graphic Designer</p>
-              </div>
+      <div *ngIf="FilteredProjects.length > 0; else EmptyList">
+      <div class="row mt-2 mb-2">
+        <!-- Project Cards -->
+        <div *ngFor="let project of FilteredProjects" class="col-md-6 col-lg-4 mb-4">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="badge position-absolute top-0 start-0 bg-success text-white m-2">
             </div>
-<div class="float-right">
-  <div class="stats d-flex align-items-center">
-    <div class="likes me-3">
-      <p>12 <i class="fa-regular fa-heart"></i></p>
-    </div>
-
-  </div>
-
-</div>
+            <img [src]="project.poster ? 'data:image/png;base64,' + project.poster : '../../assets/imgs/Nerd-amico.png'" height="250px" class="card-img-top" alt="Project Image" />
+            <div class="card-body text-end">
+              <h1 class="card-title bold-text m-auto text">  {{project.title}}</h1>
+              <p class="card-text m-1 bold-text text">{{project.description}}</p>
+              <p class="card-text m-1 text">رابط العمل : <a class="p-1 text-primary" href="{{project.link}}" target="_blank">{{project.link}}</a></p>
+              <p class="card-text  m-auto text"><small class="text-muted">{{FormatTime(project.timePublished)}}</small></p>
+            </div>
+            <!-- <div class="card-footer text-muted d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center">
+                <img src="../../assets/imgs/Nerd-amico.png" height="50px" class="border rounded-circle border-light" />
+                <div class="info ms-2">
+                  <p class="card-text mb-0 bold-text">Graphic Designer</p>
+                </div>
+              </div>
+              <div class="likes me-3">
+                <p>12 <i class="fa-regular fa-heart"></i></p>
+              </div>
+            </div> -->
           </div>
         </div>
       </div>
-    </div>
-    <div class="col mb-2" >
-      <div class="card h-100" appHighlight externalColor="#16a763">
-        <div class="badge position-absolute top-2 start-2 bg-success text-white"><i class="fa-regular fa-heart"></i></div>
-        <img src="../../assets/imgs/Nerd-amico.png" height="250px" class="card-img-top" alt="..." />
-        <div class="card-body text-end">
-          <h5 class="card-title bold-text">شعارات | logo Design</h5>
-          <div class="d-flex">
 
-            <div class="freelancerInfo d-flex ms-auto float-left">
-              <img
-              src="../../assets/imgs/Nerd-amico.png"
-                height="50px"
-                class="border rounded-circle border-light"
-              />
-              <div class="info">
-                <p class="card-text mb-0 bold-text">Asmaa Hassan</p>
-                <p class="card-text">Graphic Designer</p>
-              </div>
-            </div>
-<div class="float-right">
-  <div class="stats d-flex align-items-center">
-    <div class="likes me-3">
-      <p>12 <i class="fa-regular fa-heart"></i></p>
-    </div>
-
-  </div>
-
-</div>
-          </div>
-        </div>
+  
+      
+        <!-- End of Project Cards -->
       </div>
-    </div>
-    <div class="col mb-2" >
-      <div class="card h-100" appHighlight externalColor="#16a763">
-        <div class="badge position-absolute top-2 start-2 bg-success text-white"><i class="fa-regular fa-heart"></i></div>
-        <img src="../../assets/imgs/Nerd-amico.png" height="250px" class="card-img-top" alt="..." />
-        <div class="card-body text-end">
-          <h5 class="card-title bold-text">شعارات | logo Design</h5>
-          <div class="d-flex">
-
-            <div class="freelancerInfo d-flex ms-auto float-left">
-              <img
-              src="../../assets/imgs/Nerd-amico.png"
-                height="50px"
-                class="border rounded-circle border-light"
-              />
-              <div class="info">
-                <p class="card-text mb-0 bold-text">Asmaa Hassan</p>
-                <p class="card-text">Graphic Designer</p>
-              </div>
-            </div>
-<div class="float-right">
-  <div class="stats d-flex align-items-center">
-    <div class="likes me-3">
-      <p>12 <i class="fa-regular fa-heart"></i></p>
-    </div>
-
-  </div>
-
-</div>
-          </div>
+      <ng-template #EmptyList>
+        <div class="text-center m-5">
+          <span class="text-danger fs-4">لا توجد أعمال بعد</span>
         </div>
-      </div>
+      </ng-template>
     </div>
-    <div class="col mb-2" >
-      <div class="card h-100" appHighlight externalColor="#16a763">
-        <div class="badge position-absolute top-2 start-2 bg-success text-white"><i class="fa-regular fa-heart"></i></div>
-        <img src="../../assets/imgs/Nerd-amico.png" height="250px" class="card-img-top" alt="..." />
-        <div class="card-body text-end">
-          <h5 class="card-title bold-text">شعارات | logo Design</h5>
-          <div class="d-flex">
-
-            <div class="freelancerInfo d-flex ms-auto float-left">
-              <img
-              src="../../assets/imgs/Nerd-amico.png"
-                height="50px"
-                class="border rounded-circle border-light"
-              />
-              <div class="info">
-                <p class="card-text mb-0 bold-text">Asmaa Hassan</p>
-                <p class="card-text">Graphic Designer</p>
-              </div>
-            </div>
-<div class="float-right">
-  <div class="stats d-flex align-items-center">
-    <div class="likes me-3">
-      <p>12 <i class="fa-regular fa-heart"></i></p>
-    </div>
-
   </div>
-
 </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col mb-2" >
-      <div class="card h-100" appHighlight externalColor="#16a763">
-        <div class="badge position-absolute top-2 start-2 bg-success text-white"><i class="fa-regular fa-heart"></i></div>
-        <img src="../../assets/imgs/Nerd-amico.png" height="250px" class="card-img-top" alt="..." />
-        <div class="card-body text-end">
-          <h5 class="card-title bold-text">شعارات | logo Design</h5>
-          <div class="d-flex">
-
-            <div class="freelancerInfo d-flex ms-auto float-left">
-              <img
-              src="../../assets/imgs/Nerd-amico.png"
-                height="50px"
-                class="border rounded-circle border-light"
-              />
-              <div class="info">
-                <p class="card-text mb-0 bold-text">Asmaa Hassan</p>
-                <p class="card-text">Graphic Designer</p>
-              </div>
-            </div>
-<div class="float-right">
-  <div class="stats d-flex align-items-center">
-    <div class="likes me-3">
-      <p>12 <i class="fa-regular fa-heart"></i></p>
-    </div>
-
-  </div>
-
-</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col mb-2" >
-      <div class="card h-100" appHighlight externalColor="#16a763">
-        <div class="badge position-absolute top-2 start-2 bg-success text-white"><i class="fa-regular fa-heart"></i></div>
-        <img src="../../assets/imgs/Nerd-amico.png" height="250px" class="card-img-top" alt="..." />
-        <div class="card-body text-end">
-          <h5 class="card-title bold-text">شعارات | logo Design</h5>
-          <div class="d-flex">
-
-            <div class="freelancerInfo d-flex ms-auto float-left">
-              <img
-              src="../../assets/imgs/Nerd-amico.png"
-                height="50px"
-                class="border rounded-circle border-light"
-              />
-              <div class="info">
-                <p class="card-text mb-0 bold-text">Asmaa Hassan</p>
-                <p class="card-text">Graphic Designer</p>
-              </div>
-            </div>
-<div class="float-right">
-  <div class="stats d-flex align-items-center">
-    <div class="likes me-3">
-      <p>12 <i class="fa-regular fa-heart"></i></p>
-    </div>
-
-  </div>
-
-</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-</div>
-    </div>
-
-  </div>
-  </div>
