@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, OnChanges , OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import {
+  AbstractControl,
   FormArray,
   FormControl,
   FormGroup,
@@ -61,12 +62,16 @@ export class RegisterComponent implements OnInit, OnDestroy {
       ]),
       role : new FormControl(this.UserroleService.get())
       // phoneNumbers:new FormArray([new FormControl('')])
-    });
+    }, {validators:this.PasswordMatchValidator});
     const lang = localStorage.getItem('language') || 'en';
     this.__translateService.setDefaultLang(lang);
     this.__translateService.use(lang);
   }
-
+  PasswordMatchValidator(control:AbstractControl){
+return control.get('password')?.value===control.get('repeatPassword')?.value
+?null:
+{'mismatch':true}
+  }
   ngOnInit(): void {
    // this.clearAuthState();
     this.UserRole = this.UserroleService.get(); 
@@ -87,12 +92,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
             this.googleAuthData.idToken = result.idToken
             this.googleAuthData.name = result.name
             this.googleAuthData.photoUrl = result.photoUrl
-          //  this.googleAuthData.role = this.UserRole 
-    
+          //  this.googleAuthData.role = this.UserRole
+
             console.log( "role in google obj google" + this.googleAuthData.role)
-    
+
             console.log(this.googleAuthData);
-    
+
           this._authoService.GoogleAuthentication(this.googleAuthData).subscribe({
             next : (res) => {console.log(res);
               if(res.isSuccess)
@@ -124,6 +129,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
                     } 
 
                   this._authoService.userdata.next(res.data);
+        console.log(this._authoService.userdata)   // here
                   console.log(this._authoService.userdata)   // here 
                   console.log(localStorage.getItem("Id"));
                   console.log('before navigation to home')
@@ -138,7 +144,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             complete : () => {this.clearAuthState()}
           })
           }
-        
+
     },
     error : (err) => {
       console.log(err);
@@ -147,7 +153,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       console.log("Completed");
     }
     });
-   
+
    // alert("hello from register")
   }
 
@@ -237,7 +243,7 @@ confirm() {
     }
   }
 
-  
+
 
   OnRoleSelected(role : string)
   {
@@ -262,11 +268,11 @@ confirm() {
   //               this.googleAuthData.name = result.name
   //               this.googleAuthData.photoUrl = result.photoUrl
   //             //  this.googleAuthData.role = this.UserRole
-        
+
   //               console.log( "role in google obj google" + this.googleAuthData.role)
-        
+
   //               console.log(this.googleAuthData);
-        
+
   //             this._authoService.GoogleAuthentication(this.googleAuthData).subscribe({
   //               next : (res) => {console.log(res);
   //                 if(res.isSuccess)
@@ -275,7 +281,7 @@ confirm() {
   //                     console.log("client id from backend" + res.data.id)
   //                     localStorage.setItem("Id",res.data.id)
   //                     this._authoService.userdata.next(res.data);
-  //           console.log(this._authoService.userdata)   // here 
+  //           console.log(this._authoService.userdata)   // here
   //                     console.log(localStorage.getItem("Id"));
   //                     this._router.navigateByUrl("/home")
   //                   }
@@ -287,7 +293,7 @@ confirm() {
   //               complete : () => {this.clearAuthState()}
   //             })
   //             }
-            
+
   //       },
   //       error : (err) => {
   //         console.log(err);
@@ -296,7 +302,7 @@ confirm() {
   //         console.log("Completed");
   //       }
   //       });
-    
+
  // }
 
   private clearAuthState(): void {
