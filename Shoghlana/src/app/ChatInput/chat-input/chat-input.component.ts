@@ -12,10 +12,12 @@ import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
 export class ChatInputComponent {
   content :string = '';
   @Output() contentEmitter =new EventEmitter();
+
   sendMessage(){
     if(this.content.trim() !== ""){
       this.contentEmitter.emit(this.content)
     }
     this.content ='';
   }
+
 }

@@ -50,15 +50,17 @@ export class IndividualchatService {
     });
     this.individualChatConnection.on('NewMessage', (NewMessage: Message) => {
       this.messages = [...this.messages, NewMessage];
+      console.log ('rfsjnk')
     });
     this.individualChatConnection.on('openPrivateChat', (NewMessage: Message) => {
       this.privateMessages = [...this.privateMessages, NewMessage];
       this.privateMessageInitial = true ;
       const modalRef = this.modalservice.open(PrivateChatComponent);
       modalRef.componentInstance.toUser = NewMessage.from 
-    });
+    }); 
     this.individualChatConnection.on('NewPrivateMessage', (NewMessage: Message) => {
       this.privateMessages = [...this.privateMessages, NewMessage];
+      console.log('wkjeke')
     });
     this.individualChatConnection.on('ClosePrivateChat', () => {
       this.privateMessageInitial = false;
