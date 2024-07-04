@@ -77,7 +77,7 @@ export class LoginComponent {
            // alert(this.apiError);
           }
         },
-        error: (error) => {
+        error: (error: { error: { errors: string; }; }) => {
           this.isLoading = false;
           this.apiError = error.error.errors;
           this.resetForm();

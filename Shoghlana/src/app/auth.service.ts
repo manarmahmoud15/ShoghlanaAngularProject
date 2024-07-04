@@ -19,12 +19,12 @@ export class AuthService {
   IsFreelancer = new BehaviorSubject(null);
   IsClient = new BehaviorSubject(null);
   userdata = new BehaviorSubject(null);
+  Id: any;
 
   constructor(
 
-  Id = new BehaviorSubject(null);
+  // id = new BehaviorSubject(null);
 
-  constructor( 
 
     private _httpClient: HttpClient,
     private UserRoleService: UserRoleServiceService,
