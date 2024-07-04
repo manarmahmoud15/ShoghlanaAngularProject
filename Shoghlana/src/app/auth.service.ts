@@ -19,8 +19,8 @@ export class AuthService {
   IsFreelancer = new BehaviorSubject(null);
   IsClient = new BehaviorSubject(null);
   userdata = new BehaviorSubject(null);
-  Id: any;
-
+  // Id: any;
+  Id = new BehaviorSubject(null);
   constructor(
   // id = new BehaviorSubject(null);
   // Id = new BehaviorSubject(null),
