@@ -19,9 +19,13 @@ export class AuthService {
   IsFreelancer = new BehaviorSubject(null);
   IsClient = new BehaviorSubject(null);
   userdata = new BehaviorSubject(null);
+
+  constructor(
+
   Id = new BehaviorSubject(null);
 
   constructor( 
+
     private _httpClient: HttpClient,
     private UserRoleService: UserRoleServiceService,
     private _router: Router
@@ -66,6 +70,17 @@ export class AuthService {
   }
 
 
+forgetPassword(email: string): Observable<any> {
+  const url = `http://localhost:5092/api/Auth/forgot-password?email=${email}`;
+  console.log(email);
+  return this._httpClient.post(url, {});
+}
+resetPassword(resetform:any):Observable<any>{
+  return this._httpClient
+      .post(`${environment.baseUrl}/Auth/reset-password`, { resetform })
+}
+
+
   GetRole() : string
   {
 if (localStorage.getItem('Role'))
@@ -95,14 +110,15 @@ if (localStorage.getItem('Role'))
   return 'No roles'
   }
 
+
   setEmail(email: string) {
     this.email = email;
   }
 
   decodeUserData() {
-    console.log('hello from decode func') 
+    console.log('hello from decode func')
     const encodedToken = localStorage.getItem('token');
-    if (encodedToken) { 
+    if (encodedToken) {
       const decodedToken: any = jwtDecode(encodedToken); // Directly decode the token
       console.log('we have decoded token' +decodedToken);
       //this.userdata = decodedToken;
@@ -135,11 +151,15 @@ if (localStorage.getItem('Role'))
     localStorage.removeItem('Role');
     this._router.navigateByUrl('/signin');
     this.userdata.next(null);
+
+    console.log(this.userdata)
+
     this.IsFreelancer.next(null);
     this.IsClient.next(null);
     this.Id.next(null);
     // console.log(this.IsClient)
     // console.log(this.userdata) 
+
   }
 
   ConfirmMail(toemail: string): Observable<any> {
@@ -186,6 +206,8 @@ if (localStorage.getItem('Role'))
     return localStorage.getItem('token') || '';
   }
 
+
+//   CheckIfLoggedin()
 
   // getId() : Number | null   // set in local storage after successful login
   // {
