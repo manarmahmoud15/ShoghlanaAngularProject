@@ -28,6 +28,7 @@
                 [ngClass]="{
                     'btn-success': user === _individualChatService.myName?.name,
                     'btn-dark': user !== _individualChatService.myName?.name}"
+                (dblclick)="openPrivateChat(user)"
                 [disabled]=" user === _individualChatService.myName?.name"
               >
                 {{ user }}

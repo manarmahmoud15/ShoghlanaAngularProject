@@ -22,15 +22,8 @@ export class AuthService {
   Id: any;
 
   constructor(
-
   // id = new BehaviorSubject(null);
-
-
-
-
-  Id = new BehaviorSubject(null);
-
-
+  // Id = new BehaviorSubject(null),
     private _httpClient: HttpClient,
     private UserRoleService: UserRoleServiceService,
     private _router: Router
@@ -73,8 +66,6 @@ export class AuthService {
     //         // we call decode again
     //     }
   }
-
-
 forgetPassword(email: string): Observable<any> {
   const url = `http://localhost:5092/api/Auth/forgot-password?email=${email}`;
   console.log(email);
@@ -84,8 +75,6 @@ resetPassword(resetform:any):Observable<any>{
   return this._httpClient
       .post(`${environment.baseUrl}/Auth/reset-password`, { resetform })
 }
-
-
   GetRole() : string
   {
 if (localStorage.getItem('Role'))
@@ -114,12 +103,9 @@ if (localStorage.getItem('Role'))
     }
   return 'No roles'
   }
-
-
   setEmail(email: string) {
     this.email = email;
   }
-
   decodeUserData() {
     console.log('hello from decode func')
     const encodedToken = localStorage.getItem('token');

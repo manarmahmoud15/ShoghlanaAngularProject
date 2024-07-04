@@ -38,4 +38,7 @@ export class IndividualChatComponent implements OnInit , OnDestroy{
     this._individualChatService.sendMessage(content);
 
   }
+  openPrivateChat(toUser :string){
+
+  }
 }
