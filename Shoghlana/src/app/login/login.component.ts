@@ -45,15 +45,21 @@ export class LoginComponent {
           {
             this.isLoading = false;
             this.apiError = response.message;
+            this.resetForm();
            // alert(this.apiError);
           }
         },
         error: (error) => {
           this.isLoading = false;
           this.apiError = error.error.errors;
+          this.resetForm();
          // alert(this.apiError);
         },
       });
     }
+  }
+  resetForm() {
+    this.LoginForm.reset();
+    this.apiError = ''; // Clear the API error message
   }
 }

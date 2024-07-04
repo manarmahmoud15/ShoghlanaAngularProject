@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   private email: string = '';
   userdata = new BehaviorSubject(null);
-  constructor( 
+  constructor(
     private _httpClient: HttpClient,
     private UserRoleService: UserRoleServiceService,
     private _router: Router
@@ -26,14 +26,23 @@ export class AuthService {
     //     }
   }
 
+forgetPassword(email: string): Observable<any> {
+  const url = `http://localhost:5092/api/Auth/forgot-password?email=${email}`;
+  console.log(email);
+  return this._httpClient.post(url, {});
+}
+resetPassword(resetform:any):Observable<any>{
+  return this._httpClient
+      .post(`${environment.baseUrl}/Auth/reset-password`, { resetform })
+}
   setEmail(email: string) {
     this.email = email;
   }
 
   decodeUserData() {
-    console.log('hello from decode func') 
+    console.log('hello from decode func')
     const encodedToken = localStorage.getItem('token');
-    if (encodedToken) { 
+    if (encodedToken) {
       const decodedToken: any = jwtDecode(encodedToken); // Directly decode the token
       console.log('we have decoded token' +decodedToken);
       //this.userdata = decodedToken;
@@ -64,7 +73,7 @@ export class AuthService {
     localStorage.removeItem('Id');
     this._router.navigateByUrl('/signin');
     this.userdata.next(null);
-    console.log(this.userdata) 
+    console.log(this.userdata)
   }
 
   ConfirmMail(toemail: string): Observable<any> {
@@ -112,7 +121,7 @@ export class AuthService {
   }
 
 
-//   CheckIfLoggedin() 
+//   CheckIfLoggedin()
 // {
 //   if(localStorage.getItem('Id'))
 //     {

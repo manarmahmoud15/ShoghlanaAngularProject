@@ -27,6 +27,7 @@
     "@angular/ssr": "^17.3.7",
     "@aspnet/signalr": "^1.0.27",
     "@fortawesome/fontawesome-free": "^6.5.2",
+    "@material/snackbar": "^15.0.0-canary.7f224ddd4.0",
     "@microsoft/signalr": "^8.0.0",
     "@ng-select/ng-select": "^13.3.0",
     "@ngrx/store": "^18.0.0",

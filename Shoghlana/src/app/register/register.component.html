@@ -2,11 +2,10 @@
 <div dir="rtl" class="container-fluid">
   <div class="row">
     <div class="col-md-6 mt-4">
-
       <form (ngSubmit)="handleRegister(RegisterForm)" [formGroup] = "RegisterForm" class="form px-3 pt-1 pb-4">
         <h5 class="text-center" style="color: #1dbf73;">مرحبا بك</h5>
         <div class="flex-column">
-          <label for="username">{{ "UserName" | translate }}</label>
+          <label for="username">{{ "اسم المستخدم" | translate }}</label>
         </div>
         <div class="inputForm">
           <i class="fas fa-user fa-lg me-1 fa-fw"></i>
@@ -80,6 +79,8 @@
               <!-- <p *ngIf="RegisterForm.get('repeatPassword')?.getError('pattern')" class="m-0">كلمة السر غير صحيحة</p> -->
               <p *ngIf="RegisterForm.get('repeatPassword')?.getError('required')" class="m-0">يرجي ادخال كلمة السر </p>
             </div>
+            <p *ngIf=" RegisterForm.errors?.['mismatch'] && RegisterForm.get('repeatPassword')?.touched" class="alert alert-danger">كلمتا السر غير متطابقتين</p>
+
           </div>
         </div>
         <!-- /////// -->
@@ -114,7 +115,7 @@
     <i class="fab fa-google"></i>
     سجل بواسطة جوجل
   </button> -->
-  
+
   <!-- </button> -->
 </div>
 
