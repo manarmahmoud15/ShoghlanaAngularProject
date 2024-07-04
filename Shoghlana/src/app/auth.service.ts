@@ -26,6 +26,11 @@ export class AuthService {
   // id = new BehaviorSubject(null);
 
 
+
+
+  Id = new BehaviorSubject(null);
+
+
     private _httpClient: HttpClient,
     private UserRoleService: UserRoleServiceService,
     private _router: Router
