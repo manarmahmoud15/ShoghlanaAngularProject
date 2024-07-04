@@ -33,7 +33,7 @@ forgetPassword(email: string): Observable<any> {
 }
 resetPassword(resetform:any):Observable<any>{
   return this._httpClient
-      .post(`${environment.baseUrl}/Auth/reset-password`, { resetform })
+      .post(`${environment.baseUrl}/Auth/reset-password`, resetform )
 }
   setEmail(email: string) {
     this.email = email;
