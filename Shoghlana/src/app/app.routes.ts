@@ -15,6 +15,8 @@ import { ProjectsComponent } from './projects/projects.component';
 import { FreelancerEditProfileComponent } from './freelancer-edit-profile/freelancer-edit-profile.component';
 import { ClientProfileComponent } from './client-profile/client-profile.component';
 import { AddprojectComponent } from './addproject/addproject.component';
+import { clientGuard } from './Gards/client.guard';
+import { freelancerGuard } from './Gards/freelancer.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -34,68 +36,70 @@ export const routes: Routes = [
     path: 'signin', loadComponent: () => import('./login/login.component')
       .then((obj) => obj.LoginComponent)
   },
-  {
-    path: 'galleryworks', loadComponent: () => import('./works-gallery/works-gallery.component')
-      .then((obj) => obj.WorksGalleryComponent)
-  },
-  {
-    path: 'freelancers', loadComponent: () => import('./freelancers/freelancers.component')
-      .then((obj) => obj.FreelancersComponent)
-  },
-  {
-    path: 'works', loadComponent: () => import('./work/work.component')
-      .then((obj) => obj.WorkComponent)
-  },
-  { path: 'jobs', loadComponent: () => import('./jobs/jobs.component').then((obj) => obj.JobsComponent) },
-  {
-    path: 'offers', loadComponent: () => import('./offers/offers.component')
-      .then((obj) => obj.OffersComponent)
-  },
-  { path: 'projects', loadComponent: () => import('./projects/projects.component').then((Obj) => Obj.ProjectsComponent) },
+  // {
+  //   path: 'galleryworks', loadComponent: () => import('./works-gallery/works-gallery.component')
+  //     .then((obj) => obj.WorksGalleryComponent)
+  // },
+  // {
+  //   path: 'freelancers', loadComponent: () => import('./freelancers/freelancers.component')
+  //     .then((obj) => obj.FreelancersComponent)
+  // },
+  // {
+  //   path: 'works', loadComponent: () => import('./work/work.component')
+  //     .then((obj) => obj.WorkComponent)
+ // },
+  // { path: 'jobs', loadComponent: () => import('./jobs/jobs.component').then((obj) => obj.JobsComponent) },
+  // {
+  //   path: 'offers', loadComponent: () => import('./offers/offers.component')
+  //     .then((obj) => obj.OffersComponent)
+  // },
+  // { path: 'projects', loadComponent: () => import('./projects/projects.component').then((Obj) => Obj.ProjectsComponent) },
   //  { path : 'projectDetails/:id' , loadComponent:()=> import('./project-details/project-details.component')
   // .then((obj) =>obj.ProjectDetailsComponent)} ,
-  { path: 'clientProfile/:id', component: ClientProfileComponent },
-  { path: 'project-details/:id', loadComponent: () => import('./project-details/project-details.component').then((obj) => obj.ProjectDetailsComponent) },
-  {path: 'individualChat' , loadComponent:()=>import('./individualChat/individual-chat/individual-chat.component')
+  { path: 'clientProfile/:id', loadComponent:() => import('./client-profile/client-profile.component')
+    .then((obj) => obj.ClientProfileComponent )
+   },
+  // { path: 'project-details/:id', loadComponent: () => import('./project-details/project-details.component').then((obj) => obj.ProjectDetailsComponent) },
+  {path: 'individualChat' , canActivate : [authGuard] , loadComponent:()=>import('./individualChat/individual-chat/individual-chat.component')
     .then((obj)=>obj.IndividualChatComponent)},
-  {
-    path: 'freelancerprofile/:id',
-    loadComponent: () => import('./freelancer-profile/freelancer-profile.component').then(obj => obj.FreelancerProfileComponent),
-    children: [
-      //  { path: '', redirectTo: 'portfolio', pathMatch: 'full' },
-      { path: 'portfolio', loadComponent: () => import('./freelancer-portfolio/freelancer-portfolio.component').then(obj => obj.FreelancerPortfolioComponent) },
-      { path: 'workhistory', loadComponent: () => import('./freelancer-work-history/freelancer-work-history.component').then(obj => obj.FreelancerWorkHistoryComponent) },
-      {
-        path: 'edit', loadComponent: () => import('./freelancer-edit-profile/freelancer-edit-profile.component')
-          .then(obj => obj.FreelancerEditProfileComponent)
-      }
-    ]
-  },
+  // {
+  //   path: 'freelancerprofile/:id',
+  //   loadComponent: () => import('./freelancer-profile/freelancer-profile.component').then(obj => obj.FreelancerProfileComponent),
+  //   children: [
+  //     //  { path: '', redirectTo: 'portfolio', pathMatch: 'full' },
+  //     { path: 'portfolio', loadComponent: () => import('./freelancer-portfolio/freelancer-portfolio.component').then(obj => obj.FreelancerPortfolioComponent) },
+  //     { path: 'workhistory', loadComponent: () => import('./freelancer-work-history/freelancer-work-history.component').then(obj => obj.FreelancerWorkHistoryComponent) },
+  //     {
+  //       path: 'edit', loadComponent: () => import('./freelancer-edit-profile/freelancer-edit-profile.component')
+  //         .then(obj => obj.FreelancerEditProfileComponent)
+  //     }
+  //   ]
+  // },
 
 
+  // {
+  //   path: 'addproject', loadComponent: () =>
+  //     import('./addproject/addproject.component').then(obj => obj.AddprojectComponent)
+  // },
+  // { path: '', redirectTo: 'home', pathMatch: 'full' },
+  // {
+  //   path: 'register', loadComponent: () => import('./register/register.component')
+  //     .then((obj) => obj.RegisterComponent)
+  // },
+  // {
+  //   path: 'home', loadComponent: () => import('./home/home.component')
+  //     .then((obj) => obj.HomeComponent)
+  // },
+  // {
+  //   path: 'signin', loadComponent: () => import('./login/login.component')
+  //     .then((obj) => obj.LoginComponent)
+  // },
   {
-    path: 'addproject', loadComponent: () =>
-      import('./addproject/addproject.component').then(obj => obj.AddprojectComponent)
-  },
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  {
-    path: 'register', loadComponent: () => import('./register/register.component')
-      .then((obj) => obj.RegisterComponent)
-  },
-  {
-    path: 'home', loadComponent: () => import('./home/home.component')
-      .then((obj) => obj.HomeComponent)
-  },
-  {
-    path: 'signin', loadComponent: () => import('./login/login.component')
-      .then((obj) => obj.LoginComponent)
-  },
-  {
-    path: 'galleryworks', canActivate: [authGuard], loadComponent: () => import('./works-gallery/works-gallery.component')
+    path: 'galleryworks', canActivate: [freelancerGuard], loadComponent: () => import('./works-gallery/works-gallery.component')
       .then((obj) => obj.WorksGalleryComponent)
   },
   {
-    path: 'freelancers', canActivate: [authGuard], loadComponent: () => import('./freelancers/freelancers.component')
+    path: 'freelancers', canActivate: [clientGuard], loadComponent: () => import('./freelancers/freelancers.component')
       .then((obj) => obj.FreelancersComponent)
   },
   {
@@ -104,7 +108,7 @@ export const routes: Routes = [
   },
   { path: 'jobs', canActivate: [authGuard], loadComponent: () => import('./jobs/jobs.component').then((obj) => obj.JobsComponent) },
   {
-    path: 'offers', canActivate: [authGuard], loadComponent: () => import('./offers/offers.component')
+    path: 'offers', canActivate: [freelancerGuard], loadComponent: () => import('./offers/offers.component')
       .then((obj) => obj.OffersComponent)
   },
   {
@@ -144,11 +148,11 @@ export const routes: Routes = [
   // { path: 'clientProfile/:id', component: ClientProfileComponent },
 
   {
-    path: 'addproject', loadComponent: () =>
+    path: 'addproject', canActivate : [clientGuard] , loadComponent: () =>
       import('./addproject/addproject.component').then(obj => obj.AddprojectComponent)
   },
   {
-    path: 'addservice', loadComponent: () =>
+    path: 'addservice', canActivate : [freelancerGuard] , loadComponent: () =>
       import('./add-service/add-service.component').then(obj => obj.AddServiceComponent)
   },
   { path: '**', loadComponent: () => import('./not-found/not-found.component').then(obj => obj.NotFoundComponent) }

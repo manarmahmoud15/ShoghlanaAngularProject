@@ -2,20 +2,15 @@
   <section id="content" class="page-heading p-5 bg-light rounded shadow-sm">
     <div class="d-flex align-items-center flex-row-reverse">
       <div class="pl-3">
-        <a href="#">
-          <!-- <img class="mw-150 border rounded-circle shadow" [src]="freelancer.personalImageBytes" [alt]="freelancer.name + ' image'" height="250" width="250" /> -->
-          <img
-            class="mw-150 border rounded-circle shadow"
-            [src]="
-              editMode && previewImage
-                ? previewImage
-                : freelancer.personalImageBytes
-            "
-            [alt]="freelancer.name + ' image'"
-            height="250"
-            width="250"
-          />
-        </a>
+        <!-- <a href="#"> -->
+        <!-- <img class="mw-150 border rounded-circle shadow" [src]="freelancer.personalImageBytes" [alt]="freelancer.name + ' image'" height="250" width="250" /> -->
+        <img
+          class="mw-150 border rounded-circle shadow"
+          [src]="getImageSource()"
+          [alt]="freelancer.name + ' image'"
+          height="250"
+          width="250"
+        />
       </div>
       <div class="mr-4">
         <h2 class="media-heading custom-title" style="direction: rtl">
@@ -62,7 +57,11 @@
             </li>
           </ul>
         </div>
-        <div class="text-center">
+
+        <div
+          *ngIf="LoggedInId === currentFreelancerId && isFreelancer"
+          class="text-center"
+        >
           <button
             class="btn btn-secondary mt-3"
             style="direction: rtl"
@@ -71,6 +70,7 @@
             تعديل البروفايل
           </button>
         </div>
+
         <div class="text-center">
           <button class="btn btn-success mt-3">
             <a
@@ -119,7 +119,11 @@
               type="file"
               (change)="onFileChange($event)"
               class="form-control"
+              accept=".png, .jpg, .jpeg"
             />
+            <small class="text-danger">
+              الامتدادات المسموح بها : png , jpg and jpeg
+            </small>
           </div>
         </div>
 

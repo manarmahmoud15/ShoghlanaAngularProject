@@ -7,6 +7,7 @@ import { IClient } from '../Models/IClient';
 import { DatePipe } from '@angular/common';
 import { JobStatus } from '../Enums/JobStatus';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../auth.service';
 // import $ from 'jquery';
 
 
@@ -23,7 +24,11 @@ import { FormsModule } from '@angular/forms';
 export class ClientProfileComponent implements OnInit {
 
   VisitedClientId! : Number
-  LoggedInClientId! : Number
+  LoggedInId! : Number
+
+  isFreelancer : boolean = false
+  isClient : boolean = false
+
   Client : IClient = {} as IClient
   UpdatedClient : IClient = {} as IClient
   JobStatus = JobStatus
@@ -43,7 +48,8 @@ export class ClientProfileComponent implements OnInit {
   constructor(
     private _activatedRoute: ActivatedRoute,
     private ClientService : ClientServiceService,
-   private datePipe : DatePipe)
+   private datePipe : DatePipe,
+  private _authService : AuthService)
   {
 
   }
@@ -164,15 +170,57 @@ this.ClientService.Update(this.UpdatedClient).subscribe({
   {
     return this.datePipe.transform(this.Client.registerationTime , 'mediumDate')
   }
-  ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    this.VisitedClientId = Number(this._activatedRoute.snapshot.paramMap.get('id'));
-    this.LoggedInClientId = Number(localStorage.getItem('Id'))
-    console.log("id from local storage : " , this.LoggedInClientId)
-    this.UpdatedClient.Id = Number(this.VisitedClientId);
 
-    console.log("loggedin client id" + this.LoggedInClientId)
+
+  ngOnInit(): void {
+
+    this._authService.Id.subscribe({
+      next : () => {
+        if(this._authService.Id.getValue() !== null)
+          {
+            this.LoggedInId = Number (this._authService.Id.getValue())  
+            console.log('id from navbar ' + this.LoggedInId)
+          }
+      }
+    })
+
+    this._authService.IsClient.subscribe({
+      next : () => {
+        if(this._authService.IsClient.getValue() !== null)
+          {
+              this.isClient = true
+              console.log(this._authService.IsClient.getValue()) 
+          }
+          else
+          {
+            this.isClient = false
+            console.log(this._authService.IsClient.getValue()) 
+          }
+      }
+    })
+
+    this._authService.IsFreelancer.subscribe({
+      next : () => {
+        if(this._authService.IsFreelancer.getValue() !== null)
+          {
+              this.isFreelancer = true
+              console.log(this._authService.IsFreelancer.getValue()) 
+          }
+          else
+          {
+            this.isFreelancer = false
+            console.log(this._authService.IsFreelancer.getValue()) 
+          }
+      }
+    })
+
+
+    this.VisitedClientId = Number(this._activatedRoute.snapshot.paramMap.get('id'));
+   // this.LoggedInId = Number(localStorage.getItem('Id'))
+    console.log("id from local storage : " , this.LoggedInId)
+    this.UpdatedClient.Id = Number(this.LoggedInId); // on using updatedClient >> means user can edit >> means loggedinId = visitedClientId
+
+    console.log("loggedin client id" + this.LoggedInId)
     console.log("visited client id" +this.VisitedClientId)
     // if(this.ClientId === null || this.ClientId === undefined)
     //   {

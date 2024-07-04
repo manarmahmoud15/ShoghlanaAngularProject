@@ -1,0 +1,21 @@
+<form #messageForm="ngForm" (ngSubmit)="sendMessage()" autocomplete="off">
+    <div class="row">
+      <div class="col-9">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="send-message"
+          [(ngModel)]="content"
+          name="content"
+          required
+        />
+      </div>
+      <div class="col-3">
+        <div class="d-grid">
+          <button class="btn btn-dark btn-block" type="submit" [disabled]="!messageForm.valid">
+            send
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>

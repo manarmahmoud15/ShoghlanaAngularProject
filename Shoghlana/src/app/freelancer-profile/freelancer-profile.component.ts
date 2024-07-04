@@ -14,6 +14,7 @@ import { Skill } from '../Models/Skill';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { AuthService } from '../auth.service';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -44,6 +45,9 @@ export class FreelancerProfileComponent implements OnInit {
   originalFreelancer!: IFreelancer;
 
   currentFreelancerId !: number;
+  LoggedInId! : number;
+  isFreelancer : boolean = false
+  isClient : boolean = false
 
   editMode: boolean = false;
 
@@ -65,7 +69,9 @@ export class FreelancerProfileComponent implements OnInit {
     private freelancerService: FreelancerService,
     private skillService: SkillsService,
     private router: Router,
-    private dialog: MatDialog // Inject MatDialog
+    private dialog: MatDialog, // Inject MatDialog
+    private _authService : AuthService
+
   ) {
 
     console.log("Freelancer obj ctor :");
@@ -87,6 +93,47 @@ export class FreelancerProfileComponent implements OnInit {
     this.loadFreelancerData();
 
     this.loadAllSkills();
+
+
+    this._authService.Id.subscribe({
+      next : () => {
+        if(this._authService.Id.getValue() !== null)
+          {
+            this.LoggedInId = Number (this._authService.Id.getValue())  // test
+            console.log('id from navbar ' + this.LoggedInId)
+          }
+      }
+    })
+
+    this._authService.IsClient.subscribe({
+      next : () => {
+        if(this._authService.IsClient.getValue() !== null)
+          {
+              this.isClient = true
+              console.log(this._authService.IsClient.getValue()) 
+          }
+          else
+          {
+            this.isClient = false
+            console.log(this._authService.IsClient.getValue()) 
+          }
+      }
+    })
+
+    this._authService.IsFreelancer.subscribe({
+      next : () => {
+        if(this._authService.IsFreelancer.getValue() !== null)
+          {
+              this.isFreelancer = true
+              console.log(this._authService.IsFreelancer.getValue()) 
+          }
+          else
+          {
+            this.isFreelancer = false
+            console.log(this._authService.IsFreelancer.getValue()) 
+          }
+      }
+    })
   }
 
 
@@ -138,6 +185,16 @@ export class FreelancerProfileComponent implements OnInit {
     }
   }
 
+  getImageSource(): string {
+    if (this.editMode && this.previewImage) { 
+      return String (this.previewImage);
+    } else if (this.freelancer.personalImageBytes !== null) {
+      return String (this.freelancer.personalImageBytes);
+    } else {
+      return '../../assets/imgs/default-profile-picture-avatar-png-green.png';
+    }
+  }
+
 
   private loadAllSkills(): void {
     this.skillService.GetAll().subscribe({
@@ -163,15 +220,29 @@ export class FreelancerProfileComponent implements OnInit {
 
 
   onFileChange(event: Event): void {
-
     const input = event.target as HTMLInputElement;
-
+  
     if (input.files && input.files.length > 0) {
       const file = input.files[0]; // Get the first file from the input
-
+  
+      const validExtensions = ['image/png', 'image/jpeg']; // Allowed file types
+      const maxSize = 1 * 1024 * 1024; // Maximum size in bytes (1 MB)
+  
+      if (!validExtensions.includes(file.type)) {
+        alert('الامتدادات المسموح بها : png , jpg and jpeg');
+        input.value = ''; // Clear the input
+        return;
+      }
+  
+      if (file.size > maxSize) {
+        alert('يجب ألا يتعدى حجم الصورة 1 ميجابايت');
+        input.value = ''; // Clear the input
+        return;
+      }
+  
       // Assuming this.freelancer.personalImageBytes should be updated with the file data
       this.freelancer.personalImageBytes = file;
-
+  
       // You may want to display the selected file in your UI
       const reader = new FileReader();
       reader.onload = () => {
@@ -181,6 +252,7 @@ export class FreelancerProfileComponent implements OnInit {
       reader.readAsDataURL(file);
     }
   }
+  
 
   // Method to save changes including file upload
   saveChanges(): void {

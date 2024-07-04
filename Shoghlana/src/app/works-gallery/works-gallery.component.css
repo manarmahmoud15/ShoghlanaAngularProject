@@ -78,3 +78,11 @@ display: block
 .freelancerInfo .info .jop-title{
   color: #471212;
 }
+
+.text{
+  font-family: "Marhey", sans-serif;
+  font-optical-sizing: auto;
+  /* font-size: 50px; */
+  /* font-weight: <weight>;
+  font-style: normal; */
+}

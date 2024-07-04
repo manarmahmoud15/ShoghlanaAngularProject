@@ -13,7 +13,7 @@ import {
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { error, log } from 'console';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { GoogleSigninButtonModule, SocialAuthService } from '@abacritt/angularx-social-login';
 import { GoogleAuthData } from '../Models/google-auth-data';
 import { RoleSelectionPopupComponent } from "../role-selection-popup/role-selection-popup.component";
@@ -27,14 +27,16 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
     standalone: true,
     templateUrl:'./register.component.html',
     styleUrl: './register.component.css',
-    imports: [TranslateModule,CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, GoogleSigninButtonModule, RoleSelectionPopupComponent]
+    imports: [TranslateModule,CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, GoogleSigninButtonModule, RoleSelectionPopupComponent,
+      RouterLink, RouterLinkActive
+    ]
 })
 export class RegisterComponent implements OnInit, OnDestroy {
   isLoading:boolean=false;
   apiError:string=''
   RegisterForm: FormGroup;
   googleAuthData : GoogleAuthData | null = {} as GoogleAuthData
-  UserRole : number = {} as number
+  UserRole! : number | null 
   email: string = '';
   showModal2: boolean = false;
   private authStateSubscription! : Subscription
@@ -71,7 +73,8 @@ return control.get('password')?.value===control.get('repeatPassword')?.value
 {'mismatch':true}
   }
   ngOnInit(): void {
-    this.UserRole = this.UserroleService.get();
+   // this.clearAuthState();
+    this.UserRole = this.UserroleService.get(); 
     // console.log(this.UserRole)
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
@@ -99,14 +102,39 @@ return control.get('password')?.value===control.get('repeatPassword')?.value
             next : (res) => {console.log(res);
               if(res.isSuccess)
                 {
+
+                  this._authoService.logOut()   // if user tried to navigate to register via url >> allowed >> if try to login using gmail while he is already logged in >> make logout first to avoid conflicts 
+
+                  console.log('continuing after logout')
                   localStorage.setItem("token" , res.data.token)
                   console.log("client id from backend" + res.data.id)
                   localStorage.setItem("Id",res.data.id)
+                  if(localStorage.getItem('Id'))
+                    {
+                      const id : any = Number (localStorage.getItem('Id'))
+                      this._authoService.Id.next(id)
+                    }
                   localStorage.setItem("Role",res.data.roles)
+
+                 if (localStorage.getItem('Role') === 'Client')
+                  {
+                     const role : any = 'Client'
+                     this._authoService.IsClient.next(role)
+                  } 
+
+                  else if (localStorage.getItem('Role') === 'Freelancer')
+                    {
+                       const role : any = 'Freelancer'
+                       this._authoService.IsFreelancer.next(role)
+                    } 
+
                   this._authoService.userdata.next(res.data);
         console.log(this._authoService.userdata)   // here
+                  console.log(this._authoService.userdata)   // here 
                   console.log(localStorage.getItem("Id"));
-                  this._router.navigateByUrl("/home")
+                  console.log('before navigation to home')
+                  this._router.navigateByUrl("/home");
+                  this.UserroleService.set(null); 
                 }
                 this.clearAuthState()
             },
@@ -140,7 +168,7 @@ return control.get('password')?.value===control.get('repeatPassword')?.value
 //   addnewphone(){
 // this.Phones.push(new FormControl(''))
 //   }
-confirm() {
+confirm() { 
   const toemail = this.email; // Ensure this.email is correctly populated with the email address
   console.log(toemail);
   this._authoService.ConfirmMail(toemail).subscribe({
@@ -283,5 +311,6 @@ confirm() {
     if (this.authStateSubscription) {
       this.authStateSubscription.unsubscribe();
     }
+    this.SocialAuthService.signOut();
   }
 }

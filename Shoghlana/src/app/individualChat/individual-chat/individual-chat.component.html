@@ -1,30 +1,52 @@
 <div class="row">
-    <div class="col-lg-2">
-        <div class="d-grid">
-            <button class="btn btn-primary btn-block" type="button" (click)="backToHome()">Back to home</button>
-        </div>
+  <div class="col-lg-2">
+    <div class="d-grid">
+      <button
+        class="btn btn-primary btn-block"
+        type="button"
+        (click)="backToHome()"
+      >
+        Back to home
+      </button>
     </div>
+  </div>
 </div>
 <div class="row mt-3">
-    <div class="col-lg-2">
-        <div class="card border-secondary mb-3">
-            <div class="card-header h3 text-muted text-center">Users</div>
-            <div class="card-body " style="min-height: 555px;">
-                <div class="row mt-1">
-                    <div class="col">
-                        <div class="d-grid">
-                            <button type="button" class="btn btn-success card-text btn-block">{{_individualChatService.myName?.name}}</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-1">
-                    <div class="col">
-                        <div class="d-grid">
-                            <button type="button" class="btn btn-dark card-text btn-block">User2</button>
-                        </div>
-                    </div>
-                </div>
+  <div class="col-lg-2">
+    <div class="card border-secondary mb-3">
+      <div class="card-header h3 text-muted text-center">Users</div>
+      <div class="card-body" style="min-height: 555px">
+        <div
+          class="row mt-1"
+          *ngFor="let user of _individualChatService.OnlineUsers"
+        >
+          <div class="col">
+            <div class="d-grid">
+              <button
+                type="button"
+                class="btn  card-text btn-block"
+                [ngClass]="{
+                    'btn-success': user === _individualChatService.myName?.name,
+                    'btn-dark': user !== _individualChatService.myName?.name}"
+                [disabled]=" user === _individualChatService.myName?.name"
+              >
+                {{ user }}
+              </button>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
+  <div class="col-lg-9">
+    <div class="card border-secondary">
+      <div class="card-header h3 text-muted text-center">Messages</div>
+      <div class="card-body" style="min-height: 500px">
+        <app-messages [messages]="_individualChatService.messages"></app-messages>
+      </div>
+      <div class="card-footer">
+      <app-chat-input (contentEmitter)="sendMessages($event)"></app-chat-input>
+      </div>
+    </div>
+  </div>
 </div>

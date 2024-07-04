@@ -102,7 +102,7 @@
         <button [disabled]="RegisterForm.invalid" type="submit" class="btn">إنشاء حساب
         <i *ngIf="isLoading" class="fas fa-spinner fa-spin"></i></button>
 
-        <p class="p">ليس لديك حساب؟ <span class="span">سجل الآن</span></p>
+        <p class="p">ليس لديك حساب؟ <span class="span"> <a routerLink="/signin" routerLinkActive="router-link-active" > سجل الآن </a></span></p>
         <p class="p line">أو</p>
 
       <div class="flex-row">

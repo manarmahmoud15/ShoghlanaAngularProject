@@ -1,20 +1,24 @@
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { AuthService } from '../auth.service';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [AsyncPipe, TranslateModule],
+  imports: [AsyncPipe, TranslateModule, CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
   count!: number;
   counter: Observable<number>;
+  isLogged:boolean=false; 
+
+
   constructor(  private _translateService: TranslateService,
     private store: Store<{ counter: number }>, private _authService : AuthService) {
     //type of store is generic just as the store i wanna use
@@ -32,5 +36,16 @@ export class HomeComponent {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this._authService.decodeUserData(); 
+
+    this._authService.userdata.subscribe({
+      next: () => {
+        if (this._authService.userdata.getValue() !== null) {
+          this.isLogged = true;
+        } else {
+          this.isLogged = false;
+        }
+      },
+    });
+
   }
 }
