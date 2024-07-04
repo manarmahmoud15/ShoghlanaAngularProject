@@ -1,22 +1,35 @@
-import { Component, EventEmitter, NgZone, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IndividualchatService } from '../../Services/individualChat/individualchat.service';
 import { CommonModule } from '@angular/common';
 import { ChatInputComponent } from '../../ChatInput/chat-input/chat-input.component';
 import { MessagesComponent } from '../../messages/messages.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PrivateChatComponent } from '../../private-chat/private-chat.component';
 
 @Component({
   selector: 'app-individual-chat',
   standalone: true,
-  imports: [RouterLink ,CommonModule ,ChatInputComponent , MessagesComponent],
+  imports: [RouterLink, CommonModule, ChatInputComponent, MessagesComponent],
   templateUrl: './individual-chat.component.html',
-  styleUrl: './individual-chat.component.css'
+  styleUrl: './individual-chat.component.css',
 })
-export class IndividualChatComponent implements OnInit , OnDestroy{
-  constructor( public _individualChatService:IndividualchatService ,private ngZone: NgZone){}
+export class IndividualChatComponent implements OnInit, OnDestroy {
+  constructor(
+    public _individualChatService: IndividualchatService,
+    private ngZone: NgZone,
+    private modalService: NgbModal
+  ) {}
 
   ngOnInit(): void {
-    this._individualChatService.createChatConnection()
+    this._individualChatService.createChatConnection();
   }
   // performHeavyTask() {
   //   this.ngZone.runOutsideAngular(() => {
@@ -28,17 +41,17 @@ export class IndividualChatComponent implements OnInit , OnDestroy{
   //   });
   // }
   @Output() closeChatEmitter = new EventEmitter();
-  backToHome(){
-    this.closeChatEmitter.emit()
+  backToHome() {
+    this.closeChatEmitter.emit();
   }
   ngOnDestroy(): void {
     this._individualChatService.stopChatConnection();
   }
-  sendMessages(content :string){
+  sendMessages(content: string) {
     this._individualChatService.sendMessage(content);
-
   }
-  openPrivateChat(toUser :string){
-
+  openPrivateChat(toUser: string) {
+    const modalRef = this.modalService.open(PrivateChatComponent);
+    modalRef.componentInstance.toUser = toUser
   }
 }

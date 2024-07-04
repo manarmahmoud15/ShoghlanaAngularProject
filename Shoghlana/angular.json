@@ -75,6 +75,7 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
+             
               "buildTarget": "apppf:build:production"
             },
             "development": {

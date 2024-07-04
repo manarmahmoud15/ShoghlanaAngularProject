@@ -1,1 +1,15 @@
-<p>private-chat works!</p>
+<div class="modal-header">
+    <h4 class="modal-title">{{toUser}}</h4>
+    <button type="button" class="btn-close" (click)="activeModal.dismiss('cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="card border-secondary">
+        <div class="card-header h3 text-muted text-center">Messages</div>
+        <div class="card-body">
+            <app-messages [messages]="_individualChatService.privateMessages"></app-messages>
+        </div>
+        <div class="card-footer">
+            <app-chat-input (contentEmitter)="sendMessage($event)"></app-chat-input>
+        </div>
+    </div>
+</div>
