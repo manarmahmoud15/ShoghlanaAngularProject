@@ -1,0 +1,67 @@
+a:hover{
+  background-color: #1dbf73;
+}
+h3 {
+  color: #1dbf73;
+  font-family: "Marhey", sans-serif;
+  font-size: 1.6rem;
+
+}
+footer {
+  background-color: #000;
+  color: white;
+}
+
+footer a {
+  color: white;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #1dbf73;
+  text-decoration: underline;
+}
+
+footer .btn-floating {
+  display: inline-block;
+  margin: 0 5px;
+  padding: 10px;
+  background-color: transparent;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+footer .btn-floating:hover {
+  background-color: #1dbf73;
+  color: white;
+}
+
+footer .text-uppercase {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+footer .font-weight-bold {
+  font-weight: bold;
+}
+
+footer hr {
+  border-top: 1px solid #ffffff;
+}
+.new-content-icon {
+  color: #1dbf73;
+  margin-left: 5px;
+  align-self: center;
+}
+.text-nowrap {
+  white-space: nowrap;
+}
+
+@media (max-width: 767.98px) {
+  footer .container {
+    padding: 2rem 1rem;
+  }
+
+  footer .row {
+    text-align: center;
+  }
+}

@@ -6,6 +6,14 @@
   font-weight: bold;
   font-family: sans-serif;
 }
+h1, h1 i{
+  font-size: 1.4rem;
+}
+h1 span{
+  font-family: "Marhey", sans-serif;
+  font-size: 1.6rem;
+  /* font-optical-sizing: auto; */
+}
 .Flex {
   display: flex;
   flex-direction: column;
@@ -66,6 +74,9 @@ button:hover:after {
 }
 h3 {
   color: #1dbf73;
+  font-family: "Marhey", sans-serif;
+  font-size: 1.6rem;
+
 }
 .list-inline {
   list-style: none;
@@ -77,7 +88,7 @@ h3 {
 
 .list-inline li {
   font: bold 1.6rem;
-  width: 25%;
+  /* width: 25%; */
   text-align: center;
   color: #1dbf73;
   transition: background-color 0.3s;
