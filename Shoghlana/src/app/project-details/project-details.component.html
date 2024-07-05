@@ -127,11 +127,14 @@
           <div *ngFor="let freelancer of freelancerDetails">
             <div>
               <div class="d-flex">
-                <div>{{ freelancer.name }} <small style="color: rgb(179, 179, 179);">{{ freelancer.title }} </small> </div>
-                <button class="btn btn-success chat " (click)="chat(freelancer.name)"> مراسلة </button>
+                <div class="d-inline">{{ freelancer.name }} <small style="color: rgb(179, 179, 179);">{{ freelancer.title }} </small> </div>
+                <div >
+                  <button class="btn btn-success chat mt-3" (click)="chat(freelancer.name)"> مراسلة </button>
+                <button class="btnn "><i class="animation"></i> قبول العرض <i class="animation"></i>
+                </button>
+                </div>
                 <div>
-                  <button class="btnn"><i class="animation"></i> قبول العرض <i class="animation"></i>
-                  </button>
+                  
               </div>
               </div>
               <div class="mt-3">
