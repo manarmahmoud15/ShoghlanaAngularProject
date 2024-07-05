@@ -6,7 +6,9 @@ body {
     /* text-align: right; */
     color: var(--gray-700);
 }
-
+section{
+    background-color: rgb(235, 235, 235);
+}
 .container {
     width: 100%;
     padding-right: 15px;
@@ -39,7 +41,12 @@ body {
     padding-bottom: 10px;
     margin-bottom: 20px;
 }
-
+i {
+    color: #1dbf73;
+}
+.iedit {
+    color: #fff;
+}
 .block-head .title {
     font-size: 18px;
     font-weight: bold;
@@ -165,8 +172,8 @@ body {
 }
 
 .btn-outline-light.bg-primary.text-white:hover {
-    background-color: #0056b3; /* Darker shade of blue */
-    border-color: #004085; /* Darker border */
+    background-color: #1dbf73; /* Darker shade of blue */
+    border-color: #032c1a; /* Darker border */
     color: white; /* Ensure text stays white */
 }
 
