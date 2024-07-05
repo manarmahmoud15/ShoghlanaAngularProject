@@ -11,11 +11,11 @@
 .btn-primary:hover {
   background-color: #279e66;
 }
-button:hover {
+/* button:hover {
   color: #fff;
   background-color: #16a763;
-}
-.btn {
+} */
+/* .btn {
   margin: 0.5em;
   background: #1dbf73;
   color: #fff;
@@ -24,7 +24,7 @@ button:hover {
   position: relative;
   z-index: 1;
   overflow: hidden;
-}
+} */
 
 .text-end {
   direction: rtl;
@@ -59,4 +59,16 @@ input {
   border-radius: 15px;
   padding-right: 15px;
 
+}
+
+.proposal-container {
+  background-color: #f9f9f9; /* Light background color */
+}
+
+.proposal-container strong {
+  font-size: 1.2em; /* Increase font size for freelancer name */
+}
+
+.proposal-container p {
+  margin-bottom: 0; /* Remove bottom margin for paragraphs */
 }

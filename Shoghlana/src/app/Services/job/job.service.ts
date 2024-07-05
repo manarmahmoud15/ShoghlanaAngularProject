@@ -49,7 +49,7 @@ export class JobService {
     return this._HttpClient.post<any>(`${environment.baseUrl}/job/pagination`, requestBody, { params });
   }
 
-  GetById(Id: number): Observable<any> {
+  GetById(Id: Number): Observable<any> {  // saeed changed it from number to Number
     return this._HttpClient.get<any>(`${environment.baseUrl}/job/${Id}`)
   }
 
