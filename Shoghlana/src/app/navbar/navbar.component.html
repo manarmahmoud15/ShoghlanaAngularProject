@@ -31,21 +31,79 @@
         <li *ngIf="!isLogged" class="nav-item">
           <a class="nav-link text-gray-200 dark:hover:text-green-500 dark:text-gray-200" routerLink="/signin">تسجيل دخول</a>
         </li>
-        
+        <li *ngIf="isLogged" class="nav-item"> 
+          <label class="popup">
+            <input type="checkbox">
+            <i class="fa-solid fa-earth-americas pt-3"></i>
+            <nav class="popup-window">
+              <legend>Actions</legend>
+              <ul>
+                <li>
+                  <button>
+                    <svg stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="currentColor" fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                      <circle r="4" cy="7" cx="9"></circle>
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    <span>Colloborators</span>
+                  </button>
+                </li>
+                <li>
+                  <button>
+                    <svg stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="currentColor" fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                    </svg>
+                    <span>Magic Link</span>
+                  </button>
+                </li>
+                <hr>
+                <li>
+                  <button>
+                    <svg stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="currentColor" fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
+                      <rect ry="2" rx="2" height="13" width="13" y="9" x="9"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <span>Clone</span>
+                  </button>
+                </li>
+                <li>
+                  <button>
+                    <svg stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="currentColor" fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
+                      <polygon points="16 3 21 8 8 21 3 21 3 16 16 3"></polygon>
+                    </svg>
+                    <span>Edit</span>
+                  </button>
+                </li>
+                <hr>
+                <li>
+                  <button>
+                    <svg stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="currentColor" fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
+                      <line y2="18" x2="6" y1="6" x1="18"></line>
+                      <line y2="18" x2="18" y1="6" x1="6"></line>
+                    </svg>
+                    <span>Delete</span>
+                  </button>
+                </li>
+              </ul>
+            </nav>
+          </label>
+        </li>
         <li *ngIf="!isLogged" class="nav-item">
           <a class="nav-link dark:hover:text-green-500 dark:text-gray-200  " routerLink="/register">انشاء حساب</a>
         </li>
         <!-- <li *ngIf="isLogged" class="nav-item active">
           <a class="nav-link dark:hover:text-green-500 dark:text-gray-200" routerLink="/joinRoom"> جوين روم </a>
         </li> -->
-        <div class="navbar">
+        <!-- <div class="navbar">
           <button class="dropdown-button" (click)="toggleDropdown()">
             <i class="fa-regular fa-comment"></i>
           </button>
           <div class="dropdown-container" *ngIf="isOpen">
             <div class="dropdown-content">
               <p *ngIf="messages.length === 0">No new messages</p>
-              <!-- <div *ngFor="let message of messages">
+              <div *ngFor="let message of messages">
                 <div [ngClass]="{'incoming_msg': message.user !== loggedInUserName, 'outgoing_msg': message.user === loggedInUserName}">
                   <div *ngIf="message.user !== loggedInUserName" class="incoming_msg_img">
                     <img src="https://ptetutorials.com/images/user-profile.png" alt="user">
@@ -61,10 +119,10 @@
                     <span class="time_date">{{ message.user }} | {{ message.messageTime | date: 'medium' }}</span>
                   </div>
                 </div>
-              </div> -->
+              </div> 
             </div>
           </div>
-        </div>
+        </div> -->
 
         <li *ngIf="isLogged && isClient" class="nav-item active">
           <a class="nav-link" [routerLink]="['/clientProfile', Id]">
@@ -123,174 +181,3 @@
   </div>
 </nav>
 
-
-
-<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid justify-content-between container">
-      <ul class="navbar-nav flex-row">
-        <li class="nav-item me-3 me-lg-1">
-          <a class="nav-link d-sm-flex align-items-sm-center" href="#">
-            <img
-              src="https://mdbootstrap.com/img/new/avatars/1.webp"
-              class="rounded-circle"
-              height="22"
-              alt=""
-              loading="lazy"
-            />
-            <strong class="d-none d-sm-block ms-1">John</strong>
-          </a>
-        </li>
-        <li class="nav-item me-3 me-lg-1">
-          <a class="nav-link" href="#">
-            <span><i class="fas fa-plus-circle fa-lg"></i></span>
-          </a>
-        </li>
-        <li mdbDropdown class="nav-item dropdown me-3 me-lg-1">
-          <a
-            class="nav-link dropdown-toggle hidden-arrow"
-            href="#"
-            id="navbarDropdownMenuLink"
-            role="button"
-            mdbDropdownToggle
-            aria-expanded="false"
-          >
-            <i class="fas fa-comments fa-lg"></i>
-
-            <span class="badge rounded-pill badge-notification bg-danger">6</span>
-          </a>
-          <ul
-            mdbDropdownMenu
-            class="dropdown-menu dropdown-menu-end"
-            aria-labelledby="navbarDropdownMenuLink"
-          >
-            <li>
-              <a class="dropdown-item" href="#">Some news</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Another news</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </li>
-          </ul>
-        </li>
-        <li mdbDropdown class="nav-item dropdown me-3 me-lg-1">
-          <a
-            class="nav-link dropdown-toggle hidden-arrow"
-            href="#"
-            id="navbarDropdownMenuLink"
-            role="button"
-            mdbDropdownToggle
-            aria-expanded="false"
-          >
-            <i class="fas fa-bell fa-lg"></i>
-            <span class="badge rounded-pill badge-notification bg-danger">12</span>
-          </a>
-          <ul
-            mdbDropdownMenu
-            class="dropdown-menu dropdown-menu-end"
-            aria-labelledby="navbarDropdownMenuLink"
-          >
-
-            <li>
-              <a class="dropdown-item" href="#">Another news</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </li>
-          </ul>
-        </li>
-
-        <li mdbDropdown class="nav-item dropdown me-3 me-lg-1">
-          <a
-            class="nav-link dropdown-toggle hidden-arrow"
-            href="#"
-            id="navbarDropdownMenuLink"
-            role="button"
-            mdbDropdownToggle
-            aria-expanded="false"
-          >
-            <i class="fas fa-chevron-circle-down fa-lg"></i>
-          </a>
-          <ul
-            mdbDropdownMenu
-            class="dropdown-menu dropdown-menu-end"
-            aria-labelledby="navbarDropdownMenuLink"
-          >
-            <li>
-              <a class="dropdown-item" href="#">Some news</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Another news</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-
-      <ul class="navbar-nav flex-row d-none d-md-flex">
-        <li class="nav-item me-3 me-lg-1 active">
-            <a class="nav-link" routerLink ="/home" routerLinkActive="bg-success text-light">
-                <span><i class="fas fa-home fa-lg"></i></span>
-                <span class="badge rounded-pill badge-notification bg-danger">1</span>
-              </a>
-
-        </li>
-
-        <li class="nav-item me-3 me-lg-1">
-          <a class="nav-link" href="#">
-            <span><i class="fas fa-flag fa-lg"></i></span>
-          </a>
-        </li>
-
-        <li class="nav-item me-3 me-lg-1">
-          <a class="nav-link" href="#">
-            <span><i class="fas fa-video fa-lg"></i></span>
-          </a>
-        </li>
-
-        <li class="nav-item me-3 me-lg-1">
-          <a class="nav-link" href="#">
-            <span><i class="fas fa-shopping-bag fa-lg"></i></span>
-          </a>
-        </li>
-        <li>
-          <a class="dropdown-item" routerLink="/signin">Log in</a>
-        </li>
-        <li>
-          <a class="dropdown-item" routerLink="/register">Sign up</a>
-        </li>
-
-
-      </ul>
-
-   <div class="d-flex">
-    <form class="input-group w-auto my-auto d-none d-sm-flex">
-        <input
-          autocomplete="off"
-          type="search"
-          class="form-control rounded"
-          placeholder="Search"
-          style="min-width: 125px;"
-        />
-        <span class="input-group-text border-0 d-none d-lg-flex"
-          ><i class="fas fa-search"></i
-        ></span>
-      </form>
-    <a class="navbar-brand me-2 mb-1 d-flex align-items-center" href="#">
-      <img
-        src="https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.webp"
-        height="20"
-        alt=""
-        loading="lazy"
-        style="margin-top: 2px;"
-      />
-    </a>
-
-
-  </div>
-
-    </div>
-  </nav> -->
