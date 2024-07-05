@@ -13,7 +13,7 @@
         />
         <div class="card-body" style="direction: rtl">
           <p class="card-text">{{ job.description }}</p>
-          <button (click)="ToggleFeedback(job.id)" class="btn btn-primary">
+          <button (click)="ToggleFeedback(job.id)" class="btn btn-success">
             {{ job.showFeedback ? "اخفاء التقييم" : "عرض التقييم" }}
           </button>
           <div *ngIf="job.showFeedback" class="feedback-section mt-3 p-3 border rounded bg-light">

@@ -84,7 +84,7 @@
       </select>
       <!-- Add any validation message for skills if needed -->
     </div>
-    <button type="submit" class="btn btn-primary">حفظ</button>
+    <button type="submit" class="btn btn-success">حفظ</button>
     <button type="button" class="btn btn-secondary ms-2" (click)="cancelAdd()">
       إلغاء
     </button>
@@ -116,7 +116,7 @@
               <div class="col-4">
                 <button
                   (click)="editProject(project)"
-                  class="text btn btn-secondary p-3"
+                  class="text btn btn-success p-3"
                 >
                   تعديل
                 </button>
@@ -124,7 +124,7 @@
               <div class="col-4">
                 <button
                   (click)="ToggleProjectSkills(project.id)"
-                  class="text btn btn-primary"
+                  class="text btn btn-success"
                 >
                   {{ project.showSkills ? "اخفاء المهارات" : "عرض المهارات" }}
                 </button>
@@ -235,7 +235,7 @@
         </option>
       </select>
     </div>
-    <button type="submit" class="btn btn-primary">حفظ</button>
+    <button type="submit" class="btn btn-success">حفظ</button>
     <button
       type="button"
       class="btn btn-secondary ms-2"
