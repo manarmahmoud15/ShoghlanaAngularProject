@@ -2,14 +2,11 @@
   <section id="content" class="page-heading p-5 bg-light rounded shadow-sm">
     <div class="d-flex align-items-center flex-row-reverse">
       <div class="pl-3">
-        <!-- <a href="#"> -->
-        <!-- <img class="mw-150 border rounded-circle shadow" [src]="freelancer.personalImageBytes" [alt]="freelancer.name + ' image'" height="250" width="250" /> -->
         <img
           class="mw-150 border rounded-circle shadow"
           [src]="getImageSource()"
           [alt]="freelancer.name + ' image'"
-          height="250"
-          width="250"
+          width="150"
         />
       </div>
       <div class="mr-4">
@@ -17,7 +14,7 @@
           {{ freelancer.name }}
         </h2>
         <p
-          class="lead text-muted custom-title"
+          class="lead text-muted"
           style="direction: rtl"
           *ngIf="freelancer.title; else defaultTitle"
         >
@@ -30,9 +27,7 @@
           <ul class="list-inline">
             <li class="list-inline-item">
               <a href="#" title="Facebook Link">
-                <span
-                  class="fa-brands fa-facebook-square fs-3 text-success"
-                ></span>
+                <span class="fa-brands fa-facebook-square fs-3 text-success"></span>
               </a>
             </li>
             <li class="list-inline-item">
@@ -58,32 +53,22 @@
           </ul>
         </div>
 
-        <div
-          *ngIf="LoggedInId === currentFreelancerId && isFreelancer"
-          class="text-center"
-        >
-          <button
-            class="btn btn-success mt-3"
-            style="direction: rtl"
-            (click)="toggleEditMode()"
-          >
+        <div *ngIf="LoggedInId === currentFreelancerId && isFreelancer" class="text-start">
+          <button class="btn btn-success mt-3" style="direction: rtl" (click)="toggleEditMode()">
             تعديل البروفايل
           </button>
         </div>
 
-        <div class="text-center">
+        <div class="text-start">
           <button class="btn btn-success mt-3">
-            <a
-              class="nav-link"
-              style="direction: rtl"
-              routerLinkActive="active"
-              [routerLink]="['/offers']"
-              >العروض
+            <a class="nav-link" style="direction: rtl" routerLinkActive="active" [routerLink]="['/offers']">
+              العروض
             </a>
           </button>
         </div>
       </div>
     </div>
+
   </section>
 
   <div class="row mt-4">
@@ -169,7 +154,7 @@
         </div>
 
         <button
-          class="btn btn-success"
+          class="btn btn-success mb-2"
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
           (click)="saveChanges()"
@@ -178,7 +163,7 @@
         </button>
         <!-- Include the SimpleModalComponent -->
         <app-save-success-window></app-save-success-window>
-        <button class="btn btn-secondary ml-2" (click)="cancelEdit()">
+        <button class="btn btn-secondary ml-2 mb-2" (click)="cancelEdit()">
           إلغاء
         </button>
       </ng-container>

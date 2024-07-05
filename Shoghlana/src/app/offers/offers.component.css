@@ -70,7 +70,10 @@ input {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
-
+/* Nowrap */
+.text-nowrap {
+  white-space: nowrap;
+}
 .card-body {
   display: flex;
   flex-direction: column;

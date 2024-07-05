@@ -3,7 +3,6 @@
 
     <div class="container py-1 d-flex justify-content-between align-items-center">
       <div class="col-8 d-flex justify-content-start align-items-center gap-3">
-
         <div class="d-flex align-items-center border p-1 rounded bg-light">
           <div class="row w-100">
             <div class="col-sm-3 col-6">
@@ -14,7 +13,7 @@
                   name="statusFilter"
                   id="statusAll"
                 />
-                <label class="form-check-label" for="statusAll"> الكل </label>
+                <label class="form-check-label " for="statusAll"> الكل </label>
               </div>
             </div>
             <div class="col-sm-3 col-6">
@@ -26,7 +25,7 @@
                   id="statusOpen"
                   checked
                 />
-                <label class="form-check-label" for="statusOpen"> المقبولة </label>
+                <label class="form-check-label text-nowrap" for="statusOpen"> المقبولة </label>
               </div>
             </div>
             <div class="col-sm-3 col-6">
@@ -38,7 +37,7 @@
                   id="statusRejected"
                   checked
                 />
-                <label class="form-check-label" for="statusRejected"> المرفوضة </label>
+                <label class="form-check-label text-nowrap " for="statusRejected"> المرفوضة </label>
               </div>
             </div>
             <div class="col-sm-3 col-6">
@@ -50,15 +49,15 @@
                   id="statusWaiting"
                   checked
                 />
-                <label class="form-check-label" for="statusWaiting"> بانتظار الرد </label>
+                <label class="form-check-label text-nowrap me-5 " for="statusWaiting"> بانتظار الرد </label>
               </div>
             </div>
           </div>
         </div>
-        
-        
+
+
       </div>
-      <div class="col-4">
+      <div class="col-3">
         <h6 class="text-end">المشاريع <i class="fa-brands fa-rocketchat"></i></h6>
       </div>
     </div>
@@ -71,7 +70,7 @@
             <div class="d-flex justify-content-between align-items-center">
               <div class="proposal-details me-3 text-end">
                 <div class="status-and-title d-flex align-items-center m-3">
-                 
+
                   <p class="title text-primary mb-0">{{proposal.jobTitle}}</p>
 
                   <span
@@ -126,12 +125,12 @@
     <input
       type="text"
       id="searchClientName"
-      class="form-control" 
-      [(ngModel)]="ClientName"   
-      (input)="FilterByClientName()" 
+      class="form-control"
+      [(ngModel)]="ClientName"
+      (input)="FilterByClientName()"
     />
   </div>
-  
+
   <div class="m-2 w-75" dir="rtl">
     <label for="searchJobTitle" class="form-label">عنوان المشروع</label>
     <input

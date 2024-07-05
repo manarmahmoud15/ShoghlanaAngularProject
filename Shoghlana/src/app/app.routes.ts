@@ -133,7 +133,7 @@ export const routes: Routes = [
     path: 'freelancerprofile/:id', canActivate: [authGuard],
     loadComponent: () => import('./freelancer-profile/freelancer-profile.component').then(obj => obj.FreelancerProfileComponent),
     children: [
-      //  { path: '', redirectTo: 'portfolio', pathMatch: 'full' },
+      { path: '', redirectTo: 'workhistory', pathMatch: 'full' },
       { path: 'portfolio', loadComponent: () => import('./freelancer-portfolio/freelancer-portfolio.component').then(obj => obj.FreelancerPortfolioComponent) },
       { path: 'workhistory', loadComponent: () => import('./freelancer-work-history/freelancer-work-history.component').then(obj => obj.FreelancerWorkHistoryComponent) },
       {

@@ -170,6 +170,11 @@
   border-bottom: var(--underline-border-width) solid var(--underline-border-color);
 }
 
+/* Nowrap */
+.text-nowrap {
+  white-space: nowrap;
+}
+
 /* actions */
 
 .popup-window ul button:hover,
