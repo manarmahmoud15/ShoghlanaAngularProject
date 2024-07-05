@@ -15,25 +15,29 @@
                     <p class="status ms-1 p-1">
                       {{
                         clientJob.status === JobStatus.completed
-                          ? "مغلق"
-                          : "مفتوح"
+? 'مكتمل' : clientJob.status === JobStatus.Active? 'مفتوح' : 'مغلق'
                       }}
                     </p>
-                    <p class="title">{{ clientJob.title }}</p>
+                    <p class="title p-2"> <strong> {{ clientJob.title }} </strong> </p>
                   </div>
-                  <div class="d-flex">
-                    <p class="clientName">
-                      <i class="fa-solid fa-user"></i>
-                      {{ clientJob.clientName }}
-                    </p>
-                  </div>
-                </div>
-                <img
+               <!-- <img
                   [src]="clientJob.clientImg"
                   height="50px"
                   alt="{{ clientJob.clientName }}"
                   class="rounded-circle"
-                />
+                /> -->
+             
+                </div>
+                <div>
+                  <p class="clientName">
+                    {{ clientJob.clientName }}
+                    <i class="fa-solid fa-user"></i>
+                </p>
+                <p>
+                  {{clientJob.categoryTitle}}
+                </p>
+                </div>
+               
               </div>
             </div>
           </div>
@@ -41,10 +45,10 @@
       </div>
     </div>
     <div
-      class="col-11 container-fluid justify-content-center align-items-center d-flex my-2"
+      class="col-11 container-fluid d-flex my-2"
       *ngIf="clientJob"
     >
-      <div class="container">
+      <div class="container h-50">
         <h6 class="text-end py-3">معلومات المشروع</h6>
         <hr />
         <div class="text-end projectdetails">
@@ -67,17 +71,19 @@
           <hr />
           <div class="d-flex justify-content-between mx-3">
             <p class="p-1">عدد العروض</p>
-            <!-- <p class="mx-5">{{ clientJob.offersCount }}</p> -->
+            <p class="mx-5">{{ clientJob.proposalsCount }}</p>
           </div>
         </div>
       </div>
+
       <div class="col-8 text-end ms-3">
         <div class="container my-2 py-2">
           <h5 class="text-end py-2">وصف المشروع</h5>
           <hr />
           <p>{{ clientJob.description }}</p>
         </div>
-        <div class="container my-2 py-2">
+
+        <div *ngIf="isFreelancer && clientJob.status === JobStatus.Active" class="container my-2 py-2">
           <h5>أضف عرضك</h5>
           <hr />
           <form [formGroup]="proposalForm" (ngSubmit)="addProposal()">
@@ -122,28 +128,41 @@
             <button type="submit" class="btn btn-success  mt-3">أضف عرضك</button>
           </form>
         </div>
+
         <div class="container my-2 py-2">
-          <h4>العروض المقدمة</h4>
-          <div *ngFor="let freelancer of freelancerDetails">
-            <div>
-              <div class="d-flex">
-                <div class="d-inline">{{ freelancer.name }} <small style="color: rgb(179, 179, 179);">{{ freelancer.title }} </small> </div>
-                <div >
-                  <button class="btn btn-success chat mt-3" (click)="chat(freelancer.name)"> مراسلة </button>
-                <button class="btnn "><i class="animation"></i> قبول العرض <i class="animation"></i>
-                </button>
-                </div>
+          <h4 class="m-2">العروض المقدمة</h4>
+          <div *ngFor="let proposal of proposalsDetails">
+            <div class="proposal-container p-3 border rounded mb-3">
+              <div class="d-flex justify-content-between align-items-center mb-3">
                 <div>
-                  
-              </div>
-              </div>
-              <div class="mt-3">
-                <div *ngFor="let proposal of proposalDetails">
-                  {{ proposal.description }}
+                  <strong>{{ proposal.freelancerName }}</strong>
+                  <div><small class="text-muted">{{ proposal.freelancerTitle }}</small></div>
                 </div>
+               
+                <div class="d-flex gap-2">
+                  <button *ngIf="isClient && visitedJobClientId === LoggedInId" class="btn btn-info" (click)="chat(proposal.freelancerId, LoggedInId)" [attr.aria-label]="'Chat with ' + proposal.freelancerName">
+                    مراسلة
+                  </button>
+                  <button *ngIf="isClient && visitedJobClientId === LoggedInId" class="btn btn-success" (click)="AcceptProposal(proposal.id)">
+                    قبول
+                  </button>
+                  <button *ngIf="isClient && visitedJobClientId === LoggedInId" class="btn btn-danger">
+                    رفض 
+                  </button>
+
+                </div>
+              </div>
+              <div class="d-flex mt-3">
+              <div>
+                <p>{{ proposal.description }}</p>
+              </div>
+              <div class="d-flex gap-2 ">
+                price and duration will be here 
               </div>
             </div>
+            </div>
           </div>
+          
           
         </div>
       </div>

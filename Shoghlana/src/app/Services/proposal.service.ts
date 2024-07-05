@@ -19,7 +19,7 @@ export class ProposalService {
   getProposalById(id: number): Observable<any> {
     return this.httpclient.get<any>(`${this.baseUrl}/${id}`);
   }
-  getProposalByJobId(id: number): Observable<any> {
+  getProposalByJobId(id: Number): Observable<any> {  // saeed changed it from number to Number
     return this.httpclient.get<any>(`${this.baseUrl}/GetByJobId/${id}`);
   }
 
@@ -31,4 +31,9 @@ export class ProposalService {
   postProposal(proposalData: any): Observable<any> {
     return this.httpclient.post<any>(this.baseUrl, proposalData);
   }
-}
+
+  AcceptProposal(id : Number) : Observable<any>  // here
+  {
+    return this.httpclient.get<any>(`${this.baseUrl}/Accept/${id}`)
+  }
+}  
