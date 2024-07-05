@@ -21,11 +21,13 @@ export interface IProposal {
 
  //---------------------------------
 
- images? : IproposalImage[] ;
+ images? : IproposalImage[] ;  // saeed : should be array of string >> no need to store each img id in front and its proposal id is already accessed using the returned proposal obj from backend
 
  freelancerId: number
 
  jobId: number
  clientName? : string
+ freelancerName : string
+ freelancerTitle : string
  jobTitle? : string
 }

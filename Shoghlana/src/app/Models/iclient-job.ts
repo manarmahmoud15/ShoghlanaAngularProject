@@ -11,4 +11,7 @@ clientName: string;
 clientImg: string;
 catID: number;
 postTime:string;
+proposalsCount? : Number;
+categoryTitle? : string;
+clientId : Number
 }

@@ -1,3 +1,5 @@
+// important NOTE >> this comp represents job details not project details "name will be updated later"
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { IClientJob } from '../Models/iclient-job';
@@ -12,6 +14,8 @@ import { FreelancerService } from '../Services/freelancer.service';
 import { IndividualchatService } from '../Services/individualChat/individualchat.service';
 import { User } from '../Models/user';
 import { IndividualChatComponent } from '../individualChat/individual-chat/individual-chat.component';
+import { JobService } from '../Services/job/job.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-project-details',
@@ -22,10 +26,10 @@ import { IndividualChatComponent } from '../individualChat/individual-chat/indiv
   providers: [DatePipe],
 })
 export class ProjectDetailsComponent implements OnInit {
-  currentID: number = 0;
+  visitedJobClientId! : Number;
   proposalID :any ;
-  proposalDetails : any;
-  clientJob: IClientJob | undefined;
+  proposalsDetails! : IProposal[];
+  clientJob! : IClientJob;
   proposalForm: FormGroup;
   freelancerId : any;
   freelancerName : any;
@@ -33,23 +37,31 @@ export class ProjectDetailsComponent implements OnInit {
   apiErrorMessage: string[] = [];
   openChat = false;
   JobStatus = JobStatus;
+  JobId! : Number
+  LoggedInId : Number = Number (localStorage.getItem('Id'));
+  
+
+  isFreelancer : boolean = false
+  isClient : boolean = false
   constructor(
     private _activatedRoute: ActivatedRoute,
     private _ProjectService: ProjectService,
+    private _JobService : JobService,
     private _Location: Location,
     private datePipe: DatePipe,
     private _proposalService: ProposalService,
     private _freelancer : FreelancerService,
     private fb: FormBuilder ,
     private _individualChatService : IndividualchatService ,
-    private router : Router 
+    private router : Router ,
+    private _authService : AuthService
   ) {
     this.proposalForm = this.fb.group({
       Duration: [null, [Validators.required]],
       Price: [null, [Validators.required]],
       Description: [null, [Validators.required]],
       JobId: [null, [Validators.required]],
-      FreelancerId: [1, [Validators.required]], // Assuming the FreelancerId is 1 for now
+      FreelancerId: [this.LoggedInId, [Validators.required]], // Assuming the FreelancerId is 1 for now
       // ReposLinks: [null],
       // Images:[null]
     });
@@ -75,11 +87,11 @@ export class ProjectDetailsComponent implements OnInit {
   //   });
   //   this._proposalService.getProposalByJobId(id).subscribe({
   //     next: (res) => {
-  //       this.proposalDetails = res.data;
-  //       console.log('detailss', this.proposalDetails);
+  //       this.proposalsDetails = res.data;
+  //       console.log('detailss', this.proposalsDetails);
     
-  //       if (Array.isArray(this.proposalDetails)) {
-  //         this.proposalDetails.forEach((proposal: { freelancerId: any; }) => {
+  //       if (Array.isArray(this.proposalsDetails)) {
+  //         this.proposalsDetails.forEach((proposal: { freelancerId: any; }) => {
   //           const freelancerId = proposal.freelancerId;
   //           console.log('freelancerId', freelancerId);
     
@@ -105,15 +117,49 @@ export class ProjectDetailsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const id = +this._activatedRoute.snapshot.paramMap.get('id')!;
-    console.log('Route ID:', id);
+    this._authService.IsClient.subscribe({
+      next : () => {
+        if(this._authService.IsClient.getValue() !== null)
+          {
+              this.isClient = true
+              console.log(this._authService.IsClient.getValue()) 
+          }
+          else
+          {
+            this.isClient = false
+            console.log(this._authService.IsClient.getValue()) 
+          }
+      }
+    })
 
-    this._ProjectService.GetById(id).subscribe({
+
+    this._authService.IsFreelancer.subscribe({
+      next : () => {
+        if(this._authService.IsFreelancer.getValue() !== null)
+          {
+              this.isFreelancer = true
+              console.log(this._authService.IsFreelancer.getValue()) 
+          }
+          else
+          {
+            this.isFreelancer = false
+            console.log(this._authService.IsFreelancer.getValue()) 
+          }
+      }
+    })
+
+
+    this.JobId = +this._activatedRoute.snapshot.paramMap.get('id')!;
+    console.log('Route ID:', this.JobId);
+
+    this._JobService.GetById(this.JobId).subscribe({
       next: (res) => {
-        console.log('Project response:', res);
+        console.log('Job response:', res);
         if (res.isSuccess) {
           this.clientJob = res.data;
-          this.proposalForm.patchValue({ JobId: id });
+         this.visitedJobClientId = this.clientJob.clientId
+
+          this.proposalForm.patchValue({ JobId: this.JobId });
         } else {
           console.error('Unexpected response structure:', res);
         }
@@ -123,36 +169,43 @@ export class ProjectDetailsComponent implements OnInit {
       }
     });
 
-    this._proposalService.getProposalByJobId(id).subscribe({
+    this._proposalService.getProposalByJobId(this.JobId).subscribe({
       next: (res) => {
-        console.log('Proposal response:', res);
-        this.proposalDetails = res.data;
-        console.log('Proposal details:', this.proposalDetails);
-
-        if (Array.isArray(this.proposalDetails)) {
-          this.proposalDetails.forEach((proposal: { freelancerId: any }) => {
-            const freelancerId = proposal.freelancerId;
-            console.log('Freelancer ID:', freelancerId);
-
-            this._freelancer.getFreelancerById(freelancerId).subscribe({
-              next: (freelancerRes) => {
-                console.log('Freelancer data:', freelancerRes);
-                if (freelancerRes && typeof freelancerRes === 'object') {
-                  this.freelancerDetails.push(freelancerRes.data);
-                  this.freelancerName = freelancerRes.data.name;
-                  console.log('name',this.freelancerName)
-                } else {
-                  console.error('Unexpected freelancer response format', freelancerRes);
-                }
-              },
-              error: (err) => {
-                console.error('Error fetching freelancer data:', err);
-              },
-            });
-          });
-        } else {
-          console.error('Unexpected response data format', res.data);
+        if(res.isSuccess)
+        {
+          console.log('Proposal response:', res);
+          this.proposalsDetails = res.data;
+          console.log('Proposal details:', this.proposalsDetails);
         }
+      else
+      {
+        console.log(res.message)
+      }
+
+        // if (Array.isArray(this.proposalsDetails)) {
+        //   this.proposalsDetails.forEach((proposal: { freelancerId: any }) => {
+        //     const freelancerId = proposal.freelancerId;
+        //     console.log('Freelancer ID:', freelancerId);
+
+        //     this._freelancer.getFreelancerById(freelancerId).subscribe({
+        //       next: (freelancerRes) => {
+        //         console.log('Freelancer data:', freelancerRes);
+        //         if (freelancerRes && typeof freelancerRes === 'object') {
+        //           this.freelancerDetails.push(freelancerRes.data);
+        //           this.freelancerName = freelancerRes.data.name;
+        //           console.log('name',this.freelancerName)
+        //         } else {
+        //           console.error('Unexpected freelancer response format', freelancerRes);
+        //         }
+        //       },
+        //       error: (err) => {
+        //         console.error('Error fetching freelancer data:', err);
+        //       },
+        //     });
+        //   });
+        // } else {
+        //   console.error('Unexpected response data format', res.data);
+        // }
       },
       error: (err) => {
         console.error('Error fetching proposal data:', err);
@@ -162,24 +215,24 @@ export class ProjectDetailsComponent implements OnInit {
     this._individualChatService.myName = { name: 'Initial Name' };
   }
 
-  chat(freelancerName: string){
-    this.apiErrorMessage =[];
-    this.openChat = true ;
-    const user: User = { name: freelancerName };
-      this._individualChatService.registerUser(user).subscribe({
-        next:()=> {
-          // console.log('openchar')
-          // this.router.navigate(['individualChat']);
-          this._individualChatService.myName = user
-          console.log('myname',this._individualChatService.myName)
-          this.openChat =true
-        },
-        error: err=>{
-          if(typeof(err.error) !== 'object'){
-            this.apiErrorMessage.push(err.error)
-          }
-        }
-      })
+  chat(freelancerId: Number, ClientId : Number){ 
+    // this.apiErrorMessage =[];
+    // this.openChat = true ;
+    // const user: User = { name: freelancerName };
+    //   this._individualChatService.registerUser(user).subscribe({
+    //     next:()=> {
+    //       // console.log('openchar')
+    //       // this.router.navigate(['individualChat']);
+    //       this._individualChatService.myName = user
+    //       console.log('myname',this._individualChatService.myName)
+    //       this.openChat =true
+    //     },
+    //     error: err=>{
+    //       if(typeof(err.error) !== 'object'){
+    //         this.apiErrorMessage.push(err.error)
+    //       }
+    //     }
+    //   })
   }
   closeChat(){
     this.openChat =false;
@@ -207,13 +260,45 @@ formData.append('FreelancerId', this.proposalForm.get('FreelancerId')?.value);
       // const payload = this.proposalForm.value;
       // console.log("Form is valid:", payload);
       this._proposalService.postProposal(formData).subscribe({
-        next: () => {
-          swal({
-            // title: "wow!",
-            text: ":) تم ارسال عرضك بنجاح ",
-            icon: "success",
-
-          })        },
+        next: (res) => {
+          if(res.isSuccess)
+          {
+            swal({
+              // title: "wow!",
+              text: ":) تم ارسال عرضك بنجاح ",
+              icon: "success",
+  
+            })  
+            
+            
+            this._proposalService.getProposalByJobId(this.JobId).subscribe({
+              next: (res) => {
+                if(res.isSuccess)
+                {
+                  console.log('Proposal response:', res);
+                  this.proposalsDetails = res.data;
+                  console.log('Proposal details:', this.proposalsDetails);
+                }
+              else
+              {
+                console.log(res.message)
+              }
+              
+              },
+              error: (err) => {
+                console.error('Error fetching proposal data:', err);
+              },
+            });
+          }
+          else
+          {
+            swal({
+              title: " :( فشل ارسال العرض ",
+              icon: "warning",
+              dangerMode: true,
+            })
+          }
+              },
         error: (err) => {
           console.log('Error response:', err);
           console.log('Payload sent:',formData);
@@ -230,4 +315,14 @@ formData.append('FreelancerId', this.proposalForm.get('FreelancerId')?.value);
     }
   }
 
+  AcceptProposal(id : Number)
+  {
+     this._proposalService.AcceptProposal(id).subscribe(
+      {
+        next : (res) => {
+          console.log(res)
+        }
+      }
+     )
+  }
 }
