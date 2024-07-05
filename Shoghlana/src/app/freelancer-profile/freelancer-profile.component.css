@@ -16,10 +16,11 @@
 body{margin-top:20px;
     background:#eee;
     }
+    
     /* .fs35 {
         font-size: 35px !important;
     }
-    
+
     .mw50 {
         max-width: 50px !important;
     }
@@ -35,15 +36,15 @@ body{margin-top:20px;
     .mr25 {
         margin-right: 25px !important;
     } */
-    
+
     .mw40 {
         max-width: 40px !important;
     }
-    
+
     .p30 {
         padding: 30px !important;
     }
-    
+
     .page-heading {
       position: relative;
       /* padding: 30px 40px; */
@@ -444,8 +445,8 @@ body{margin-top:20px;
     .panel-group .panel-footer + .panel-collapse .panel-body {
       border-bottom: 1px solid #eeeeee;
     }
-    
-    
+
+
     .media {
       color: #999999;
       font-weight: 600;
@@ -486,7 +487,7 @@ body{margin-top:20px;
     .border-radius {
      border-radius: 5%;
     }
-    
+
     /*===============================================
       Tabs
     ================================================= */

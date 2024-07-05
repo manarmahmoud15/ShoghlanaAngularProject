@@ -27,7 +27,7 @@
               </li>
             </ul>
           </div>
-          
+
           <div class="dropdown">
             <button
               class="btn btn-primary dropdown-toggle"
@@ -50,8 +50,8 @@
               </li>
             </ul>
           </div>
-          
-          
+
+
           <div class="d-flex align-items-center border p-2 rounded">
             <div class="form-check">
               <input class="form-check-input"
@@ -94,21 +94,21 @@
                   class="btn btn-success"
                   (click)="navigateToDetails(job.id)"
                 >
-                  عرض التفاصيل 
+                  عرض التفاصيل
                 </button>
               </div>
               <div class="col-8 d-flex justify-content-end align-items-center">
                 <div class="d-flex flex-column text-end me-3">
                   <div class="d-flex">
                     <p class="status ms-1 p-1">{{ job.proposalsCount }}</p>
-                    
+
                     <ng-container [ngSwitch]="job.status">
                       <p class="status ms-1 p-1" *ngSwitchCase="JobStatus.Active">مفتوح</p>
                       <p class="status ms-1 p-1" *ngSwitchCase="JobStatus.Closed">مغلق</p>
                       <p class="status ms-1 p-1" *ngSwitchCase="JobStatus.completed">مكتمل</p>
                       <p class="status ms-1 p-1" *ngSwitchDefault>غير معروف</p>
                     </ng-container>
-                    
+
                     <p class="title">{{ job.title }}</p>
                   </div>
                   <p class="Descriptipn">{{ job.description }}</p>
