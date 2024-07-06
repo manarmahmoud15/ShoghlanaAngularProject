@@ -12,6 +12,8 @@ import { Observable } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { Router, RouterModule } from '@angular/router';
 import { UserRoleServiceService } from '../Services/UserRole/user-role-service.service';
+import { IndividualchatService } from '../Services/individualChat/individualchat.service';
+import { User } from '../Models/user';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -22,13 +24,41 @@ import { UserRoleServiceService } from '../Services/UserRole/user-role-service.s
 export class LoginComponent {
   isLoading: boolean = false;
   apiError: string = '';
+  visitedJobClientId! : Number;
+  proposalID :any ;
+  freelancerId : any;
+  freelancerName : any;
+  freelancerDetails : any[] =[];
+  apiErrorMessage: string[] = [];
+  openChat = false;
+  JobId! : Number
+  LoggedInId : Number = Number (localStorage.getItem('Id'));
   constructor(private _authoService: AuthService, private _router: Router,
-    private UserRoleService : UserRoleServiceService
+    private UserRoleService : UserRoleServiceService ,
+    private _individualChatService : IndividualchatService ,
+
   ) {}
   LoginForm: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
     password: new FormControl(null, [Validators.required]),
   });
+
+  chat(freelancerName : string){ 
+
+    const user: User = { name: freelancerName };
+      this._individualChatService.registerUser(user).subscribe({
+        next:()=> {
+          this._individualChatService.myName = user
+          console.log('myname',this._individualChatService.myName)
+          // this.openChat =true
+        },
+        error: err=>{
+          if(typeof(err.error) !== 'object'){
+            this.apiErrorMessage.push(err.error)
+          }
+        }
+      })
+  }
   handleLogin(LoginForm: FormGroup) {
     this.isLoading = true;
     if (LoginForm.valid) {

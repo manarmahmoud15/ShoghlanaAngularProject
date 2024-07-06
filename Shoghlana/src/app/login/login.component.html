@@ -40,8 +40,9 @@
             <p *ngIf="LoginForm.get('password')?.getError('required')" class="m-0">يرجي ادخال كلمة السر </p>
           </div>
 
-
-        <button class="btn" [disabled]="LoginForm.invalid" type="submit"> تسجيل الدخول
+          
+        <button class="btn" [disabled]="LoginForm.invalid" type="submit" 
+        > تسجيل الدخول
           <i *ngIf="isLoading" class="fas fa-spinner fa-spin"></i> </button>
           <span *ngIf="apiError" class="text-danger">{{apiError}}</span>
        <p class="p">ليس لديك حساب؟  <span class="span"><a routerLink="/register">سجل الآن</a></span>

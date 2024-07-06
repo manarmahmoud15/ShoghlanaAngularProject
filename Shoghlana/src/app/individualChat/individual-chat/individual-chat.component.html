@@ -26,8 +26,8 @@
                 type="button"
                 class="btn  card-text btn-block"
                 [ngClass]="{
-                    'btn-success': user === _individualChatService.myName?.name,
-                    'btn-dark': user !== _individualChatService.myName?.name}"
+                    'hidden': user === _individualChatService.myName?.name,
+                    'btn-success': user !== _individualChatService.myName?.name}"
                 (dblclick)="openPrivateChat(user)"
                 [disabled]=" user === _individualChatService.myName?.name"
               >
