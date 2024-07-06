@@ -39,6 +39,7 @@ export class ProjectDetailsComponent implements OnInit {
   JobStatus = JobStatus;
   JobId! : Number
   LoggedInId : Number = Number (localStorage.getItem('Id'));
+  clientName! : string | null
   
 
   isFreelancer : boolean = false
@@ -116,6 +117,9 @@ export class ProjectDetailsComponent implements OnInit {
   // }
 
   ngOnInit(): void {
+
+    
+    this.clientName = localStorage.getItem('Name');
 
     this._authService.IsClient.subscribe({
       next : () => {
@@ -202,7 +206,7 @@ export class ProjectDetailsComponent implements OnInit {
       },
     });
   } 
-  chat(freelancerId: Number, ClientId : Number){ 
+  chat(freelancerId: Number, ClientName : string | null){ 
     // this.apiErrorMessage =[];
     // this.openChat = true ;
     // const user: User = { name: freelancerName };
