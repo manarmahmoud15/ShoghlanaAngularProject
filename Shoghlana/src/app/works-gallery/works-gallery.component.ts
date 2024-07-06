@@ -36,6 +36,7 @@ export class WorksGalleryComponent implements OnInit {
     next : (res) => {
       if(res.isSuccess)
         {
+          console.log(res)
           this.Projects = res.data 
           this.FilteredProjects = this.Projects
           console.log(this.Projects)

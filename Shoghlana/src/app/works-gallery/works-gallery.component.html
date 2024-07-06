@@ -41,6 +41,8 @@
       <div class="GalleryWork">
         <p class="bold-text pt-2 pe-2 text">معرض الأعمال</p>
       </div>
+
+      <ng-container *ngIf="FilteredProjects !== null; else EmptyList">
       <div *ngIf="FilteredProjects.length > 0; else EmptyList">
       <div class="row mt-2 mb-2">
         <!-- Project Cards -->
@@ -74,6 +76,8 @@
       
         <!-- End of Project Cards -->
       </div>
+    </ng-container>
+
       <ng-template #EmptyList>
         <div class="text-center m-5">
           <span class="text-danger fs-4">لا توجد أعمال بعد</span>

@@ -13,5 +13,6 @@ catID: number;
 postTime:string;
 proposalsCount? : Number;
 categoryTitle? : string;
-clientId : Number
+clientId : Number;
+acceptedFreelancerId : Number
 }

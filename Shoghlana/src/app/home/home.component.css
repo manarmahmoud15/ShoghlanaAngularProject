@@ -1,5 +1,6 @@
 .container-fluid {
   background-color: #f9fafb;
+  overflow-x: hidden;
 }
 .SecondaryColor {
   color: #1dbf73;

@@ -26,36 +26,47 @@
 
       <ul class="navbar-nav text-gray-900 dark:text-gray-200">
         <li *ngIf="isLogged" class="nav-item">
-          <a class="nav-link text-nowrap text-gray-200 dark:hover:text-green-500 dark:text-gray-200" routerLink="/individualChat"> شات </a>
-        </li>
-        <li *ngIf="!isLogged" class="nav-item">
-          <a class="nav-link text-nowrap text-gray-200 dark:hover:text-green-500 dark:text-gray-200" routerLink="/signin">تسجيل دخول</a>
-        </li>
-
-        <li *ngIf="isLogged" class="nav-item">
           <label class="popup">
-            <input type="checkbox">
+            <input type="checkbox" [(ngModel)]="IsOpenPopUp">
             <i class="fa-solid fa-earth-americas pt-3"></i>
-            <nav class="popup-window">
-              <legend>Actions</legend>
+
+            <ng-container *ngIf="Notifications !== null">
+              <span class="badge">{{Notifications.length}}</span>
+            </ng-container>
+            
+            <nav class="popup-window" style="direction: rtl;">
+              <legend style="direction: rtl;"> <strong style="font-size: larger; font-weight: bolder; direction: rtl;"> الاشعارات </strong></legend>
+
               <ul>
-                <li>
-                  <button>
-                    <svg stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="currentColor" fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                      <circle r="4" cy="7" cx="9"></circle>
-                      <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                    </svg>
-                    <span>Colloborators</span>
+              <ng-container *ngIf="Notifications !== null">
+                <div *ngIf="Notifications.length > 0; else EmptyNotifications">
+                <li *ngFor="let notification of Notifications" class="mb-2">
+                  <button (click)="Navigate(notification.id)" class="btn btn-light w-100 p-2 d-flex justify-content-between align-items-start">
+                    <div class="d-flex">
+                      <i class="fa-regular fa-bell me-2 mt-1"></i>
+                      <div>
+                        <p class="mb-0 fw-bold" style="font-size: larger;">{{notification.title}}</p>
+                        <p class="mb-0 text-muted">{{notification.description}}</p>
+                      </div>
+                    </div>
+                    <span class="text-muted align-self-start">{{FormatTime(notification.sentTime)}}</span>
                   </button>
                 </li>
-                <li>
+              </div>
+</ng-container>
+                
+            <ng-template #EmptyNotifications>
+              <li class="bg-danger  text-white p-2"> لا يوجد اشعارات بعد </li>
+             </ng-template>
+              
+                
+                <!-- <li>
                   <button>
                     <svg stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="currentColor" fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
                       <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
                       <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
                     </svg>
+                    <i class="fa-regular fa-bell"></i>
                     <span>Magic Link</span>
                   </button>
                 </li>
@@ -86,12 +97,27 @@
                     </svg>
                     <span>Delete</span>
                   </button>
-                </li>
+                </li> -->
               </ul>
+
+          
+
             </nav>
           </label>
         </li>
 
+
+
+        <li *ngIf="!isLogged" class="nav-item">
+          <a class="nav-link text-nowrap text-gray-200 dark:hover:text-green-500 dark:text-gray-200" routerLink="/signin">تسجيل دخول</a>
+        </li>
+
+
+        <li *ngIf="isLogged" class="nav-item">
+          <a class="nav-link text-nowrap text-gray-200 dark:hover:text-green-500 dark:text-gray-200" routerLink="/individualChat"> شات </a>
+        </li>
+
+       
         <li *ngIf="!isLogged" class="nav-item">
           <a class="nav-link text-nowrap dark:hover:text-green-500 dark:text-gray-200  " routerLink="/register">انشاء حساب</a>
         </li>
