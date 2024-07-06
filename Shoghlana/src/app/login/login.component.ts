@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -39,10 +39,10 @@ export class LoginComponent {
 
           if (response.isSuccess) 
             {
-
             this._authoService.logOut();  // if user tried to navigate to signin via url >> allowed >> if try to login using another account while he is already logged in >> make logout first to avoid conflicts 
             localStorage.setItem('token', response.token);
             localStorage.setItem("Id",response.data.id);
+            localStorage.setItem("Name",response.data.username); 
             if(localStorage.getItem('Id'))
               {
                 const id : any = Number (localStorage.getItem('Id'))
@@ -90,4 +90,10 @@ export class LoginComponent {
     this.LoginForm.reset();
     this.apiError = ''; // Clear the API error message
   }
+
+  // ngOnDestroy(): void {
+  //   //Called once, before the instance is destroyed.
+  //   //Add 'implements OnDestroy' to the class.
+  //   console.log(localStorage.getItem('Name'));
+  // }
 }

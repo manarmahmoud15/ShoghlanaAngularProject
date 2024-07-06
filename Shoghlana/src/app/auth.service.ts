@@ -140,6 +140,8 @@ if (localStorage.getItem('Role'))
     localStorage.removeItem('token');
     localStorage.removeItem('Id');
     localStorage.removeItem('Role');
+    localStorage.removeItem('Name');
+
     this._router.navigateByUrl('/signin');
     this.userdata.next(null);
 

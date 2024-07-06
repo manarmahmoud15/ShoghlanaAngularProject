@@ -201,7 +201,7 @@ export class ProjectDetailsComponent implements OnInit {
         console.error('Error fetching proposal data:', err);
       },
     });
-  }
+  } 
   chat(freelancerId: Number, ClientId : Number){ 
     // this.apiErrorMessage =[];
     // this.openChat = true ;

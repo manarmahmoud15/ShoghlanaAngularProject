@@ -109,6 +109,7 @@ return control.get('password')?.value===control.get('repeatPassword')?.value
                   localStorage.setItem("token" , res.data.token)
                   console.log("client id from backend" + res.data.id)
                   localStorage.setItem("Id",res.data.id)
+                  localStorage.setItem("Name",res.data.username); 
                   if(localStorage.getItem('Id'))
                     {
                       const id : any = Number (localStorage.getItem('Id'))
