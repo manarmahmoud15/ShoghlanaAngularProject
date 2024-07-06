@@ -147,7 +147,11 @@
                       [disabled]="clientJob.status !== JobStatus.Active && clientJob.acceptedFreelancerId !== proposal.freelancerId" 
                       *ngIf="isClient && visitedJobClientId === LoggedInId" 
                       class="btn btn-info" 
-                      (click)="chat(proposal.freelancerId, clientName)" 
+
+<!--                       (click)="chat(proposal.freelancerId, clientName)"  -->
+
+                      (click)="chat(proposal.freelancerName)" 
+
                       [attr.aria-label]="'Chat with ' + proposal.freelancerName">
                       مراسلة
                     </button>

@@ -15,9 +15,9 @@
     justify-content: center;
     position: relative;
     transition: all 0.3s ease;
-    min-width: 200px;
+    min-width: 100px;
     padding: 20px;
-    height: 68px;
+    height: 30px;
     font-family: "Galano Grotesque", Poppins, Montserrat, sans-serif;
     font-style: normal;
     font-size: 18px;
