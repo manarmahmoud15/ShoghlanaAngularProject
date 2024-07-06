@@ -1,8 +1,8 @@
 .container {
     max-width: 1170px;
     margin: auto;
-    background-color: #1dbf73;
-    background-image: linear-gradient(180deg, #1dbf73 25%,  rgb(194, 194, 194) 100%);
+    background-color: #5fd8a0;
+    background-image: linear-gradient(180deg, #d5fdea 25%,  rgb(195, 195, 195) 100%);
   }
   .chat_header {
     display: flex;
@@ -39,7 +39,7 @@
   
   .inbox_people {
     background-color: #1dbf73;
-    background-image: linear-gradient(180deg, #1dbf73 25%,  rgb(194, 194, 194) 100%);
+    background-image: linear-gradient(180deg, #d5fdea 25%,  rgb(195, 195, 195) 100%);
     float: left;
     overflow: hidden;
     width: 40%;
