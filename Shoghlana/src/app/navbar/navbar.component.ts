@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Component, HostListener, OnInit, inject } from '@angular/core';
@@ -7,7 +7,10 @@ import { ChatService } from '../Services/chat/chat.service';
 import { AuthService } from '../auth.service';
 import { DarkModeService } from '../Services/DarkMode/dark-mode.service';
 import { data } from 'jquery';
-
+import { NotificationService } from '../Services/Notification/notification.service';
+import { INotification } from '../Models/INotification';
+import { NotificationReason } from '../Enums/Notification-Reason';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -18,6 +21,7 @@ import { data } from 'jquery';
     ReactiveFormsModule,
     FormsModule,
   ],
+  providers : [DatePipe],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
@@ -33,13 +37,17 @@ isLogged:boolean=false;
  Id! : Number
  isFreelancer : boolean = false
  isClient : boolean = false
-
+ Notifications! : INotification[] 
+ NotificationReason = NotificationReason
+ IsOpenPopUp : boolean = false
 
  logOut(){
     this._authService.logOut();
   }
 
-  constructor(private _authService: AuthService) {
+  constructor(private _authService: AuthService,
+     private _notificationService : NotificationService, private DatePipe : DatePipe,
+    private router : Router) {
     //using behavoir subject this code works with every change in dom
 
    
@@ -64,6 +72,55 @@ isLogged:boolean=false;
       next: () => {
         if (this._authService.userdata.getValue() !== null) {
           this.isLogged = true;
+
+          if(typeof localStorage !== 'undefined')
+          {
+            if(localStorage.getItem('Role') === 'Client')
+              {
+                this._notificationService.GetByClientId(this.Id).subscribe({
+                  next : (res) => {
+                      console.log(res)
+                      if(res.isSuccess)
+                      {
+                            this.Notifications = res.data;
+                            console.log(this.Notifications) 
+                      }
+                      else
+                      {
+                        console.log(res.message)
+                      }
+                  },
+                  error : (err) => {
+                    console.log(err)
+                  }
+                });
+              }
+    
+              else if(localStorage.getItem('Role') === 'Freelancer')
+              {
+                this._notificationService.GetByFreelancerId(this.Id).subscribe({
+                  next : (res) => {
+                      console.log(res)
+                      if(res.isSuccess)
+                      {
+                            this.Notifications = res.data;
+                            console.log(this.Notifications) 
+                      }
+                      else
+                      {
+                        console.log(res.message)
+                      }
+                  },
+                  error : (err) => {
+                    console.log(err)
+                  }
+                });
+              }
+          }
+         
+
+
+
         } else {
           this.isLogged = false; 
         }
@@ -138,5 +195,39 @@ isLogged:boolean=false;
       console.log(this.messages);
     });
 
+  }
+
+  FormatTime(Time : string) : string 
+  {
+      return this.DatePipe.transform(Time , 'medium')?? ''
+  }
+
+  Navigate(id : Number) : void
+  {
+    const TempNotification = this.Notifications.find(n => n.id === id)
+    if(!TempNotification)
+    {
+      return;
+    }
+
+    switch(TempNotification.reason)
+    {
+      case this.NotificationReason.Welcome:
+          this.router.navigateByUrl('/home'); 
+          this.IsOpenPopUp = false; 
+        break;
+      case this.NotificationReason.AcceptedProposal:
+        this.router.navigate(['/project-details',TempNotification.notificationTriggerId]);  
+        this.IsOpenPopUp = false; 
+        break;
+      case this.NotificationReason.RejectedProposal:
+        this.router.navigate(['/project-details',TempNotification.notificationTriggerId]); 
+        this.IsOpenPopUp = false; 
+      break;
+      case this.NotificationReason.NewProposalAdded:
+        this.router.navigate(['/project-details',TempNotification.notificationTriggerId]);  
+        this.IsOpenPopUp = false; 
+      break;
+    }
   }
 }

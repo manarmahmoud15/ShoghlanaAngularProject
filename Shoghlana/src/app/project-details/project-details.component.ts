@@ -148,10 +148,22 @@ export class ProjectDetailsComponent implements OnInit {
       }
     })
 
+    this._activatedRoute.params.subscribe(params => {
+      this.JobId = +params['id'];
+      this.LoadJobData();
+      this.LoadProposalsData();
+    })
 
-    this.JobId = +this._activatedRoute.snapshot.paramMap.get('id')!;
-    console.log('Route ID:', this.JobId);
+    //this.JobId = +this._activatedRoute.snapshot.paramMap.get('id')!;
+   // console.log('Route ID:', this.JobId);
 
+   
+    this._individualChatService.myName = { name: 'Initial Name' };
+  }
+
+
+  LoadJobData()
+  {
     this._JobService.GetById(this.JobId).subscribe({
       next: (res) => {
         console.log('Job response:', res);
@@ -168,7 +180,10 @@ export class ProjectDetailsComponent implements OnInit {
         console.error('Error fetching project data:', err);
       }
     });
+  }
 
+  LoadProposalsData()
+  {
     this._proposalService.getProposalByJobId(this.JobId).subscribe({
       next: (res) => {
         if(res.isSuccess)
@@ -181,40 +196,12 @@ export class ProjectDetailsComponent implements OnInit {
       {
         console.log(res.message)
       }
-
-        // if (Array.isArray(this.proposalsDetails)) {
-        //   this.proposalsDetails.forEach((proposal: { freelancerId: any }) => {
-        //     const freelancerId = proposal.freelancerId;
-        //     console.log('Freelancer ID:', freelancerId);
-
-        //     this._freelancer.getFreelancerById(freelancerId).subscribe({
-        //       next: (freelancerRes) => {
-        //         console.log('Freelancer data:', freelancerRes);
-        //         if (freelancerRes && typeof freelancerRes === 'object') {
-        //           this.freelancerDetails.push(freelancerRes.data);
-        //           this.freelancerName = freelancerRes.data.name;
-        //           console.log('name',this.freelancerName)
-        //         } else {
-        //           console.error('Unexpected freelancer response format', freelancerRes);
-        //         }
-        //       },
-        //       error: (err) => {
-        //         console.error('Error fetching freelancer data:', err);
-        //       },
-        //     });
-        //   });
-        // } else {
-        //   console.error('Unexpected response data format', res.data);
-        // }
       },
       error: (err) => {
         console.error('Error fetching proposal data:', err);
       },
     });
-
-    this._individualChatService.myName = { name: 'Initial Name' };
   }
-
   chat(freelancerId: Number, ClientId : Number){ 
     // this.apiErrorMessage =[];
     // this.openChat = true ;
@@ -277,6 +264,7 @@ formData.append('FreelancerId', this.proposalForm.get('FreelancerId')?.value);
                 {
                   console.log('Proposal response:', res);
                   this.proposalsDetails = res.data;
+                  this.clientJob.proposalsCount = this.proposalsDetails.length
                   console.log('Proposal details:', this.proposalsDetails);
                 }
               else
@@ -321,6 +309,50 @@ formData.append('FreelancerId', this.proposalForm.get('FreelancerId')?.value);
       {
         next : (res) => {
           console.log(res)
+          if(res.isSuccess)
+          {
+            swal({
+              text: ":) تم قبول العرض بنجاح ",
+              icon: "success",
+  
+            }) 
+
+            this._JobService.GetById(this.JobId).subscribe(
+              {
+                next : (res) => {
+                  console.log(res)
+                  if(res.isSuccess)
+                  {
+                    this.clientJob = res.data
+                  }
+                  else
+                  {
+                    console.log(res.message)
+                  }
+                },
+                error : (err) => {
+                  console.log(err)
+                }
+              }
+            )
+          }
+          else
+          {
+            swal({
+              title: " :( فشل قبول العرض ",
+              icon: "warning",
+              dangerMode: true,
+            })
+            console.log(res.message)
+          }
+        },
+        error : (err)=> {
+          swal({
+            title: " :( فشل قبول العرض ",
+            icon: "warning",
+            dangerMode: true,
+          })
+           console.log(err)
         }
       }
      )

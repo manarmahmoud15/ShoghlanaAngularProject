@@ -131,37 +131,68 @@
 
         <div class="container my-2 py-2">
           <h4 class="m-2">العروض المقدمة</h4>
-          <div *ngFor="let proposal of proposalsDetails">
-            <div class="proposal-container p-3 border rounded mb-3">
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <div>
-                  <strong>{{ proposal.freelancerName }}</strong>
-                  <div><small class="text-muted">{{ proposal.freelancerTitle }}</small></div>
-                </div>
-               
-                <div class="d-flex gap-2">
-                  <button *ngIf="isClient && visitedJobClientId === LoggedInId" class="btn btn-info" (click)="chat(proposal.freelancerId, LoggedInId)" [attr.aria-label]="'Chat with ' + proposal.freelancerName">
-                    مراسلة
-                  </button>
-                  <button *ngIf="isClient && visitedJobClientId === LoggedInId" class="btn btn-success" (click)="AcceptProposal(proposal.id)">
-                    قبول
-                  </button>
-                  <button *ngIf="isClient && visitedJobClientId === LoggedInId" class="btn btn-danger">
-                    رفض 
-                  </button>
 
+
+          <ng-container *ngIf="proposalsDetails && proposalsDetails.length > 0; else EmptyProposals">          
+            <div *ngFor="let proposal of proposalsDetails">
+              <div class="proposal-container p-3 border rounded mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <div>
+                    <strong>{{ proposal.freelancerName }}</strong>
+                    <div><small class="text-muted">{{ proposal.freelancerTitle }}</small></div>
+                  </div>
+            
+                  <div class="d-flex gap-2">
+                    <button 
+                      [disabled]="clientJob.status !== JobStatus.Active && clientJob.acceptedFreelancerId !== proposal.freelancerId" 
+                      *ngIf="isClient && visitedJobClientId === LoggedInId" 
+                      class="btn btn-info" 
+                      (click)="chat(proposal.freelancerId, LoggedInId)" 
+                      [attr.aria-label]="'Chat with ' + proposal.freelancerName">
+                      مراسلة
+                    </button>
+                    <button 
+                      [disabled]="clientJob.status !== JobStatus.Active" 
+                      *ngIf="isClient && visitedJobClientId === LoggedInId" 
+                      class="btn btn-success" 
+                      (click)="AcceptProposal(proposal.id)">
+                      قبول
+                    </button>
+                    <button 
+                      [disabled]="clientJob.status !== JobStatus.Active" 
+                      *ngIf="isClient && visitedJobClientId === LoggedInId" 
+                      class="btn btn-danger">
+                      رفض 
+                    </button>
+                  </div>
+                </div>
+            
+                <div class="row mt-3">
+                  <div class="col-12">
+                    <p>{{ proposal.description }}</p>
+                  </div>
+                </div>
+            
+                <div *ngIf="isClient && visitedJobClientId === LoggedInId" class="row">
+                  <div class="col-12 d-flex justify-content-end align-items-center">
+                    <div class="text-success mx-3">
+                      <i class="fa-solid fa-dollar-sign p-1"></i>
+                      <span>{{ proposal.price }}</span>
+                    </div>
+                    <div>
+                      {{ proposal.duration }} أيام
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="d-flex mt-3">
-              <div>
-                <p>{{ proposal.description }}</p>
-              </div>
-              <div class="d-flex gap-2 ">
-                price and duration will be here 
-              </div>
             </div>
-            </div>
-          </div>
+             </ng-container>
+          
+          <ng-template #EmptyProposals>
+            <tr style="direction: rtl" class="text-danger">
+              <td colspan="2">لا توجد عروض حتى الآن</td>
+            </tr>
+          </ng-template>
           
           
         </div>
