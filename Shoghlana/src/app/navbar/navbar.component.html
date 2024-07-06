@@ -30,7 +30,7 @@
             <input type="checkbox" [(ngModel)]="IsOpenPopUp">
             <i class="fa-solid fa-earth-americas pt-3"></i>
 
-            <ng-container *ngIf="Notifications !== null">
+            <ng-container *ngIf="Notifications !== undefined">
               <span class="badge">{{Notifications.length}}</span>
             </ng-container>
             
@@ -38,7 +38,7 @@
               <legend style="direction: rtl;"> <strong style="font-size: larger; font-weight: bolder; direction: rtl;"> الاشعارات </strong></legend>
 
               <ul>
-              <ng-container *ngIf="Notifications !== null">
+              <ng-container *ngIf="Notifications !== undefined">
                 <div *ngIf="Notifications.length > 0; else EmptyNotifications">
                 <li *ngFor="let notification of Notifications" class="mb-2">
                   <button (click)="Navigate(notification.id)" class="btn btn-light w-100 p-2 d-flex justify-content-between align-items-start">

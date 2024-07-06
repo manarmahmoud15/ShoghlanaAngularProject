@@ -33,7 +33,7 @@ export class NavbarComponent implements OnInit {
 
 
 
-isLogged:boolean=false; 
+isLogged : boolean = true;
  Id! : Number
  isFreelancer : boolean = false
  isClient : boolean = false
@@ -67,6 +67,21 @@ isLogged:boolean=false;
     }
   }
   ngOnInit(): void {
+
+    if(localStorage.getItem('token'))
+    {
+      console.log('logging')
+      this.isLogged = true
+      if(localStorage.getItem('Id'))
+      {
+        this.Id = Number (localStorage.getItem('Id'))
+      }
+    }
+    else
+    {
+      console.log('Not logging')
+      this.isLogged = false;
+    }
 
     this._authService.userdata.subscribe({
       next: () => {
