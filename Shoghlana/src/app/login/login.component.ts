@@ -61,8 +61,6 @@ export class LoginComponent {
                    const role : any = 'Freelancer'
                    this._authoService.IsFreelancer.next(role)
                 } 
-
-
             this._authoService.decodeUserData();
             this._authoService.userdata.next(response.data)  // navbar keep track for changes
             this.isLoading = false;

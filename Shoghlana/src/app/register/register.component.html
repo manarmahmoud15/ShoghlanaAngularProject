@@ -99,7 +99,7 @@
          <span class="text-danger" *ngIf="apiError">
 {{apiError}}
          </span>
-        <button [disabled]="RegisterForm.invalid" type="submit" class="btn">إنشاء حساب
+        <button [disabled]="RegisterForm.invalid" type="submit" class="btn" >إنشاء حساب
         <i *ngIf="isLoading" class="fas fa-spinner fa-spin"></i></button>
 
         <p class="p">ليس لديك حساب؟ <span class="span"> <a routerLink="/signin" routerLinkActive="router-link-active" > سجل الآن </a></span></p>

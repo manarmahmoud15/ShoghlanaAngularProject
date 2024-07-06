@@ -202,24 +202,24 @@ export class ProjectDetailsComponent implements OnInit {
       },
     });
   }
-  chat(freelancerId: Number, ClientId : Number){ 
-    // this.apiErrorMessage =[];
-    // this.openChat = true ;
-    // const user: User = { name: freelancerName };
-    //   this._individualChatService.registerUser(user).subscribe({
-    //     next:()=> {
-    //       // console.log('openchar')
-    //       // this.router.navigate(['individualChat']);
-    //       this._individualChatService.myName = user
-    //       console.log('myname',this._individualChatService.myName)
-    //       this.openChat =true
-    //     },
-    //     error: err=>{
-    //       if(typeof(err.error) !== 'object'){
-    //         this.apiErrorMessage.push(err.error)
-    //       }
-    //     }
-    //   })
+  chat(freelancerName : string){ 
+    this.apiErrorMessage =[];
+    this.openChat = true ;
+    const user: User = { name: freelancerName };
+      this._individualChatService.registerUser(user).subscribe({
+        next:()=> {
+          // console.log('openchar')
+          // this.router.navigate(['individualChat']);
+          this._individualChatService.myName = user
+          console.log('myname',this._individualChatService.myName)
+          this.openChat =true
+        },
+        error: err=>{
+          if(typeof(err.error) !== 'object'){
+            this.apiErrorMessage.push(err.error)
+          }
+        }
+      })
   }
   closeChat(){
     this.openChat =false;
