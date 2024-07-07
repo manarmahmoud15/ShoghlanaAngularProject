@@ -8,6 +8,8 @@ import { environment } from '../../../environments/environment.development';
 })
 export class NotificationService {
 
+ // UnReadNotificationsCount! : number
+
   constructor(private _HttpClient: HttpClient) { }
   // saeed commented this 
   
@@ -32,4 +34,16 @@ export class NotificationService {
   {
       return this._HttpClient.get(`${environment.baseUrl}/Notification/ClientId/` + id)
   }
+
+
+  getUnReadNotificationsCount() : number
+  {
+       return Number (localStorage.getItem('UnReadNotificationsCount'));
+  }
+
+  setUnReadNotificationsCount(count : any) : void
+  {
+     localStorage.setItem('UnReadNotificationsCount' , count)
+  }  
+
 }

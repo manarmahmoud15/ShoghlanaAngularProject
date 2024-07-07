@@ -21,6 +21,7 @@ import { UserRole } from '../Enums/UserRole';
 import { UserRoleServiceService } from '../Services/UserRole/user-role-service.service';
 import swal from 'sweetalert';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { NotificationService } from '../Services/Notification/notification.service';
 
 @Component({
     selector: 'app-register',
@@ -44,7 +45,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
   constructor(private _authoService: AuthService, private _router: Router,
     private SocialAuthService : SocialAuthService,
     private UserroleService : UserRoleServiceService,
-    private __translateService: TranslateService
+    private __translateService: TranslateService,
+    private _notificationService : NotificationService
 
   ) {
     this.RegisterForm = new FormGroup({
@@ -105,11 +107,14 @@ return control.get('password')?.value===control.get('repeatPassword')?.value
 
                   this._authoService.logOut()   // if user tried to navigate to register via url >> allowed >> if try to login using gmail while he is already logged in >> make logout first to avoid conflicts 
 
+                  console.log(res)
                   console.log('continuing after logout')
                   localStorage.setItem("token" , res.data.token)
                   console.log("client id from backend" + res.data.id)
                   localStorage.setItem("Id",res.data.id)
                   localStorage.setItem("Name",res.data.username); 
+                  this._notificationService.setUnReadNotificationsCount(res.data.unReadNotificationsNum)
+                  // console.log(this._authoService.getUnReadNotificationsCount())
                   if(localStorage.getItem('Id'))
                     {
                       const id : any = Number (localStorage.getItem('Id'))
