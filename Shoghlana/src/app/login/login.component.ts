@@ -43,22 +43,7 @@ export class LoginComponent {
     password: new FormControl(null, [Validators.required]),
   });
 
-  chat(freelancerName : string){ 
 
-    const user: User = { name: freelancerName };
-      this._individualChatService.registerUser(user).subscribe({
-        next:()=> {
-          this._individualChatService.myName = user
-          console.log('myname',this._individualChatService.myName)
-          // this.openChat =true
-        },
-        error: err=>{
-          if(typeof(err.error) !== 'object'){
-            this.apiErrorMessage.push(err.error)
-          }
-        }
-      })
-  }
   handleLogin(LoginForm: FormGroup) {
     this.isLoading = true;
     if (LoginForm.valid) {

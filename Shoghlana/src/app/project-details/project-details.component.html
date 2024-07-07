@@ -1,215 +1,238 @@
-<ng-container *ngIf="openChat===false">
+<ng-container *ngIf="openChat === false">
   <div class="project container-fluid pt-5">
-  <div class="col-12">
-    <div class="container d-flex justify-content-between align-items-center">
-      <div class="col-12 justify-content-start align-items-center gap-3">
-        <div class="jobs-container mt-3" *ngIf="clientJob">
-          <div
-            class="container job-item my-3 pt-2 border rounded"
-            *ngIf="clientJob"
-          >
-            <div class="row justify-content-between align-items-center">
-              <div class="col-12 d-flex justify-content-end align-items-center">
-                <div class="d-flex flex-column text-end me-3">
-                  <div class="d-flex">
-                    <p class="status ms-1 p-1">
-                      {{
-                        clientJob.status === JobStatus.completed
-? 'مكتمل' : clientJob.status === JobStatus.Active? 'مفتوح' : 'مغلق'
-                      }}
-                    </p>
-                    <p class="title p-2"> <strong> {{ clientJob.title }} </strong> </p>
-                  </div>
-               <!-- <img
+    <div class="col-12">
+      <div class="container d-flex justify-content-between align-items-center">
+        <div class="col-12 justify-content-start align-items-center gap-3">
+          <div class="jobs-container mt-3" *ngIf="clientJob">
+            <div
+              class="container job-item my-3 pt-2 border rounded"
+              *ngIf="clientJob"
+            >
+              <div class="row justify-content-between align-items-center">
+                <div
+                  class="col-12 d-flex justify-content-end align-items-center"
+                >
+                  <div class="d-flex flex-column text-end me-3">
+                    <div class="d-flex">
+                      <p class="status ms-1 p-1">
+                        {{
+                          clientJob.status === JobStatus.completed
+                            ? "مكتمل"
+                            : clientJob.status === JobStatus.Active
+                            ? "مفتوح"
+                            : "مغلق"
+                        }}
+                      </p>
+                      <p class="title p-2">
+                        <strong> {{ clientJob.title }} </strong>
+                      </p>
+                    </div>
+                    <!-- <img
                   [src]="clientJob.clientImg"
                   height="50px"
                   alt="{{ clientJob.clientName }}"
                   class="rounded-circle"
                 /> -->
-             
-                </div>
-                <div>
-                  <p class="clientName">
-                    {{ clientJob.clientName }}
-                    <i class="fa-solid fa-user"></i>
-                </p>
-                <p>
-                  {{clientJob.categoryTitle}}
-                </p>
-                </div>
-               
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="col-11 container-fluid d-flex my-2"
-      *ngIf="clientJob"
-    >
-      <div class="container h-50">
-        <h6 class="text-end py-3">معلومات المشروع</h6>
-        <hr />
-        <div class="text-end projectdetails">
-          <div class="d-flex justify-content-between mx-3">
-            <p class="p-1">تاريخ النشر</p>
-            <p class="mx-2">{{ getFormattedDate(clientJob.postTime) }}</p>
-          </div>
-          <hr />
-          <div class="d-flex justify-content-between mx-3">
-            <p class="p-1">الميزانية</p>
-            <p class="mx-5">
-              {{ clientJob.minBudget }} $ - {{ clientJob.maxBudget }} $
-            </p>
-          </div>
-          <hr />
-          <div class="d-flex justify-content-between mx-3">
-            <p class="p-1">مدة المشروع</p>
-            <p class="mx-5">3 أيام</p>
-          </div>
-          <hr />
-          <div class="d-flex justify-content-between mx-3">
-            <p class="p-1">عدد العروض</p>
-            <p class="mx-5">{{ clientJob.proposalsCount }}</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-8 text-end ms-3">
-        <div class="container my-2 py-2">
-          <h5 class="text-end py-2">وصف المشروع</h5>
-          <hr />
-          <p>{{ clientJob.description }}</p>
-        </div>
-
-        <div *ngIf="isFreelancer && clientJob.status === JobStatus.Active" class="container my-2 py-2">
-          <h5>أضف عرضك</h5>
-          <hr />
-          <form [formGroup]="proposalForm" (ngSubmit)="addProposal()">
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label for="deliveryTime">مدة التسليم بالأيام</label>
-                <input
-                  formControlName="Duration"
-                  type="number"
-                  id="deliveryTime"
-                  name="deliveryTime"
-                  placeholder="مدة التسليم"
-                  class="w-75 form-control"
-                  required
-                />
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="offerValue">قيمة العرض بالدولار</label>
-                <input
-                  formControlName="Price"
-                  type="number"
-                  id="offerValue"
-                  name="offerValue"
-                  placeholder="قيمة العرض"
-                  class="w-75 form-control"
-                  required
-                />
-              </div>
-            </div>
-            <div class="col-11 mt-3">
-              <label for="offerDetails">تفاصيل العرض</label>
-              <textarea
-                formControlName="Description"
-                id="offerDetails"
-                name="offerDetails"
-                class="w-100 form-control"
-                rows="4"
-                required
-              ></textarea>
-            </div>
-            
-            <button type="submit" class="btn btn-success  mt-3">أضف عرضك</button>
-          </form>
-        </div>
-
-        <div class="container my-2 py-2">
-          <h4 class="m-2">العروض المقدمة</h4>
-
-
-          <ng-container *ngIf="proposalsDetails && proposalsDetails.length > 0; else EmptyProposals">          
-            <div *ngFor="let proposal of proposalsDetails">
-              <div class="proposal-container p-3 border rounded mb-3">
-                <div class="d-flex justify-content-between align-items-center mb-3">
+                  </div>
                   <div>
-                    <strong>{{ proposal.freelancerName }}</strong>
-                    <div><small class="text-muted">{{ proposal.freelancerTitle }}</small></div>
-                  </div>
-            
-                  <div class="d-flex gap-2">
-                    <button 
-                      [disabled]="clientJob.status !== JobStatus.Active && clientJob.acceptedFreelancerId !== proposal.freelancerId" 
-                      *ngIf="isClient && visitedJobClientId === LoggedInId" 
-                      class="btn btn-info" 
-
-<!--                       (click)="chat(proposal.freelancerId, clientName)"  -->
-
-                      (click)="chat(proposal.freelancerName)" 
-
-                      [attr.aria-label]="'Chat with ' + proposal.freelancerName">
-                      مراسلة
-                    </button>
-                    <button 
-                      [disabled]="clientJob.status !== JobStatus.Active" 
-                      *ngIf="isClient && visitedJobClientId === LoggedInId" 
-                      class="btn btn-success" 
-                      (click)="AcceptProposal(proposal.id)">
-                      قبول
-                    </button>
-                    <button 
-                      [disabled]="clientJob.status !== JobStatus.Active" 
-                      *ngIf="isClient && visitedJobClientId === LoggedInId" 
-                      class="btn btn-danger">
-                      رفض 
-                    </button>
-                  </div>
-                </div>
-            
-                <div class="row mt-3">
-                  <div class="col-12">
-                    <p>{{ proposal.description }}</p>
-                  </div>
-                </div>
-            
-                <div *ngIf="isClient && visitedJobClientId === LoggedInId" class="row">
-                  <div class="col-12 d-flex justify-content-end align-items-center">
-                    <div class="text-success mx-3">
-                      <i class="fa-solid fa-dollar-sign p-1"></i>
-                      <span>{{ proposal.price }}</span>
-                    </div>
-                    <div>
-                      {{ proposal.duration }} أيام
-                    </div>
+                    <p class="clientName">
+                      {{ clientJob.clientName }}
+                      <i class="fa-solid fa-user"></i>
+                    </p>
+                    <p>
+                      {{ clientJob.categoryTitle }}
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
-             </ng-container>
-          
-          <ng-template #EmptyProposals>
-            <tr style="direction: rtl" class="text-danger">
-              <td colspan="2">لا توجد عروض حتى الآن</td>
-            </tr>
-          </ng-template>
-          
-          
+          </div>
+        </div>
+      </div>
+      <div class="col-11 container-fluid d-flex my-2" *ngIf="clientJob">
+        <div class="container h-50">
+          <h6 class="text-end py-3">معلومات المشروع</h6>
+          <hr />
+          <div class="text-end projectdetails">
+            <div class="d-flex justify-content-between mx-3">
+              <p class="p-1">تاريخ النشر</p>
+              <p class="mx-2">{{ getFormattedDate(clientJob.postTime) }}</p>
+            </div>
+            <hr />
+            <div class="d-flex justify-content-between mx-3">
+              <p class="p-1">الميزانية</p>
+              <p class="mx-5">
+                {{ clientJob.minBudget }} $ - {{ clientJob.maxBudget }} $
+              </p>
+            </div>
+            <hr />
+            <div class="d-flex justify-content-between mx-3">
+              <p class="p-1">مدة المشروع</p>
+              <p class="mx-5">3 أيام</p>
+            </div>
+            <hr />
+            <div class="d-flex justify-content-between mx-3">
+              <p class="p-1">عدد العروض</p>
+              <p class="mx-5">{{ clientJob.proposalsCount }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-8 text-end ms-3">
+          <div class="container my-2 py-2">
+            <h5 class="text-end py-2">وصف المشروع</h5>
+            <hr />
+            <p>{{ clientJob.description }}</p>
+          </div>
+
+          <div
+            *ngIf="isFreelancer && clientJob.status === JobStatus.Active"
+            class="container my-2 py-2"
+          >
+            <h5>أضف عرضك</h5>
+            <hr />
+            <form [formGroup]="proposalForm" (ngSubmit)="addProposal()">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="deliveryTime">مدة التسليم بالأيام</label>
+                  <input
+                    formControlName="Duration"
+                    type="number"
+                    id="deliveryTime"
+                    name="deliveryTime"
+                    placeholder="مدة التسليم"
+                    class="w-75 form-control"
+                    required
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="offerValue">قيمة العرض بالدولار</label>
+                  <input
+                    formControlName="Price"
+                    type="number"
+                    id="offerValue"
+                    name="offerValue"
+                    placeholder="قيمة العرض"
+                    class="w-75 form-control"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="col-11 mt-3">
+                <label for="offerDetails">تفاصيل العرض</label>
+                <textarea
+                  formControlName="Description"
+                  id="offerDetails"
+                  name="offerDetails"
+                  class="w-100 form-control"
+                  rows="4"
+                  required
+                ></textarea>
+              </div>
+                <button
+                  type="submit"
+                  class="btn btn-success mt-3"
+                  (click)="chatfreelancer(freelancerName)"
+                >
+                  أضف عرضك
+                </button>
+           
+            </form>
+          </div>
+
+          <div class="container my-2 py-2">
+            <h4 class="m-2">العروض المقدمة</h4>
+
+            <ng-container
+              *ngIf="
+                proposalsDetails && proposalsDetails.length > 0;
+                else EmptyProposals
+              "
+            >
+              <div *ngFor="let proposal of proposalsDetails">
+                <div class="proposal-container p-3 border rounded mb-3">
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-3"
+                  >
+                    <div>
+                      <strong>{{ proposal.freelancerName }}</strong>
+                      <div>
+                        <small class="text-muted">{{
+                          proposal.freelancerTitle
+                        }}</small>
+                      </div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                      <button
+                        [disabled]="
+                          clientJob.status !== JobStatus.Active &&
+                          clientJob.acceptedFreelancerId !==
+                            proposal.freelancerId
+                        "
+                        *ngIf="isClient && visitedJobClientId === LoggedInId"
+                        class="btn btn-info"
+                        (click)="chat(clientName)"
+                        [attr.aria-label]="
+                          'Chat with ' + proposal.freelancerName
+                        "
+                      >
+                        مراسلة
+                      </button>
+                      <button
+                        [disabled]="clientJob.status !== JobStatus.Active"
+                        *ngIf="isClient && visitedJobClientId === LoggedInId"
+                        class="btn btn-success"
+                        (click)="AcceptProposal(proposal.id)"
+                      >
+                        قبول
+                      </button>
+                      <button
+                        [disabled]="clientJob.status !== JobStatus.Active"
+                        *ngIf="isClient && visitedJobClientId === LoggedInId"
+                        class="btn btn-danger"
+                      >
+                        رفض
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="row mt-3">
+                    <div class="col-12">
+                      <p>{{ proposal.description }}</p>
+                    </div>
+                  </div>
+
+                  <div
+                    *ngIf="isClient && visitedJobClientId === LoggedInId"
+                    class="row"
+                  >
+                    <div
+                      class="col-12 d-flex justify-content-end align-items-center"
+                    >
+                      <div class="text-success mx-3">
+                        <i class="fa-solid fa-dollar-sign p-1"></i>
+                        <span>{{ proposal.price }}</span>
+                      </div>
+                      <div>{{ proposal.duration }} أيام</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-template #EmptyProposals>
+              <tr style="direction: rtl" class="text-danger">
+                <td colspan="2">لا توجد عروض حتى الآن</td>
+              </tr>
+            </ng-template>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 </ng-container>
 
-
-<ng-container *ngIf="openChat=== true"> 
+<ng-container *ngIf="openChat === true">
   <app-individual-chat (closeChatEmitter)="closeChat()"></app-individual-chat>
 </ng-container>
-
-
-

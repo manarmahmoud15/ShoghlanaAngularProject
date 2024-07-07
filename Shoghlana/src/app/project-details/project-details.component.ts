@@ -32,15 +32,15 @@ export class ProjectDetailsComponent implements OnInit {
   clientJob! : IClientJob;
   proposalForm: FormGroup;
   freelancerId : any;
-  freelancerName : any;
+  //  freelancerName : any;
   freelancerDetails : any[] =[];
   apiErrorMessage: string[] = [];
   openChat = false;
   JobStatus = JobStatus;
   JobId! : Number
   LoggedInId : Number = Number (localStorage.getItem('Id'));
-  clientName! : string | null
-  
+  clientName! : string ;
+  freelancerName !: string ;
 
   isFreelancer : boolean = false
   isClient : boolean = false
@@ -68,65 +68,16 @@ export class ProjectDetailsComponent implements OnInit {
     });
   }
 
-  // ngOnInit(): void {
-    
-  //   const id = +this._activatedRoute.snapshot.paramMap.get('id')!;
-
-  //   this._ProjectService.GetById(id).subscribe({
-  //     next: (res) => {
-
-  //       if (res.isSuccess) {
-  //         this.clientJob = res.data;
-  //         this.proposalForm.patchValue({ JobId: id }); // Set the JobId in the form
-  //       } else {
-  //         console.error('Unexpected response structure:', res);
-  //       }
-  //     },
-  //     error: (err) => {
-  //       console.log(err);
-  //     },
-  //   });
-  //   this._proposalService.getProposalByJobId(id).subscribe({
-  //     next: (res) => {
-  //       this.proposalsDetails = res.data;
-  //       console.log('detailss', this.proposalsDetails);
-    
-  //       if (Array.isArray(this.proposalsDetails)) {
-  //         this.proposalsDetails.forEach((proposal: { freelancerId: any; }) => {
-  //           const freelancerId = proposal.freelancerId;
-  //           console.log('freelancerId', freelancerId);
-    
-  //           this._freelancer.getFreelancerById(freelancerId).subscribe({
-  //             next: (freelancerRes) => {
-  //               console.log('freelancer', freelancerRes);
-  //             },
-  //             error: (err) => {
-  //               console.error('Error fetching freelancer data', err);
-  //             }
-  //           });
-  //         });
-  //       } else {
-  //         console.error('Unexpected response data format', res.data);
-  //       }
-  //     },
-  //     error: (err) => {
-  //       console.error('Error fetching proposal data', err);
-  //     }
-  //   });
-    
-  // }
-
-  ngOnInit(): void {
-
-    
-    this.clientName = localStorage.getItem('Name');
-
+  ngOnInit(): void {    
+    this.clientName = localStorage.getItem('Name') ?? '';
+    console.log("clientName",this.clientName)
     this._authService.IsClient.subscribe({
       next : () => {
         if(this._authService.IsClient.getValue() !== null)
           {
               this.isClient = true
               console.log(this._authService.IsClient.getValue()) 
+              
           }
           else
           {
@@ -143,6 +94,8 @@ export class ProjectDetailsComponent implements OnInit {
           {
               this.isFreelancer = true
               console.log(this._authService.IsFreelancer.getValue()) 
+              // this.freelancerName = localStorage.getItem('Name');
+
           }
           else
           {
@@ -157,14 +110,60 @@ export class ProjectDetailsComponent implements OnInit {
       this.LoadJobData();
       this.LoadProposalsData();
     })
-
     //this.JobId = +this._activatedRoute.snapshot.paramMap.get('id')!;
    // console.log('Route ID:', this.JobId);
 
-   
-    this._individualChatService.myName = { name: 'Initial Name' };
-  }
+   const id = +this._activatedRoute.snapshot.paramMap.get('id')!;
+   console.log('Route ID:', id);
+   this._ProjectService.GetById(id).subscribe({
+    next: (res) => {
+      console.log('Project response:', res);
+      if (res.isSuccess) {
+        this.clientJob = res.data;
+        this.proposalForm.patchValue({ JobId: id });
+      } else {
+        console.error('Unexpected response structure:', res);
+      }
+    },
+    error: (err) => {
+      console.error('Error fetching project data:', err);
+    }
+  });
 
+  this._proposalService.getProposalByJobId(id).subscribe({
+    next: (res) => {
+      this.proposalsDetails = res.data;
+
+      if (Array.isArray(this.proposalsDetails)) {
+        this.proposalsDetails.forEach((proposal: { freelancerId: any }) => {
+          const freelancerId = proposal.freelancerId;
+
+          this._freelancer.getFreelancerById(freelancerId).subscribe({
+            next: (freelancerRes) => {
+              if (freelancerRes && typeof freelancerRes === 'object') {
+                this.freelancerDetails.push(freelancerRes.data);
+                this.freelancerName = freelancerRes.data.name;
+                console.log('name',this.freelancerName)
+              } else {
+                console.error('Unexpected freelancer response format', freelancerRes);
+              }
+            },
+            error: (err) => {
+              console.error('Error fetching freelancer data:', err);
+            },
+          });
+        });
+      } else {
+        console.error('Unexpected response data format', res.data);
+      }
+    },
+    error: (err) => {
+      console.error('Error fetching proposal data:', err);
+    },
+  });
+
+  this._individualChatService.myName = { name: 'Initial Name' };
+  }
 
   LoadJobData()
   {
@@ -207,46 +206,180 @@ export class ProjectDetailsComponent implements OnInit {
     });
 
   } 
-  chat(freelancerId: Number, ClientName : string | null){ 
-    // this.apiErrorMessage =[];
-    // this.openChat = true ;
-    // const user: User = { name: freelancerName };
-    //   this._individualChatService.registerUser(user).subscribe({
-    //     next:()=> {
-    //       // console.log('openchar')
-    //       // this.router.navigate(['individualChat']);
-    //       this._individualChatService.myName = user
-    //       console.log('myname',this._individualChatService.myName)
-    //       this.openChat =true
-    //     },
-    //     error: err=>{
-    //       if(typeof(err.error) !== 'object'){
-    //         this.apiErrorMessage.push(err.error)
-    //       }
-    //     }
-    //   })
+  // chat(ClientName : string   ) : void{ 
+  //   this.apiErrorMessage =[];
+  //  //  this.openChat = true ;
+    
+  //   if (ClientName != null) {
+  //     const user: User = { name: ClientName };
+  
+  //     this._individualChatService.registerUser(user).subscribe({
+  //       next: () => {
+  //         this._individualChatService.myName = user;
+  //         console.log('myname', this._individualChatService.myName);
+  //         this.openChat = true;
+  //       },
+  //       error: (err) => {
+  //         if (typeof err.error !== 'object') {
+  //           this.apiErrorMessage.push(err.error);
+  //         }
+  //       }
+  //     });
+  //   }
+  // }
+  // chat(clientName : string){ 
+  //   this.apiErrorMessage =[];
+  //   //this.openChat = true ;
+  //   console.log("chatfrcleees",clientName)
 
+  //   const user: User = { name: clientName };
+  //     this._individualChatService.registerUser(user).subscribe({
+  //       next:()=> {
+  //         // console.log('openchar')
+  //         // this.router.navigate(['individualChat']);
+  //         this._individualChatService.myName = user
+  //         console.log('myname',this._individualChatService.myName)
+  //         this.openChat =true
+  //       },
+  //       error: err=>{
+  //         if(typeof(err.error) !== 'object'){
+  //           this.apiErrorMessage.push(err.error)
+  //         }
+  //       }
+  //     })
+  // }
+  // chatFreelancer(freelancerName : string)  { 
+  //   this.apiErrorMessage =[];
+  //   console.log("chatfreeeee",freelancerName)
+  //   // this.openChat = true ;
+
+  //   const user: User = { name: freelancerName };
+  //     this._individualChatService.registerUser(user).subscribe({
+  //       next:()=> {
+  //         // console.log('openchar')
+  //         // this.router.navigate(['individualChat']);
+  //         this._individualChatService.myName = user
+  //         console.log('myname',this._individualChatService.myName)
+  //         // this.openChat =true
+  //       },
+  //       error: err=>{
+  //         if(typeof(err.error) !== 'object'){
+  //           this.apiErrorMessage.push(err.error)
+  //         }
+  //       }
+  //     })
+    
+
+  // }
+  // chat(clientName: string) {
+  //   this.apiErrorMessage = [];
+  // console.log(',jhngbvxcgvhbj')
+  //   const user: User = { name: clientName };
+  //   this._individualChatService.registerUser(user).subscribe({
+  //     next: () => {
+  //       this._individualChatService.myName = user;
+  //       console.log('Chat opened with:', user.name);
+  //       this.openChat = true;
+  //     },
+  //     error: err => {
+  //       console.error('Error registering user:', err);
+  //       if (typeof err.error === 'object' && err.error.message) {
+  //         this.apiErrorMessage.push(err.error.message);
+  //       } else {
+  //         this.apiErrorMessage.push('Failed to open chat. Please try again later.');
+  //       }
+  //     }
+  //   });
+  // }
+  
+  // chatFreelancer(freelancerName: string) {
+  //   this.apiErrorMessage = [];
+  //   console.log('freeeeeeeee',freelancerName)
+  // console.log('lkjhgkjl;jhgf')
+  //   const user: User = { name: freelancerName };
+  //   this._individualChatService.registerUser(user).subscribe({
+  //     next: () => {
+  //       this._individualChatService.myName = user;
+  //       console.log('Chat opened with:', user.name);
+  //       this.openChat = true;
+  //     },
+  //     error: err => {
+  //       console.error('Error registering user:', err);
+  //       if (typeof err.error === 'object' && err.error.message) {
+  //         this.apiErrorMessage.push(err.error.message);
+  //       } else {
+  //         this.apiErrorMessage.push('Failed to open chat. Please try again later.');
+  //       }
+  //     }
+  //   });
+  // }
+
+  chat(Name: string) {
+    this.apiErrorMessage = [];
+
+    const user = { name: Name };
+
+    this._individualChatService.registerUser(user).subscribe({
+      next: () => {
+        this._individualChatService.myName = user;
+        console.log('Chat opened with:', user.name);
+        this.openChat = true;
+      },
+      error: err => {
+        console.error('Error registering user:', err);
+        if (err.error && typeof err.error === 'object' && err.error.message) {
+          this.apiErrorMessage.push(err.error.message);
+        } else {
+          this.apiErrorMessage.push('Failed to open chat. Please try again later.');
+        }
+      }
+    });
   }
-//   chat(freelancerName : string){ 
-//     this.apiErrorMessage =[];
-//     this.openChat = true ;
-//     const user: User = { name: freelancerName };
-//       this._individualChatService.registerUser(user).subscribe({
-//         next:()=> {
-//           // console.log('openchar')
-//           // this.router.navigate(['individualChat']);
-//           this._individualChatService.myName = user
-//           console.log('myname',this._individualChatService.myName)
-//           this.openChat =true
-//         },
-//         error: err=>{
-//           if(typeof(err.error) !== 'object'){
-//             this.apiErrorMessage.push(err.error)
-//           }
-//         }
-//       })
+  chatfreelancer(Name: string) {
+    this.apiErrorMessage = [];
 
-//   }
+    const user : User= { name: Name };
+
+    this._individualChatService.registerUser(user).subscribe({
+      next: () => {
+        this._individualChatService.myName = user;
+        console.log('Chat opened with:', user.name);
+        //this.openChat = true;
+      },
+      error: err => {
+        console.error('Error registering user:', err);
+        if (err.error && typeof err.error === 'object' && err.error.message) {
+          this.apiErrorMessage.push(err.error.message);
+        } else {
+          this.apiErrorMessage.push('Failed to open chat. Please try again later.');
+        }
+      }
+    });
+  }
+
+  // chatFreelancer(freelancerNaame: string) {
+  //   this.apiErrorMessage = [];
+
+  //   const user = { name: freelancerNaame };
+
+  //   this._individualChatService.registerUser(user).subscribe({
+  //     next: () => {
+  //       this._individualChatService.myName = user;
+  //       console.log('Chat opened with:', user.name);
+  //       this.openChat = true;
+  //     },
+  //     error: err => {
+  //       console.error('Error registering user:', err);
+  //       if (err.error && typeof err.error === 'object' && err.error.message) {
+  //         this.apiErrorMessage.push(err.error.message);
+  //       } else {
+  //         this.apiErrorMessage.push('Failed to open chat. Please try again later.');
+  //       }
+  //     }
+  //   });
+  // }
+
+  
   closeChat(){
     this.openChat =false;
   }
