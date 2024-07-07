@@ -16,6 +16,7 @@ import { User } from '../Models/user';
 import { IndividualChatComponent } from '../individualChat/individual-chat/individual-chat.component';
 import { JobService } from '../Services/job/job.service';
 import { AuthService } from '../auth.service';
+import { ProposalStatus } from '../Enums/proposal-status';
 
 @Component({
   selector: 'app-project-details',
@@ -41,6 +42,8 @@ export class ProjectDetailsComponent implements OnInit {
   LoggedInId : Number = Number (localStorage.getItem('Id'));
   clientName! : string ;
   freelancerName !: string ;
+  proposalStatus = ProposalStatus
+  rejectedProposalsIds : Number[] = [];
 
   isFreelancer : boolean = false
   isClient : boolean = false
@@ -86,8 +89,6 @@ export class ProjectDetailsComponent implements OnInit {
           }
       }
     })
-
-
     this._authService.IsFreelancer.subscribe({
       next : () => {
         if(this._authService.IsFreelancer.getValue() !== null)
@@ -95,7 +96,6 @@ export class ProjectDetailsComponent implements OnInit {
               this.isFreelancer = true
               console.log(this._authService.IsFreelancer.getValue()) 
               // this.freelancerName = localStorage.getItem('Name');
-
           }
           else
           {
@@ -113,54 +113,41 @@ export class ProjectDetailsComponent implements OnInit {
     //this.JobId = +this._activatedRoute.snapshot.paramMap.get('id')!;
    // console.log('Route ID:', this.JobId);
 
-   const id = +this._activatedRoute.snapshot.paramMap.get('id')!;
-   console.log('Route ID:', id);
-   this._ProjectService.GetById(id).subscribe({
-    next: (res) => {
-      console.log('Project response:', res);
-      if (res.isSuccess) {
-        this.clientJob = res.data;
-        this.proposalForm.patchValue({ JobId: id });
-      } else {
-        console.error('Unexpected response structure:', res);
-      }
-    },
-    error: (err) => {
-      console.error('Error fetching project data:', err);
-    }
-  });
+  //  const id = +this._activatedRoute.snapshot.paramMap.get('id')!;
+  //  console.log('Route ID:', id);
 
-  this._proposalService.getProposalByJobId(id).subscribe({
-    next: (res) => {
-      this.proposalsDetails = res.data;
 
-      if (Array.isArray(this.proposalsDetails)) {
-        this.proposalsDetails.forEach((proposal: { freelancerId: any }) => {
-          const freelancerId = proposal.freelancerId;
+  // this._proposalService.getProposalByJobId(id).subscribe({
+  //   next: (res) => {
+  //     this.proposalsDetails = res.data;
 
-          this._freelancer.getFreelancerById(freelancerId).subscribe({
-            next: (freelancerRes) => {
-              if (freelancerRes && typeof freelancerRes === 'object') {
-                this.freelancerDetails.push(freelancerRes.data);
-                this.freelancerName = freelancerRes.data.name;
-                console.log('name',this.freelancerName)
-              } else {
-                console.error('Unexpected freelancer response format', freelancerRes);
-              }
-            },
-            error: (err) => {
-              console.error('Error fetching freelancer data:', err);
-            },
-          });
-        });
-      } else {
-        console.error('Unexpected response data format', res.data);
-      }
-    },
-    error: (err) => {
-      console.error('Error fetching proposal data:', err);
-    },
-  });
+  //     if (Array.isArray(this.proposalsDetails)) {
+  //       this.proposalsDetails.forEach((proposal: { freelancerId: any }) => {
+  //         const freelancerId = proposal.freelancerId;
+
+  //         this._freelancer.getFreelancerById(freelancerId).subscribe({
+  //           next: (freelancerRes) => {
+  //             if (freelancerRes && typeof freelancerRes === 'object') {
+  //               this.freelancerDetails.push(freelancerRes.data);
+  //               this.freelancerName = freelancerRes.data.name;
+  //               console.log('name',this.freelancerName)
+  //             } else {
+  //               console.error('Unexpected freelancer response format', freelancerRes);
+  //             }
+  //           },
+  //           error: (err) => {
+  //             console.error('Error fetching freelancer data:', err);
+  //           },
+  //         });
+  //       });
+  //     } else {
+  //       console.error('Unexpected response data format', res.data);
+  //     }
+  //   },
+  //   error: (err) => {
+  //     console.error('Error fetching proposal data:', err);
+  //   },
+  // });
 
   this._individualChatService.myName = { name: 'Initial Name' };
   }
@@ -406,5 +393,63 @@ formData.append('FreelancerId', this.proposalForm.get('FreelancerId')?.value);
         }
       }
      )
+  }
+
+
+  RejectProposal(id : number )
+  {
+    console.log('Entered RejectProposal func :')
+this._proposalService.RejectProposal(id).subscribe({
+  next : (res) => {
+    console.log(res)
+    if(res.isSuccess)
+    {
+      swal({ 
+        text : ":) تم رفض العرض بنجاح",
+        icon : "success"  
+      })
+      // this.LoadProposalsData();
+      // this._JobService.GetById(this.JobId).subscribe(
+      //   {
+      //     next : (res) => {
+      //       console.log(res)
+      //       if(res.isSuccess)
+      //       {
+      //         this.clientJob = res.data
+      //         this.LoadProposalsData();
+      //         console.log(this.proposalsDetails)
+      //       }
+      //       else
+      //       {
+      //         console.log(res.message)
+      //       }
+      //     },
+      //     error : (err) => {
+      //       console.log(err)
+      //     }
+      //   }
+      // )
+      this.rejectedProposalsIds.push(id)
+    }
+    else
+    {
+      swal({
+        title : ":) فشل رفض العرض",
+        icon : "warning",
+        dangerMode : true
+      })
+      console.log(res.message)
+    }
+  },
+
+  error : (err) => {
+    swal({
+      title : ":( فشل رفض العرض",
+      icon : "warning",
+      dangerMode : true
+    })
+    console.log(err)
+  }
+})
   }
 }

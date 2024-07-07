@@ -170,11 +170,11 @@
                     <div class="d-flex gap-2">
                       <button
                         [disabled]="
-                          clientJob.status !== JobStatus.Active &&
+                          (clientJob.status !== JobStatus.Active &&
                           clientJob.acceptedFreelancerId !==
-                            proposal.freelancerId
+                            proposal.freelancerId) || proposal.status === proposalStatus.Rejected || rejectedProposalsIds.includes(proposal.id) === true
                         "
-                        *ngIf="isClient && visitedJobClientId === LoggedInId"
+                        *ngIf="isClient && visitedJobClientId === LoggedInId "
                         class="btn btn-info"
                         (click)="chat(clientName)"
                         [attr.aria-label]="
@@ -184,18 +184,18 @@
                         مراسلة
                       </button>
                       <button
-                        [disabled]="clientJob.status !== JobStatus.Active"
-                        *ngIf="isClient && visitedJobClientId === LoggedInId"
+                        [disabled]="clientJob.status !== JobStatus.Active || proposal.status === proposalStatus.Rejected || rejectedProposalsIds.includes(proposal.id)"
+                        *ngIf="isClient && visitedJobClientId === LoggedInId "
                         class="btn btn-success"
                         (click)="AcceptProposal(proposal.id)"
                       >
                         قبول
                       </button>
-                      <button
-                        [disabled]="clientJob.status !== JobStatus.Active"
+                      <button (click)="RejectProposal(proposal.id)"
+                        [disabled]="clientJob.status !== JobStatus.Active || proposal.status === proposalStatus.Rejected || rejectedProposalsIds.includes(proposal.id)"
                         *ngIf="isClient && visitedJobClientId === LoggedInId"
                         class="btn btn-danger"
-                      >
+                      >  
                         رفض
                       </button>
                     </div>
