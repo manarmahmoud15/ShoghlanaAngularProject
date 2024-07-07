@@ -248,12 +248,12 @@ export class ProjectDetailsComponent implements OnInit {
         }
       })
   }
-  chatFreelancer(freelancerName : string)  { 
+  chatFreelancer(Name : string)  { 
     this.apiErrorMessage =[];
-    console.log("chatfreeeee",freelancerName)
+    console.log("chatfreeeee",Name)
     // this.openChat = true ;
 
-    const user: User = { name: freelancerName };
+    const user: User = { name: Name };
       this._individualChatService.registerUser(user).subscribe({
         next:()=> {
           // console.log('openchar')
