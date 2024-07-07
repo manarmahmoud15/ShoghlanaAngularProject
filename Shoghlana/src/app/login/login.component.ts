@@ -15,6 +15,9 @@ import { UserRoleServiceService } from '../Services/UserRole/user-role-service.s
 import { IndividualchatService } from '../Services/individualChat/individualchat.service';
 import { User } from '../Models/user';
 import { NotificationService } from '../Services/Notification/notification.service';
+import swal from 'sweetalert';
+import { error } from 'console';
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -92,7 +95,11 @@ export class LoginComponent {
             this.apiError = response.message;
             this.resetForm();
            // alert(this.apiError);
-          }
+           swal({
+            text: `تأكد من ادخال البريد والرقم السري بشكل صحيح`,
+            icon: "warning"
+          });
+                    }
         },
         error: (error: { error: { errors: string; }; }) => {
           this.isLoading = false;
