@@ -54,13 +54,10 @@
                   </button>
                 </li>
               </div>
-</ng-container>
-                
+</ng-container>  
             <ng-template #EmptyNotifications>
               <li class="bg-danger  text-white p-2"> لا يوجد اشعارات بعد </li>
-             </ng-template>
-              
-                
+             </ng-template>            
                 <!-- <li>
                   <button>
                     <svg stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="currentColor" fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
@@ -101,25 +98,16 @@
                 </li> -->
               </ul>
             </div>
-          
-
             </nav>
           </label>
         </li>
-
-
-
         <li *ngIf="!isLogged" class="nav-item">
           <a class="nav-link text-nowrap text-gray-200 dark:hover:text-green-500 dark:text-gray-200" routerLink="/signin">تسجيل دخول</a>
         </li>
-
-
         <li *ngIf="isClient || isFreelancer" class="nav-item">
           <a class="nav-link text-nowrap text-gray-200 dark:hover:text-green-500 dark:text-gray-200" routerLink="/individualChat"> شات </a>
         </li>
-
-       
-        <li *ngIf="!isLogged" class="nav-item">
+          <li *ngIf="!isLogged" class="nav-item">
           <a class="nav-link text-nowrap dark:hover:text-green-500 dark:text-gray-200  " routerLink="/register">انشاء حساب</a>
         </li>
         <!-- <li *ngIf="isLogged" class="nav-item active">
@@ -189,8 +177,6 @@
         </li>
       </ul>
     </div>
-
-
   </div>
   <div class="relative mt-4 md:mt-0">
     <div class="flex items-center">
@@ -206,8 +192,6 @@
             /> </svg>
         </span>
       }
-
-
     </div>
   </div>
 </nav>
