@@ -36,4 +36,9 @@ export class ProposalService {
   {
     return this.httpclient.get<any>(`${this.baseUrl}/Accept/${id}`)
   }
+
+  RejectProposal(id : Number) : Observable<any>  // here
+  {
+    return this.httpclient.get<any>(`${this.baseUrl}/Reject/${id}`)
+  }
 }  

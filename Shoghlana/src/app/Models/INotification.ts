@@ -9,5 +9,7 @@ export interface INotification
    notificationTriggerId : Number,
    sentTime : string 
    reason : NotificationReason
-   title : string
+   title : string,
+   isRead : boolean 
+
 }
