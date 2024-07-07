@@ -113,41 +113,41 @@ export class ProjectDetailsComponent implements OnInit {
     //this.JobId = +this._activatedRoute.snapshot.paramMap.get('id')!;
    // console.log('Route ID:', this.JobId);
 
-  //  const id = +this._activatedRoute.snapshot.paramMap.get('id')!;
-  //  console.log('Route ID:', id);
+   const id = +this._activatedRoute.snapshot.paramMap.get('id')!;
+   console.log('Route ID:', id);
 
 
-  // this._proposalService.getProposalByJobId(id).subscribe({
-  //   next: (res) => {
-  //     this.proposalsDetails = res.data;
+  this._proposalService.getProposalByJobId(id).subscribe({
+    next: (res) => {
+      this.proposalsDetails = res.data;
 
-  //     if (Array.isArray(this.proposalsDetails)) {
-  //       this.proposalsDetails.forEach((proposal: { freelancerId: any }) => {
-  //         const freelancerId = proposal.freelancerId;
+      if (Array.isArray(this.proposalsDetails)) {
+        this.proposalsDetails.forEach((proposal: { freelancerId: any }) => {
+          const freelancerId = proposal.freelancerId;
 
-  //         this._freelancer.getFreelancerById(freelancerId).subscribe({
-  //           next: (freelancerRes) => {
-  //             if (freelancerRes && typeof freelancerRes === 'object') {
-  //               this.freelancerDetails.push(freelancerRes.data);
-  //               this.freelancerName = freelancerRes.data.name;
-  //               console.log('name',this.freelancerName)
-  //             } else {
-  //               console.error('Unexpected freelancer response format', freelancerRes);
-  //             }
-  //           },
-  //           error: (err) => {
-  //             console.error('Error fetching freelancer data:', err);
-  //           },
-  //         });
-  //       });
-  //     } else {
-  //       console.error('Unexpected response data format', res.data);
-  //     }
-  //   },
-  //   error: (err) => {
-  //     console.error('Error fetching proposal data:', err);
-  //   },
-  // });
+          this._freelancer.getFreelancerById(freelancerId).subscribe({
+            next: (freelancerRes) => {
+              if (freelancerRes && typeof freelancerRes === 'object') {
+                this.freelancerDetails.push(freelancerRes.data);
+                this.freelancerName = freelancerRes.data.name;
+                console.log('name',this.freelancerName)
+              } else {
+                console.error('Unexpected freelancer response format', freelancerRes);
+              }
+            },
+            error: (err) => {
+              console.error('Error fetching freelancer data:', err);
+            },
+          });
+        });
+      } else {
+        console.error('Unexpected response data format', res.data);
+      }
+    },
+    error: (err) => {
+      console.error('Error fetching proposal data:', err);
+    },
+  });
 
   this._individualChatService.myName = { name: 'Initial Name' };
   }
@@ -193,27 +193,7 @@ export class ProjectDetailsComponent implements OnInit {
     });
 
   } 
-  // chat(ClientName : string   ) : void{ 
-  //   this.apiErrorMessage =[];
-  //  //  this.openChat = true ;
-    
-  //   if (ClientName != null) {
-  //     const user: User = { name: ClientName };
-  
-  //     this._individualChatService.registerUser(user).subscribe({
-  //       next: () => {
-  //         this._individualChatService.myName = user;
-  //         console.log('myname', this._individualChatService.myName);
-  //         this.openChat = true;
-  //       },
-  //       error: (err) => {
-  //         if (typeof err.error !== 'object') {
-  //           this.apiErrorMessage.push(err.error);
-  //         }
-  //       }
-  //     });
-  //   }
-  // }
+
   chat(clientName : string){ 
     this.apiErrorMessage =[];
     //this.openChat = true ;
