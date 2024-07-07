@@ -227,159 +227,50 @@ export class ProjectDetailsComponent implements OnInit {
   //     });
   //   }
   // }
-  // chat(clientName : string){ 
-  //   this.apiErrorMessage =[];
-  //   //this.openChat = true ;
-  //   console.log("chatfrcleees",clientName)
+  chat(clientName : string){ 
+    this.apiErrorMessage =[];
+    //this.openChat = true ;
+    console.log("chatfrcleees",clientName)
 
-  //   const user: User = { name: clientName };
-  //     this._individualChatService.registerUser(user).subscribe({
-  //       next:()=> {
-  //         // console.log('openchar')
-  //         // this.router.navigate(['individualChat']);
-  //         this._individualChatService.myName = user
-  //         console.log('myname',this._individualChatService.myName)
-  //         this.openChat =true
-  //       },
-  //       error: err=>{
-  //         if(typeof(err.error) !== 'object'){
-  //           this.apiErrorMessage.push(err.error)
-  //         }
-  //       }
-  //     })
-  // }
-  // chatFreelancer(freelancerName : string)  { 
-  //   this.apiErrorMessage =[];
-  //   console.log("chatfreeeee",freelancerName)
-  //   // this.openChat = true ;
+    const user: User = { name: clientName };
+      this._individualChatService.registerUser(user).subscribe({
+        next:()=> {
+          // console.log('openchar')
+          // this.router.navigate(['individualChat']);
+          this._individualChatService.myName = user
+          console.log('myname',this._individualChatService.myName)
+          this.openChat =true
+        },
+        error: err=>{
+          if(typeof(err.error) !== 'object'){
+            this.apiErrorMessage.push(err.error)
+          }
+        }
+      })
+  }
+  chatFreelancer(freelancerName : string)  { 
+    this.apiErrorMessage =[];
+    console.log("chatfreeeee",freelancerName)
+    // this.openChat = true ;
 
-  //   const user: User = { name: freelancerName };
-  //     this._individualChatService.registerUser(user).subscribe({
-  //       next:()=> {
-  //         // console.log('openchar')
-  //         // this.router.navigate(['individualChat']);
-  //         this._individualChatService.myName = user
-  //         console.log('myname',this._individualChatService.myName)
-  //         // this.openChat =true
-  //       },
-  //       error: err=>{
-  //         if(typeof(err.error) !== 'object'){
-  //           this.apiErrorMessage.push(err.error)
-  //         }
-  //       }
-  //     })
+    const user: User = { name: freelancerName };
+      this._individualChatService.registerUser(user).subscribe({
+        next:()=> {
+          // console.log('openchar')
+          // this.router.navigate(['individualChat']);
+          this._individualChatService.myName = user
+          console.log('myname',this._individualChatService.myName)
+          // this.openChat =true
+        },
+        error: err=>{
+          if(typeof(err.error) !== 'object'){
+            this.apiErrorMessage.push(err.error)
+          }
+        }
+      })
     
 
-  // }
-  // chat(clientName: string) {
-  //   this.apiErrorMessage = [];
-  // console.log(',jhngbvxcgvhbj')
-  //   const user: User = { name: clientName };
-  //   this._individualChatService.registerUser(user).subscribe({
-  //     next: () => {
-  //       this._individualChatService.myName = user;
-  //       console.log('Chat opened with:', user.name);
-  //       this.openChat = true;
-  //     },
-  //     error: err => {
-  //       console.error('Error registering user:', err);
-  //       if (typeof err.error === 'object' && err.error.message) {
-  //         this.apiErrorMessage.push(err.error.message);
-  //       } else {
-  //         this.apiErrorMessage.push('Failed to open chat. Please try again later.');
-  //       }
-  //     }
-  //   });
-  // }
-  
-  // chatFreelancer(freelancerName: string) {
-  //   this.apiErrorMessage = [];
-  //   console.log('freeeeeeeee',freelancerName)
-  // console.log('lkjhgkjl;jhgf')
-  //   const user: User = { name: freelancerName };
-  //   this._individualChatService.registerUser(user).subscribe({
-  //     next: () => {
-  //       this._individualChatService.myName = user;
-  //       console.log('Chat opened with:', user.name);
-  //       this.openChat = true;
-  //     },
-  //     error: err => {
-  //       console.error('Error registering user:', err);
-  //       if (typeof err.error === 'object' && err.error.message) {
-  //         this.apiErrorMessage.push(err.error.message);
-  //       } else {
-  //         this.apiErrorMessage.push('Failed to open chat. Please try again later.');
-  //       }
-  //     }
-  //   });
-  // }
-
-  chat(Name: string) {
-    this.apiErrorMessage = [];
-
-    const user = { name: Name };
-
-    this._individualChatService.registerUser(user).subscribe({
-      next: () => {
-        this._individualChatService.myName = user;
-        console.log('Chat opened with:', user.name);
-        this.openChat = true;
-      },
-      error: err => {
-        console.error('Error registering user:', err);
-        if (err.error && typeof err.error === 'object' && err.error.message) {
-          this.apiErrorMessage.push(err.error.message);
-        } else {
-          this.apiErrorMessage.push('Failed to open chat. Please try again later.');
-        }
-      }
-    });
   }
-  chatfreelancer(Name: string) {
-    this.apiErrorMessage = [];
-
-    const user : User= { name: Name };
-
-    this._individualChatService.registerUser(user).subscribe({
-      next: () => {
-        this._individualChatService.myName = user;
-        console.log('Chat opened with:', user.name);
-        //this.openChat = true;
-      },
-      error: err => {
-        console.error('Error registering user:', err);
-        if (err.error && typeof err.error === 'object' && err.error.message) {
-          this.apiErrorMessage.push(err.error.message);
-        } else {
-          this.apiErrorMessage.push('Failed to open chat. Please try again later.');
-        }
-      }
-    });
-  }
-
-  // chatFreelancer(freelancerNaame: string) {
-  //   this.apiErrorMessage = [];
-
-  //   const user = { name: freelancerNaame };
-
-  //   this._individualChatService.registerUser(user).subscribe({
-  //     next: () => {
-  //       this._individualChatService.myName = user;
-  //       console.log('Chat opened with:', user.name);
-  //       this.openChat = true;
-  //     },
-  //     error: err => {
-  //       console.error('Error registering user:', err);
-  //       if (err.error && typeof err.error === 'object' && err.error.message) {
-  //         this.apiErrorMessage.push(err.error.message);
-  //       } else {
-  //         this.apiErrorMessage.push('Failed to open chat. Please try again later.');
-  //       }
-  //     }
-  //   });
-  // }
-
-  
   closeChat(){
     this.openChat =false;
   }
