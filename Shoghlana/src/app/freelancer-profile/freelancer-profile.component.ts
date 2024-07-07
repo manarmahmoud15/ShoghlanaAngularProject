@@ -15,6 +15,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { AuthService } from '../auth.service';
+import { CountriesService } from '../Services/Countries/countries.service';
+import { ICountry } from '../Models/icountry';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -63,6 +65,8 @@ export class FreelancerProfileComponent implements OnInit {
 
   // filteredSkills: Skill[] = [];
 
+  allCountries !: ICountry[] ;
+
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -70,7 +74,8 @@ export class FreelancerProfileComponent implements OnInit {
     private skillService: SkillsService,
     private router: Router,
     private dialog: MatDialog, // Inject MatDialog
-    private _authService : AuthService
+    private _authService : AuthService ,
+    private _coutriesService : CountriesService
 
   ) {
 
@@ -83,6 +88,7 @@ export class FreelancerProfileComponent implements OnInit {
     // this.loadFreelancerData(); // Fetch data whenever the route changes
 
     // console.log(this.freelancer);
+
   }
 
 
@@ -94,6 +100,10 @@ export class FreelancerProfileComponent implements OnInit {
 
     this.loadAllSkills();
 
+    this.allCountries = this._coutriesService.getAll();
+
+    console.log("All Countries: ");
+    console.log(this.allCountries);
 
     this._authService.Id.subscribe({
       next : () => {
@@ -135,6 +145,7 @@ export class FreelancerProfileComponent implements OnInit {
       }
     })
   }
+
 
 
   public loadFreelancerData(): void {

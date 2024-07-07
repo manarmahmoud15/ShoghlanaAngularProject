@@ -10,11 +10,12 @@ export interface IFreelancer {
     skills : Skill[],
     skillIDs : number[],
     // rate : number ,
-    address:string
+    address:string  // I will assign country to it for now untill i change it in the back
     personalImageBytes: string | File; // Updated to string | File
     overview:string,
     portfolio : Iproject[],
     workingHistory : Ijob[]
+
     // portfolio : string[] | null ,
     // workHistory : string[] | null
 }
