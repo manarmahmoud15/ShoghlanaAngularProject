@@ -8,11 +8,12 @@ import { IClient } from '../Models/IClient';
 import { JobService } from '../Services/job/job.service';
 import { Ijob } from '../Models/ijob';
 import { SearchStatus } from '../Enums/search-status';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-project-side-bar',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule , RouterLink],
   templateUrl: './project-side-bar.component.html',
   styleUrls: ['./project-side-bar.component.css'],
 })
