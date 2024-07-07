@@ -21,44 +21,44 @@ import { ProposalStatus } from '../Enums/proposal-status';
 @Component({
   selector: 'app-project-details',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule, ReactiveFormsModule , IndividualChatComponent],
+  imports: [CommonModule, RouterLink, FormsModule, ReactiveFormsModule, IndividualChatComponent],
   templateUrl: './project-details.component.html',
   styleUrls: ['./project-details.component.css'],
   providers: [DatePipe],
 })
 export class ProjectDetailsComponent implements OnInit {
-  visitedJobClientId! : Number;
-  proposalID :any ;
-  proposalsDetails! : IProposal[];
-  clientJob! : IClientJob;
+  visitedJobClientId!: Number;
+  proposalID: any;
+  proposalsDetails!: IProposal[];
+  clientJob!: IClientJob;
   proposalForm: FormGroup;
-  freelancerId : any;
+  freelancerId: any;
   //  freelancerName : any;
-  freelancerDetails : any[] =[];
+  freelancerDetails: any[] = [];
   apiErrorMessage: string[] = [];
   openChat = false;
   JobStatus = JobStatus;
-  JobId! : Number
-  LoggedInId : Number = Number (localStorage.getItem('Id'));
-  clientName! : string ;
-  freelancerName !: string ;
+  JobId!: Number
+  LoggedInId: Number = Number(localStorage.getItem('Id'));
+  clientName!: string;
+  freelancerName !: string;
   proposalStatus = ProposalStatus
-  rejectedProposalsIds : Number[] = [];
+  rejectedProposalsIds: Number[] = [];
 
-  isFreelancer : boolean = false
-  isClient : boolean = false
+  isFreelancer: boolean = false
+  isClient: boolean = false
   constructor(
     private _activatedRoute: ActivatedRoute,
     private _ProjectService: ProjectService,
-    private _JobService : JobService,
+    private _JobService: JobService,
     private _Location: Location,
     private datePipe: DatePipe,
     private _proposalService: ProposalService,
-    private _freelancer : FreelancerService,
-    private fb: FormBuilder ,
-    private _individualChatService : IndividualchatService ,
-    private router : Router ,
-    private _authService : AuthService
+    private _freelancer: FreelancerService,
+    private fb: FormBuilder,
+    private _individualChatService: IndividualchatService,
+    private router: Router,
+    private _authService: AuthService
   ) {
     this.proposalForm = this.fb.group({
       Duration: [null, [Validators.required]],
@@ -71,37 +71,33 @@ export class ProjectDetailsComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     this.clientName = localStorage.getItem('Name') ?? '';
-    console.log("clientName",this.clientName)
+    console.log("clientName", this.clientName)
     this._authService.IsClient.subscribe({
-      next : () => {
-        if(this._authService.IsClient.getValue() !== null)
-          {
-              this.isClient = true
-              console.log(this._authService.IsClient.getValue()) 
-              
-          }
-          else
-          {
-            this.isClient = false
-            console.log(this._authService.IsClient.getValue()) 
-          }
+      next: () => {
+        if (this._authService.IsClient.getValue() !== null) {
+          this.isClient = true
+          console.log(this._authService.IsClient.getValue())
+
+        }
+        else {
+          this.isClient = false
+          console.log(this._authService.IsClient.getValue())
+        }
       }
     })
     this._authService.IsFreelancer.subscribe({
-      next : () => {
-        if(this._authService.IsFreelancer.getValue() !== null)
-          {
-              this.isFreelancer = true
-              console.log(this._authService.IsFreelancer.getValue()) 
-              // this.freelancerName = localStorage.getItem('Name');
-          }
-          else
-          {
-            this.isFreelancer = false
-            console.log(this._authService.IsFreelancer.getValue()) 
-          }
+      next: () => {
+        if (this._authService.IsFreelancer.getValue() !== null) {
+          this.isFreelancer = true
+          console.log(this._authService.IsFreelancer.getValue())
+          // this.freelancerName = localStorage.getItem('Name');
+        }
+        else {
+          this.isFreelancer = false
+          console.log(this._authService.IsFreelancer.getValue())
+        }
       }
     })
 
@@ -111,55 +107,54 @@ export class ProjectDetailsComponent implements OnInit {
       this.LoadProposalsData();
     })
     //this.JobId = +this._activatedRoute.snapshot.paramMap.get('id')!;
-   // console.log('Route ID:', this.JobId);
+    // console.log('Route ID:', this.JobId);
 
-   const id = +this._activatedRoute.snapshot.paramMap.get('id')!;
-   console.log('Route ID:', id);
+    const id = +this._activatedRoute.snapshot.paramMap.get('id')!;
+    console.log('Route ID:', id);
 
 
-  this._proposalService.getProposalByJobId(id).subscribe({
-    next: (res) => {
-      this.proposalsDetails = res.data;
+    this._proposalService.getProposalByJobId(id).subscribe({
+      next: (res) => {
+        this.proposalsDetails = res.data;
 
-      if (Array.isArray(this.proposalsDetails)) {
-        this.proposalsDetails.forEach((proposal: { freelancerId: any }) => {
-          const freelancerId = proposal.freelancerId;
+        if (Array.isArray(this.proposalsDetails)) {
+          this.proposalsDetails.forEach((proposal: { freelancerId: any }) => {
+            const freelancerId = proposal.freelancerId;
 
-          this._freelancer.getFreelancerById(freelancerId).subscribe({
-            next: (freelancerRes) => {
-              if (freelancerRes && typeof freelancerRes === 'object') {
-                this.freelancerDetails.push(freelancerRes.data);
-                this.freelancerName = freelancerRes.data.name;
-                console.log('name',this.freelancerName)
-              } else {
-                console.error('Unexpected freelancer response format', freelancerRes);
-              }
-            },
-            error: (err) => {
-              console.error('Error fetching freelancer data:', err);
-            },
+            this._freelancer.getFreelancerById(freelancerId).subscribe({
+              next: (freelancerRes) => {
+                if (freelancerRes && typeof freelancerRes === 'object') {
+                  this.freelancerDetails.push(freelancerRes.data);
+                  this.freelancerName = freelancerRes.data.name;
+                  console.log('name', this.freelancerName)
+                } else {
+                  console.error('Unexpected freelancer response format', freelancerRes);
+                }
+              },
+              error: (err) => {
+                console.error('Error fetching freelancer data:', err);
+              },
+            });
           });
-        });
-      } else {
-        console.error('Unexpected response data format', res.data);
-      }
-    },
-    error: (err) => {
-      console.error('Error fetching proposal data:', err);
-    },
-  });
+        } else {
+          console.error('Unexpected response data format', res.data);
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching proposal data:', err);
+      },
+    });
 
-  this._individualChatService.myName = { name: 'Initial Name' };
+    this._individualChatService.myName = { name: 'Initial Name' };
   }
 
-  LoadJobData()
-  {
+  LoadJobData() {
     this._JobService.GetById(this.JobId).subscribe({
       next: (res) => {
         console.log('Job response:', res);
         if (res.isSuccess) {
           this.clientJob = res.data;
-         this.visitedJobClientId = this.clientJob.clientId
+          this.visitedJobClientId = this.clientJob.clientId
 
           this.proposalForm.patchValue({ JobId: this.JobId });
         } else {
@@ -172,74 +167,71 @@ export class ProjectDetailsComponent implements OnInit {
     });
   }
 
-  LoadProposalsData()
-  {
+  LoadProposalsData() {
     this._proposalService.getProposalByJobId(this.JobId).subscribe({
       next: (res) => {
-        if(res.isSuccess)
-        {
+        if (res.isSuccess) {
           console.log('Proposal response:', res);
           this.proposalsDetails = res.data;
           console.log('Proposal details:', this.proposalsDetails);
         }
-      else
-      {
-        console.log(res.message)
-      }
+        else {
+          console.log(res.message)
+        }
       },
       error: (err) => {
         console.error('Error fetching proposal data:', err);
       },
     });
 
-  } 
+  }
 
-  chat(clientName : string){ 
-    this.apiErrorMessage =[];
+  chat(clientName: string) {
+    this.apiErrorMessage = [];
     //this.openChat = true ;
-    console.log("chatfrcleees",clientName)
+    console.log("chatfrcleees", clientName)
 
     const user: User = { name: clientName };
-      this._individualChatService.registerUser(user).subscribe({
-        next:()=> {
-          // console.log('openchar')
-          // this.router.navigate(['individualChat']);
-          this._individualChatService.myName = user
-          console.log('myname',this._individualChatService.myName)
-          this.openChat =true
-        },
-        error: err=>{
-          if(typeof(err.error) !== 'object'){
-            this.apiErrorMessage.push(err.error)
-          }
+    this._individualChatService.registerUser(user).subscribe({
+      next: () => {
+        // console.log('openchar')
+        // this.router.navigate(['individualChat']);
+        this._individualChatService.myName = user
+        console.log('myname', this._individualChatService.myName)
+        this.openChat = true
+      },
+      error: err => {
+        if (typeof (err.error) !== 'object') {
+          this.apiErrorMessage.push(err.error)
         }
-      })
+      }
+    })
   }
-  chatFreelancer(Name : string)  { 
-    this.apiErrorMessage =[];
-    console.log("chatfreeeee",Name)
+  chatFreelancer(Name: string) {
+    this.apiErrorMessage = [];
+    console.log("chatfreeeee", Name)
     // this.openChat = true ;
 
     const user: User = { name: Name };
-      this._individualChatService.registerUser(user).subscribe({
-        next:()=> {
-          // console.log('openchar')
-          // this.router.navigate(['individualChat']);
-          this._individualChatService.myName = user
-          console.log('myname',this._individualChatService.myName)
-          // this.openChat =true
-        },
-        error: err=>{
-          if(typeof(err.error) !== 'object'){
-            this.apiErrorMessage.push(err.error)
-          }
+    this._individualChatService.registerUser(user).subscribe({
+      next: () => {
+        // console.log('openchar')
+        // this.router.navigate(['individualChat']);
+        this._individualChatService.myName = user
+        console.log('myname', this._individualChatService.myName)
+        // this.openChat =true
+      },
+      error: err => {
+        if (typeof (err.error) !== 'object') {
+          this.apiErrorMessage.push(err.error)
         }
-      })
-    
+      }
+    })
+
 
   }
-  closeChat(){
-    this.openChat =false;
+  closeChat() {
+    this.openChat = false;
   }
   goBack() {
     this._Location.back();
@@ -249,14 +241,16 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   addProposal() {
-let formData: FormData;
-formData = new FormData();
 
-formData.append('Duration', this.proposalForm.get('Duration')?.value);
-formData.append('Description', this.proposalForm.get('Description')?.value);
-formData.append('Price', this.proposalForm.get('Price')?.value);
-formData.append('JobId', this.proposalForm.get('JobId')?.value);
-formData.append('FreelancerId', this.proposalForm.get('FreelancerId')?.value);
+    console.log("Logged ID :" , this.proposalForm.get('FreelancerId')?.value);
+    let formData: FormData;
+    formData = new FormData();
+
+    formData.append('Duration', this.proposalForm.get('Duration')?.value);
+    formData.append('Description', this.proposalForm.get('Description')?.value);
+    formData.append('Price', this.proposalForm.get('Price')?.value);
+    formData.append('JobId', this.proposalForm.get('JobId')?.value);
+    formData.append('FreelancerId', this.proposalForm.get('FreelancerId')?.value);
 
 
     console.log("Submitting proposal...");
@@ -265,48 +259,44 @@ formData.append('FreelancerId', this.proposalForm.get('FreelancerId')?.value);
       // console.log("Form is valid:", payload);
       this._proposalService.postProposal(formData).subscribe({
         next: (res) => {
-          if(res.isSuccess)
-          {
+          if (res.isSuccess) {
             swal({
               // title: "wow!",
               text: ":) تم ارسال عرضك بنجاح ",
               icon: "success",
-  
-            })  
-            
-            
+
+            })
+
+
             this._proposalService.getProposalByJobId(this.JobId).subscribe({
               next: (res) => {
-                if(res.isSuccess)
-                {
+                if (res.isSuccess) {
                   console.log('Proposal response:', res);
                   this.proposalsDetails = res.data;
                   this.clientJob.proposalsCount = this.proposalsDetails.length
                   console.log('Proposal details:', this.proposalsDetails);
                 }
-              else
-              {
-                console.log(res.message)
-              }
-              
+                else {
+                  console.log(res.message)
+                }
+
               },
               error: (err) => {
                 console.error('Error fetching proposal data:', err);
               },
             });
           }
-          else
-          {
+          else {
             swal({
               title: " :( فشل ارسال العرض ",
               icon: "warning",
               dangerMode: true,
             })
           }
-              },
+        },
         error: (err) => {
           console.log('Error response:', err);
-          console.log('Payload sent:',formData);
+          console.log('Payload sent:', formData);
           // console.log('Payload sent:', payload);
           swal({
             title: " :( فشل ارسال العرض ",
@@ -320,41 +310,36 @@ formData.append('FreelancerId', this.proposalForm.get('FreelancerId')?.value);
     }
   }
 
-  AcceptProposal(id : Number)
-  {
-     this._proposalService.AcceptProposal(id).subscribe(
+  AcceptProposal(id: Number) {
+    this._proposalService.AcceptProposal(id).subscribe(
       {
-        next : (res) => {
+        next: (res) => {
           console.log(res)
-          if(res.isSuccess)
-          {
+          if (res.isSuccess) {
             swal({
               text: ":) تم قبول العرض بنجاح ",
               icon: "success",
-  
-            }) 
+
+            })
 
             this._JobService.GetById(this.JobId).subscribe(
               {
-                next : (res) => {
+                next: (res) => {
                   console.log(res)
-                  if(res.isSuccess)
-                  {
+                  if (res.isSuccess) {
                     this.clientJob = res.data
                   }
-                  else
-                  {
+                  else {
                     console.log(res.message)
                   }
                 },
-                error : (err) => {
+                error: (err) => {
                   console.log(err)
                 }
               }
             )
           }
-          else
-          {
+          else {
             swal({
               title: " :( فشل قبول العرض ",
               icon: "warning",
@@ -363,73 +348,70 @@ formData.append('FreelancerId', this.proposalForm.get('FreelancerId')?.value);
             console.log(res.message)
           }
         },
-        error : (err)=> {
+        error: (err) => {
           swal({
             title: " :( فشل قبول العرض ",
             icon: "warning",
             dangerMode: true,
           })
-           console.log(err)
+          console.log(err)
         }
       }
-     )
+    )
   }
 
 
-  RejectProposal(id : number )
-  {
+  RejectProposal(id: number) {
     console.log('Entered RejectProposal func :')
-this._proposalService.RejectProposal(id).subscribe({
-  next : (res) => {
-    console.log(res)
-    if(res.isSuccess)
-    {
-      swal({ 
-        text : ":) تم رفض العرض بنجاح",
-        icon : "success"  
-      })
-      // this.LoadProposalsData();
-      // this._JobService.GetById(this.JobId).subscribe(
-      //   {
-      //     next : (res) => {
-      //       console.log(res)
-      //       if(res.isSuccess)
-      //       {
-      //         this.clientJob = res.data
-      //         this.LoadProposalsData();
-      //         console.log(this.proposalsDetails)
-      //       }
-      //       else
-      //       {
-      //         console.log(res.message)
-      //       }
-      //     },
-      //     error : (err) => {
-      //       console.log(err)
-      //     }
-      //   }
-      // )
-      this.rejectedProposalsIds.push(id)
-    }
-    else
-    {
-      swal({
-        title : ":) فشل رفض العرض",
-        icon : "warning",
-        dangerMode : true
-      })
-      console.log(res.message)
-    }
-  },
+    this._proposalService.RejectProposal(id).subscribe({
+      next: (res) => {
+        console.log(res)
+        if (res.isSuccess) {
+          swal({
+            text: ":) تم رفض العرض بنجاح",
+            icon: "success"
+          })
+          // this.LoadProposalsData();
+          // this._JobService.GetById(this.JobId).subscribe(
+          //   {
+          //     next : (res) => {
+          //       console.log(res)
+          //       if(res.isSuccess)
+          //       {
+          //         this.clientJob = res.data
+          //         this.LoadProposalsData();
+          //         console.log(this.proposalsDetails)
+          //       }
+          //       else
+          //       {
+          //         console.log(res.message)
+          //       }
+          //     },
+          //     error : (err) => {
+          //       console.log(err)
+          //     }
+          //   }
+          // )
+          this.rejectedProposalsIds.push(id)
+        }
+        else {
+          swal({
+            title: ":) فشل رفض العرض",
+            icon: "warning",
+            dangerMode: true
+          })
+          console.log(res.message)
+        }
+      },
 
-  error : (err) => {
-    swal({
-      title : ":( فشل رفض العرض",
-      icon : "warning",
-      dangerMode : true
+      error: (err) => {
+        swal({
+          title: ":( فشل رفض العرض",
+          icon: "warning",
+          dangerMode: true
+        })
+        console.log(err)
+      }
     })
-    console.log(err)
-  }
-})
   }
 }

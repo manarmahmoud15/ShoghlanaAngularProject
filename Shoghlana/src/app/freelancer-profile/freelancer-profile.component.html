@@ -149,7 +149,12 @@
             <span class="card-title ml-2"> تعديل الدولة</span>
           </div>
           <div class="card-body" style="direction: rtl">
-            <input [(ngModel)]="freelancer.address" class="form-control" />
+            <option value="" disabled selected>اختر الدولة</option>
+            <select [(ngModel)]="freelancer.address" class="form-control">
+              <!-- <option value="" disabled selected>اختر الدولة</option> -->
+              <option *ngFor="let country of allCountries" [value]="country.name">{{ country.name }}</option>
+            </select>
+            <!-- <input [(ngModel)]="freelancer.address" class="form-control" /> -->
           </div>
         </div>
 
