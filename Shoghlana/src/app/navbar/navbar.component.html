@@ -151,6 +151,12 @@
             >
           <!--client profile not freelancer-->
         </li>
+        <li *ngIf="isLogged && isFreelancer" class="nav-item active">
+          <a class="nav-link text-nowrap" [routerLink]="['/joinRoom' ]">
+            الانضمام الى مجموعه</a
+          >
+        <!--client profile not freelancer-->
+      </li>
         <li *ngIf="isFreelancer || isClient" class="nav-item active">
           <a class="nav-link text-nowrap dark:hover:text-green-500 dark:text-gray-200" routerLink="/projects">مشروع</a>
         </li>
