@@ -23,12 +23,12 @@
       />
     </a>
 
-    <div class="ms-auto dark:bg-gray-800">
+    <div class="ms-auto dark:bg-gray-800 ">
       <ul class="navbar-nav text-gray-900 dark:text-gray-200">
-        <li *ngIf="isClient || isFreelancer" class="nav-item">
+        <li *ngIf="isClient || isFreelancer" class="nav-item ">
           <label class="popup btn" style="color: aliceblue;" (click)="GetNotifications()">
             <input type="checkbox" [(ngModel)]="IsOpenPopUp">
-            <i class="fa-solid fa-earth-americas pt-3"></i>
+            <i class="fa-solid fa-earth-americas "></i>
 
             <ng-container *ngIf="NewNotificationsCounter > 0">
               <span class="badge">{{NewNotificationsCounter}}</span>

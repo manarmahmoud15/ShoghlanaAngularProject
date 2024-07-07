@@ -437,3 +437,37 @@
   border-radius: 5px;
   background: #fff;
 } */
+.navbar-nav .nav-link {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 5px;
+  color: white
+}
+
+.navbar-nav .nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  display: block;
+  margin-top: 5px;
+  right: 0;
+  background:#1dbf73;
+  transition: width 1s ease;
+  -webkit-transition: width 1s ease;
+}
+
+.navbar-nav .nav-link:hover {
+  /* color: #1dbf73; */
+}
+.navbar-nav .nav-link:hover::after {
+  width: 100%;
+  left: 0;
+  right: auto;
+}
+
+.mx-auto {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
