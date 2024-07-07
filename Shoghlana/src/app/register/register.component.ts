@@ -182,7 +182,8 @@ confirm() {
       console.log(response)
       console.log(response.isSuccess);
       if (response.isSuccess) {
-        window.open(`https://mail.google.com/mail/u/0/#inbox=${toemail}`, '_blank');
+        // window.open(`https://mail.google.com/mail/u/0/#inbox=${toemail}`, '_blank');
+        window.location.href = `https://mail.google.com/mail/u/0/#inbox=${toemail}`;
         this._router.navigateByUrl("/signin");
       }
     },
