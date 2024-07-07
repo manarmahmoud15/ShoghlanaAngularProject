@@ -16,7 +16,6 @@ import { User } from '../Models/user';
 import { IndividualChatComponent } from '../individualChat/individual-chat/individual-chat.component';
 import { JobService } from '../Services/job/job.service';
 import { AuthService } from '../auth.service';
-import { ProposalStatus } from '../Enums/proposal-status';
 
 @Component({
   selector: 'app-project-details',
@@ -41,7 +40,7 @@ export class ProjectDetailsComponent implements OnInit {
   JobId! : Number
   LoggedInId : Number = Number (localStorage.getItem('Id'));
   clientName! : string | null
-  proposalStatus = ProposalStatus  
+  
 
   isFreelancer : boolean = false
   isClient : boolean = false
@@ -384,41 +383,4 @@ formData.append('FreelancerId', this.proposalForm.get('FreelancerId')?.value);
       }
      )
   }
-
-  RejectProposal(id : Number)
-  {
-    this._proposalService.RejectProposal(id).subscribe(
-      {
-        next : (res) => {
-          console.log(res)
-          if(res.isSuccess)
-          {
-            swal({
-              text: ":) تم رفض العرض بنجاح ",
-              icon: "success",
-            }) 
-           }
-          else
-          {
-            swal({
-              title: " :( فشل رفض العرض ",
-              icon: "warning",
-              dangerMode: true,
-            })
-            console.log(res.message)
-          }
-        },
-        error : (err)=> {
-          swal({
-            title: " :( فشل رفض العرض ",
-            icon: "warning",
-            dangerMode: true,
-          })
-           console.log(err)
-        }
-      }
-     )
-  }
-
-  
 }

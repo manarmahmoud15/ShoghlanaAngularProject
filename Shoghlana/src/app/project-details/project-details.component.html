@@ -144,24 +144,26 @@
             
                   <div class="d-flex gap-2">
                     <button 
-                    [disabled]="(clientJob.status !== JobStatus.Active && clientJob.acceptedFreelancerId !== proposal.freelancerId) 
-                    || proposal.status === proposalStatus.Rejected" 
-                    *ngIf="isClient && visitedJobClientId === LoggedInId" 
-                    class="btn btn-info" 
-                    (click)="chat(proposal.freelancerId, clientName)" 
-                    [attr.aria-label]="'Chat with ' + proposal.freelancerName">
-                    مراسلة
-                  </button>
+                      [disabled]="clientJob.status !== JobStatus.Active && clientJob.acceptedFreelancerId !== proposal.freelancerId" 
+                      *ngIf="isClient && visitedJobClientId === LoggedInId" 
+                      class="btn btn-info" 
 
+<!--                       (click)="chat(proposal.freelancerId, clientName)"  -->
+
+                      (click)="chat(proposal.freelancerName)" 
+
+                      [attr.aria-label]="'Chat with ' + proposal.freelancerName">
+                      مراسلة
+                    </button>
                     <button 
-                      [disabled]="clientJob.status !== JobStatus.Active || proposal.status === proposalStatus.Rejected" 
+                      [disabled]="clientJob.status !== JobStatus.Active" 
                       *ngIf="isClient && visitedJobClientId === LoggedInId" 
                       class="btn btn-success" 
                       (click)="AcceptProposal(proposal.id)">
                       قبول
                     </button>
-                    <button (click)="RejectProposal(proposal.id)"
-                      [disabled]="clientJob.status !== JobStatus.Active || proposal.status === proposalStatus.Rejected" 
+                    <button 
+                      [disabled]="clientJob.status !== JobStatus.Active" 
                       *ngIf="isClient && visitedJobClientId === LoggedInId" 
                       class="btn btn-danger">
                       رفض 

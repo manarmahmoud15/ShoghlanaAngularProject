@@ -22,22 +22,21 @@
         height="50px"
       />
     </a>
-
     <div class="ms-auto dark:bg-gray-800">
+
       <ul class="navbar-nav text-gray-900 dark:text-gray-200">
-        <li *ngIf="isClient || isFreelancer" class="nav-item">
-          <label class="popup btn" style="color: aliceblue;" (click)="GetNotifications()">
+        <li *ngIf="isLogged" class="nav-item">
+          <label class="popup">
             <input type="checkbox" [(ngModel)]="IsOpenPopUp">
             <i class="fa-solid fa-earth-americas pt-3"></i>
 
-            <ng-container *ngIf="NewNotificationsCounter > 0">
-              <span class="badge">{{NewNotificationsCounter}}</span>
+            <ng-container *ngIf="Notifications !== undefined">
+              <span class="badge">{{Notifications.length}}</span>
             </ng-container>
             
             <nav class="popup-window" style="direction: rtl;">
               <legend style="direction: rtl;"> <strong style="font-size: larger; font-weight: bolder; direction: rtl;"> الاشعارات </strong></legend>
 
-              <div style="height: 60vh; overflow: scroll;">
               <ul>
               <ng-container *ngIf="Notifications !== undefined">
                 <div *ngIf="Notifications.length > 0; else EmptyNotifications">
@@ -46,7 +45,7 @@
                     <div class="d-flex">
                       <i class="fa-regular fa-bell me-2 mt-1"></i>
                       <div>
-                        <p class="mb-0 fw-bold " style="font-size: larger;">{{notification.title}}</p>
+                        <p class="mb-0 fw-bold" style="font-size: larger;">{{notification.title}}</p>
                         <p class="mb-0 text-muted">{{notification.description}}</p>
                       </div>
                     </div>
@@ -100,7 +99,7 @@
                   </button>
                 </li> -->
               </ul>
-            </div>
+
           
 
             </nav>
@@ -114,7 +113,7 @@
         </li>
 
 
-        <li *ngIf="isClient || isFreelancer" class="nav-item">
+        <li *ngIf="isLogged" class="nav-item">
           <a class="nav-link text-nowrap text-gray-200 dark:hover:text-green-500 dark:text-gray-200" routerLink="/individualChat"> شات </a>
         </li>
 
@@ -163,7 +162,7 @@
             >
           <!--client profile not freelancer-->
         </li>
-        <li *ngIf="isFreelancer || isClient" class="nav-item active">
+        <li *ngIf="isLogged" class="nav-item active">
           <a class="nav-link text-nowrap dark:hover:text-green-500 dark:text-gray-200" routerLink="/projects">مشروع</a>
         </li>
         <li *ngIf="isLogged && isClient" class="nav-item active">
@@ -189,8 +188,6 @@
         </li>
       </ul>
     </div>
-
-
   </div>
   <div class="relative mt-4 md:mt-0">
     <div class="flex items-center">

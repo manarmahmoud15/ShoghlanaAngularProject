@@ -21,7 +21,6 @@ export class AuthService {
   userdata = new BehaviorSubject(null);
   // Id: any;
   Id = new BehaviorSubject(null);
-
   constructor(
   // id = new BehaviorSubject(null);
   // Id = new BehaviorSubject(null),

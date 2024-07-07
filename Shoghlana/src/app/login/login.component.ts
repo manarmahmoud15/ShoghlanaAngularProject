@@ -14,7 +14,6 @@ import { Router, RouterModule } from '@angular/router';
 import { UserRoleServiceService } from '../Services/UserRole/user-role-service.service';
 import { IndividualchatService } from '../Services/individualChat/individualchat.service';
 import { User } from '../Models/user';
-import { NotificationService } from '../Services/Notification/notification.service';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -37,7 +36,6 @@ export class LoginComponent {
   constructor(private _authoService: AuthService, private _router: Router,
     private UserRoleService : UserRoleServiceService ,
     private _individualChatService : IndividualchatService ,
-    private _notificationService : NotificationService
 
   ) {}
   LoginForm: FormGroup = new FormGroup({
@@ -75,8 +73,6 @@ export class LoginComponent {
             localStorage.setItem('token', response.token);
             localStorage.setItem("Id",response.data.id);
             localStorage.setItem("Name",response.data.username); 
-            this._notificationService.setUnReadNotificationsCount(response.data.unReadNotificationsNum)
-            // console.log(this._authoService.getUnReadNotificationsCount());
             if(localStorage.getItem('Id'))
               {
                 const id : any = Number (localStorage.getItem('Id'))

@@ -40,7 +40,6 @@ isLogged : boolean = true;
  Notifications! : INotification[] 
  NotificationReason = NotificationReason
  IsOpenPopUp : boolean = false
- NewNotificationsCounter! : number
 
  logOut(){
     this._authService.logOut();
@@ -50,7 +49,7 @@ isLogged : boolean = true;
      private _notificationService : NotificationService, private DatePipe : DatePipe,
     private router : Router) {
     //using behavoir subject this code works with every change in dom
-    
+
    
   }
   isOpen = false;
@@ -68,82 +67,71 @@ isLogged : boolean = true;
     }
   }
   ngOnInit(): void {
-    
-    if(localStorage.getItem('token'))
-      {
-        console.log('logging')
-        this.isLogged = true
-        this.NewNotificationsCounter = this._notificationService.getUnReadNotificationsCount();
 
-        if(localStorage.getItem('Id'))
-        {
-          this.Id = Number (localStorage.getItem('Id'))
-        }
-      }
-      else
+    if(localStorage.getItem('token'))
+    {
+      console.log('logging')
+      this.isLogged = true
+      if(localStorage.getItem('Id'))
       {
-        console.log('Not logging')
-        this.isLogged = false;
+        this.Id = Number (localStorage.getItem('Id'))
       }
-      console.log( 'is logged' + this.isLogged)
-      console.log(this._authService.userdata)
-  
-    
+    }
+    else
+    {
+      console.log('Not logging')
+      this.isLogged = false;
+    }
+
     this._authService.userdata.subscribe({
       next: () => {
         if (this._authService.userdata.getValue() !== null) {
           this.isLogged = true;
-          this.NewNotificationsCounter = this._notificationService.getUnReadNotificationsCount();
-          console.log(this.NewNotificationsCounter)
 
-          // if(typeof localStorage !== 'undefined')
-          // {
-          //   if(localStorage.getItem('Role') === 'Client')
-          //     {
-          //       this._notificationService.GetByClientId(this.Id).subscribe({
-          //         next : (res) => {
-          //             console.log(res)
-          //             if(res.isSuccess)
-          //             {
-          //                   this.Notifications = res.data;
-          //                   this.NewNotificationsCounter = this.Notifications.length 
-          //                   console.log(this.Notifications) 
-          //                 //  this.NewNotificationsCount() 
-          //             }
-          //             else
-          //             {
-          //               console.log(res.message)
-          //             }
-          //         },
-          //         error : (err) => {
-          //           console.log(err)
-          //         }
-          //       });
-          //     }
+          if(typeof localStorage !== 'undefined')
+          {
+            if(localStorage.getItem('Role') === 'Client')
+              {
+                this._notificationService.GetByClientId(this.Id).subscribe({
+                  next : (res) => {
+                      console.log(res)
+                      if(res.isSuccess)
+                      {
+                            this.Notifications = res.data;
+                            console.log(this.Notifications) 
+                      }
+                      else
+                      {
+                        console.log(res.message)
+                      }
+                  },
+                  error : (err) => {
+                    console.log(err)
+                  }
+                });
+              }
     
-          //     else if(localStorage.getItem('Role') === 'Freelancer')
-          //     {
-          //       this._notificationService.GetByFreelancerId(this.Id).subscribe({
-          //         next : (res) => {
-          //             console.log(res)
-          //             if(res.isSuccess)
-          //             {
-          //                   this.Notifications = res.data;
-          //                   this.NewNotificationsCounter = this.Notifications.length 
-          //                   console.log(this.Notifications) 
-          //               //    this.NewNotificationsCount() 
-          //             }
-          //             else
-          //             {
-          //               console.log(res.message)
-          //             }
-          //         },
-          //         error : (err) => {
-          //           console.log(err)
-          //         }
-          //       });
-          //     }
-          // }
+              else if(localStorage.getItem('Role') === 'Freelancer')
+              {
+                this._notificationService.GetByFreelancerId(this.Id).subscribe({
+                  next : (res) => {
+                      console.log(res)
+                      if(res.isSuccess)
+                      {
+                            this.Notifications = res.data;
+                            console.log(this.Notifications) 
+                      }
+                      else
+                      {
+                        console.log(res.message)
+                      }
+                  },
+                  error : (err) => {
+                    console.log(err)
+                  }
+                });
+              }
+          }
          
 
 
@@ -224,74 +212,6 @@ isLogged : boolean = true;
 
   }
 
-  // NewNotificationsCount() 
-  // {
-  //   if(this.Notifications !== undefined)
-  //   {
-  //     this.NewNotificationsCounter = this.Notifications.filter(n => n.isRead === false).length
-  //     console.log(this.Notifications.filter(n => n.isRead === false))
-  //   }
-  // }
-
-  GetNotifications()  // called with each click >> get latest notifications >> signalr simulation
-  {
-     if(typeof localStorage !== 'undefined')
-          {
-            if(localStorage.getItem('Role') === 'Client')
-              {
-                this._notificationService.GetByClientId(this.Id).subscribe({
-                  next : (res) => {
-                      console.log(res)
-                      if(res.isSuccess)
-                      {
-                            this.Notifications = res.data;
-                           // this.NewNotificationsCounter = this.Notifications.length 
-                            console.log(this.Notifications) 
-                          //  this.NewNotificationsCount() 
-                      }
-                      else
-                      {
-                        console.log(res.message)
-                      }
-                  },
-                  error : (err) => {
-                    console.log(err)
-                  }
-                });
-              }
-    
-              else if(localStorage.getItem('Role') === 'Freelancer')
-              {
-                this._notificationService.GetByFreelancerId(this.Id).subscribe({
-                  next : (res) => {
-                      console.log(res)
-                      if(res.isSuccess)
-                      {
-                            this.Notifications = res.data;
-                           // this.NewNotificationsCounter = this.Notifications.length 
-                            console.log(this.Notifications) 
-                        //    this.NewNotificationsCount() 
-                      }
-                      else
-                      {
-                        console.log(res.message)
-                      }
-                  },
-                  error : (err) => {
-                    console.log(err)
-                  }
-                });
-              }
-          }   
-          this.MarkNotificationsAsRead()
-  }
-
-  MarkNotificationsAsRead()
-  {
-    this._notificationService.setUnReadNotificationsCount(0);
-    this.NewNotificationsCounter = this._notificationService.getUnReadNotificationsCount();
-  }
-
   FormatTime(Time : string) : string 
   {
       return this.DatePipe.transform(Time , 'medium')?? ''
@@ -314,7 +234,6 @@ isLogged : boolean = true;
       case this.NotificationReason.AcceptedProposal:
         this.router.navigate(['/project-details',TempNotification.notificationTriggerId]);  
         this.IsOpenPopUp = false; 
-        this.NewNotificationsCounter = 0
         break;
       case this.NotificationReason.RejectedProposal:
         this.router.navigate(['/project-details',TempNotification.notificationTriggerId]); 
