@@ -89,14 +89,18 @@
           >
             <div class="row justify-content-between align-items-center">
               <div class="col-4">
-                <p class="price">{{ job.minBudget }} $ - {{ job.maxBudget }} $</p>
+                <p class="price ml-4">{{ job.minBudget }} $ - {{ job.maxBudget }} $</p>
                 <button
                   class="btn btn-success"
                   (click)="navigateToDetails(job.id)"
                 >
                   عرض التفاصيل
                 </button>
+                <p class="price">
+                  {{job.postTime}}
+                </p>
               </div>
+            
               <div class="col-8 d-flex justify-content-end align-items-center">
                 <div class="d-flex flex-column text-end me-3">
                   <div class="d-flex">
