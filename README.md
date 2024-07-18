@@ -54,8 +54,9 @@ Welcome to Shoghlana, a freelancing platform where you can register as either a 
 
 ### Frontend
 1. Clone the Angular repository:
-   bash
-   cd ShoghlanaAngularProject
+    bash
+   git clone 
+   cd <repository-directory>
    
 2. Install the dependencies:
    bash
