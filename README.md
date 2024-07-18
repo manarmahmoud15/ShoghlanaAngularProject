@@ -36,7 +36,7 @@ Welcome to Shoghlana, a freelancing platform where you can register as either a 
 ## Installation 🛠
 
 ### Backend
-1. Clone the repository:
+1. Clone the backend repository :
    bash
    git clone https://github.com/Omar-Abo-Ziada/Shoghlana.Api
    cd <repository-directory>
