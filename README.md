@@ -38,7 +38,7 @@ Welcome to Shoghlana, a freelancing platform where you can register as either a 
 ### Backend
 1. Clone the repository:
    bash
-   git clone <repository-url>
+   git clone https://github.com/Omar-Abo-Ziada/Shoghlana.Api
    cd <repository-directory>
    
 2. Set up the database (MSSQL) and configure the connection string in appsettings.json.
@@ -55,7 +55,6 @@ Welcome to Shoghlana, a freelancing platform where you can register as either a 
 ### Frontend
 1. Clone the Angular repository:
    bash
-   git clone https://github.com/manarmahmoud15/ShoghlanaAngularProject
    cd ShoghlanaAngularProject
    
 2. Install the dependencies:
